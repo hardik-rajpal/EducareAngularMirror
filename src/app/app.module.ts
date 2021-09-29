@@ -10,6 +10,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CourseComponent } from './course/course.component';
 import { CourseItemComponent } from './course-item/course-item.component';
 import { CoursePostComponent } from './course-post/course-post.component';
+import { CreateCourseComponent } from './create-course/create-course.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CoursePostComponent } from './course-post/course-post.component';
     NavbarComponent,
     CourseComponent,
     CourseItemComponent,
-    CoursePostComponent
+    CoursePostComponent,
+    CreateCourseComponent
   ],
   imports: [
     BrowserModule,

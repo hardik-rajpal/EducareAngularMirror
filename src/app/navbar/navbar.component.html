@@ -15,14 +15,17 @@
           <li class="nav-item">
             <a class="nav-link" href="/dashboard">Dashboard</a>
           </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/courses">Courses</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Courses
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/courses">My Courses</a></li>
+              <li><a class="dropdown-item" href="/create_course">Create Course</a></li>
+            </ul>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/grades">Grades</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/create_course">Create Course</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/signup">Sign Up</a>
@@ -30,16 +33,6 @@
           <li class="nav-item">
             <a class="nav-link" href="/login">Log In</a>
           </li>
-          <!--
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Courses
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/courses/courses">Courses</a></li>
-            </ul>
-          </li>
-        -->
         </ul>
         <button class="btn btn-outline-danger" type="submit">Log Out</button>
       </div>

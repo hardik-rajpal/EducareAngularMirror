@@ -2,3 +2,16 @@
     {{courseItem.code}} <br>
     <small class="text-muted">{{courseItem.name}}</small>
 </h3>
+
+<ul *ngFor="let post of courseItem.posts">
+    <li>
+        <h3>{{post.title}}</h3>
+        <h4><small class="text-muted">By <i>author</i> at <i>date-time</i></small></h4>
+        <p>{{post.desc}}</p>
+        
+        <ul *ngFor="let file of post.files">
+            <li [innerHTML]=file.name>
+            </li>
+        </ul>
+    </li>
+</ul>

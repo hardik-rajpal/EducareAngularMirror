@@ -14,7 +14,14 @@ export class CourseItemComponent implements OnInit {
   courseItem : CourseItem;
 
   constructor (private route: ActivatedRoute) {
-    this.courseItem = { code: "AA101", name: "Fetch name", posts: [] };
+    this.courseItem = {
+      code: "AA101",
+      name: "Fetch name",
+      posts: [
+        { title: "Title1", desc: "Desc1", files: [new File(["Blobpart1_1"], "file1_1.txt"), new File(["Blobpart1_2"], "file1_2.txt")] },
+        { title: "Title2", desc: "Desc2", files: [new File(["Blobpart2_1"], "file2_1.txt"), new File(["Blobpart2_2"], "file2_2.txt")] }
+      ]
+    };
   }
 
   ngOnInit(): void {

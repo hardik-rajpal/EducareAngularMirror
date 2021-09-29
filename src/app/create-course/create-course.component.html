@@ -1,0 +1,21 @@
+<h3 style="margin: 20px;">Create a new course</h3>
+
+<div style="margin: 40px;">
+
+    <form action="{{server_url}}/create_course" method="post" target="_self">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="createCourseCode" placeholder="AA101">
+            <label for="createCourseCode" class="form-label">Course code</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="createCourseName" placeholder="Name of the course">
+            <label for="createCourseName" class="form-label">Course name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" id="createCourseDesc" rows="3" placeholder="Description of the course"></textarea>
+            <label for="createCourseDesc" class="form-label">Course description</label>
+        </div>
+        <input class="btn btn-outline-success" type="submit" value="Submit">
+    </form>
+
+</div>

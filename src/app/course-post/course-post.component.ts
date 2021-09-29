@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CoursePost } from './CoursePost';
 
 @Component({
   selector: 'app-course-post',
@@ -7,7 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoursePostComponent implements OnInit {
 
-  constructor() { }
+  post : CoursePost;
+  //filenames : string[] = [];
+
+  constructor() { 
+    this.post = {
+      title: "Title",
+      desc: "Desc",
+      files: [new File(["Blobpart1"], "file1.txt"), new File(["Blobpart2"], "file2.txt")],
+    };
+    /*
+    for (let i=0; i<this.post.files.length; i++) {
+      this.filenames.push(this.post.files[i].name);
+    }
+    */
+   }
 
   ngOnInit(): void {
   }

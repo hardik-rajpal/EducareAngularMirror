@@ -1,30 +1,8 @@
-<ul *ngFor="let course of courses">
+<p *ngFor="let course of courses" style="margin: 20px; display:inline-block;">
     <button class="btn btn-outline-primary"
         routerLink="{{course.code}}"
         style="border-radius: 0px; height: 200px; width: 300px; margin: 10px;">
         <h3>{{course.code}}</h3>
         <h6>{{course.name}}</h6>
     </button>
-</ul>
-
-<div style="margin: 40px;">
-
-    <button (click)="createCourse()" class="btn btn-info" style="margin-bottom: 10px">{{value}}</button>
-
-    <form *ngIf="showForm" action="{{server_url}}/create_course" method="post" target="_self">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="createCourseCode" placeholder="AA101">
-            <label for="createCourseCode" class="form-label">Course code</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="createCourseName" placeholder="Name of the course">
-            <label for="createCourseName" class="form-label">Course name</label>
-        </div>
-        <div class="form-floating mb-3">
-            <textarea class="form-control" id="createCourseDesc" rows="3" placeholder="Description of the course"></textarea>
-            <label for="createCourseDesc" class="form-label">Course description</label>
-        </div>
-        <input class="btn btn-outline-success" type="submit" value="Submit">
-    </form>
-
-</div>
+</p>
