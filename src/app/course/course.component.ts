@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { Course } from "./Course"
+import { CourseItem } from '../course-item/CourseItem';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-course',
@@ -9,7 +10,9 @@ import { Course } from "./Course"
 })
 export class CourseComponent implements OnInit {
 
-  courses : Course[];
+  server_url=environment.server_url;
+
+  courses : CourseItem[];
 
   constructor (
     private router:Router
@@ -17,22 +20,33 @@ export class CourseComponent implements OnInit {
 
     this.courses = [
       {
-        code : "CS251",
-        name : "Software Systems Lab",
+        code: "CS251",
+        name: "Software Systems Lab",
+        posts: [],
       },
       {
-        code : "CS213",
-        name : "Data Structures and Algorithms",
+        code: "CS213",
+        name: "Data Structures and Algorithms",
+        posts: [],
       }
     ]
 
   }
 
-  onclick() {
-    this.router.navigate(['/123'])
+  ngOnInit(): void {
   }
 
-  ngOnInit(): void {
+  showForm = false;
+  value = "Create a new Course";
+
+  createCourse() {
+    this.showForm = !this.showForm;
+    if (this.value == "Create a new Course") {
+      this.value = "Hide form";
+    }
+    else {
+      this.value = "Create a new Course";
+    }
   }
 
 }
