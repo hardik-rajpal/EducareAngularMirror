@@ -1,0 +1,8 @@
+<ul *ngFor="let course of courses">
+    <button class="btn btn-outline-primary"
+        (click)="onclick()"
+        style="border-radius: 0px; height: 200px; width: 300px; margin: 10px;">
+        <h3>{{course.code}}</h3>
+        <h6>{{course.name}}</h6>
+    </button>
+</ul>
