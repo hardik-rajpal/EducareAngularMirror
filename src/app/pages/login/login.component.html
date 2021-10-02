@@ -1,8 +1,9 @@
 <h2>Login</h2>
-<form action='{{server_url}}/Login' method="post" target="_self">
-    <label for="name">Username:</label>
-    <input type="text" id="name" name="name"><br><br>
+
+<!-- <form> -->
+    <label for="name">User ID:</label>
+    <input type="text" id="name" name="name" #userid><br><br>
     <label for="password">Password:</label>
-    <input type="text" id="password" name="password"><br><br>
-    <input type="submit" value="Submit">
-</form>
+    <input type="password" id="password" name="password" #password><br><br>
+    <button (click)="sendcreds()">Log In</button>
+<!-- </form> -->
