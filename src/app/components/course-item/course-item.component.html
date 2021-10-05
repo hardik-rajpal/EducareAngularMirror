@@ -1,0 +1,33 @@
+<h3 style="text-align: center; padding: 10px">
+    {{courseItem.courseCode}} <br>
+    <small class="text-muted">{{courseItem.courseName}}</small>
+</h3>
+<ul>
+    <div *ngFor="let task of assignments" (click)="navigateToSub(task)">
+        <h1 class="alert alert-info" >Assignment {{task.number}}</h1>
+        
+    </div>
+
+</ul>
+
+
+
+
+<!-- 
+<ul *ngFor="let post of courseItem.posts">
+    <li>
+        <h3>{{post.title}}</h3>
+        <h4><small class="text-muted">By <i>author</i> at <i>date-time</i></small></h4>
+        <p>{{post.desc}}</p>
+        
+        <ul *ngFor="let file of post.files">
+            <li [innerHTML]=file.name>
+            </li>
+        </ul>
+    </li>
+</ul> -->
+<!-- <ul> -->
+    <!-- <li *ngFor="let assignment of assignments"> -->
+    
+<!-- </li> -->
+<!-- </ul> -->

@@ -9,7 +9,11 @@ import { LoginComponent } from './pages/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule} from '@angular/common/http';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import {CourseComponent} from './components/course/course.component';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { CourseItemComponent } from './components/course-item/course-item.component';
+import { AssignmentComponent } from './pages/assignment/assignment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,13 +21,17 @@ import { FormsModule } from '@angular/forms';
     SignupComponent,
     LoginComponent,
     NavbarComponent,
-    DashboardComponent
+    DashboardComponent,
+    CourseComponent,
+    CourseItemComponent,
+    AssignmentComponent
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    CommonModule,
     FormsModule
   ],
   providers: [],

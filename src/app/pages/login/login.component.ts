@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
     })
   } 
   ngOnInit(): void {
+    localStorage.setItem('userid', 'None')
     this.userservice.getProfileData('200050048').subscribe(data=>{
       console.log(data);
     })
