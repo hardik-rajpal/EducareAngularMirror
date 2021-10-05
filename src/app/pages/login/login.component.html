@@ -1,9 +1,11 @@
 <h2>Login</h2>
+<p *ngIf="userDNE" class="alert alert-danger">User ID Does Not Exist!</p>
+<p *ngIf="wrongPassword" class="alert alert-danger">Password is incorrect!</p>
+<form  #userlogin = "ngForm" (ngSubmit) = "sendcreds(userlogin.value)">
 
-<!-- <form> -->
     <label for="name">User ID:</label>
-    <input type="text" id="name" name="name" #userid><br><br>
+    <input type="text" id="name" name="name" ngModel><br><br>
     <label for="password">Password:</label>
-    <input type="password" id="password" name="password" #password><br><br>
-    <button (click)="sendcreds()">Log In</button>
-<!-- </form> -->
+    <input type="password" id="password" name="password" ngModel><br><br>
+    <input type="submit" value="Login">
+</form>

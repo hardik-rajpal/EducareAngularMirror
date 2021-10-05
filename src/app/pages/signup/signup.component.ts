@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-signup',
@@ -6,9 +7,15 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  server_url=environment.server_url;
-  constructor() { }
+  constructor(private userService:UserService) { }
   ngOnInit(): void {
+  }
+  createUser(tosend:string){
+    console.log(tosend)
+
+    this.userService.sendCreateReq(tosend).subscribe(data=>{
+      console.log(data)
+    });
   }
 
 }

@@ -20,6 +20,12 @@ export class UserService {
     const authHttpOp = {
       params:new HttpParams().append('userid', userid).append('password',password)
     }
-    return this.http.get<any>(this.apiroot+"auth/", authHttpOp)
+    return this.http.post<any>(this.apiroot+"auth/", authHttpOp)
+  }
+  sendCreateReq(userdata:string){
+    const createHttpOp = {
+      params:new HttpParams().append('userdata',userdata)
+    }
+    return this.http.post<any>(this.apiroot + 'create/', createHttpOp)
   }
 }

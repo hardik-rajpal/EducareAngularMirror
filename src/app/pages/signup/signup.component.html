@@ -1,8 +1,8 @@
 <h2>Signup</h2>
-<form action="{{server_url}}/new_user" method="post" target="_self">
-    <label for="name">Username:</label>
-    <input type="text" id="name" name="name"><br><br>
+<form  #usercreate = "ngForm" (ngSubmit) = "createUser(usercreate.value)">
+    <label for="userid">UserID:</label>
+    <input type="text" id="name" name="userid" ngModel><br><br>
     <label for="password">Password:</label>
-    <input type="text" id="password" name="password"><br><br>
-    <input type="submit" value="Submit">
+    <input type="text" id="password" name="password" ngModel><br><br>
+    <button type="submit">Submit</button>
 </form>
