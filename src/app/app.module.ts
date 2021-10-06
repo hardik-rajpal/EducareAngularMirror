@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CourseItemComponent } from './components/course-item/course-item.component';
 import { AssignmentComponent } from './pages/assignment/assignment.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,8 @@ import { AssignmentComponent } from './pages/assignment/assignment.component';
     DashboardComponent,
     CourseComponent,
     CourseItemComponent,
-    AssignmentComponent
+    AssignmentComponent,
+    ProfileComponent
     
   ],
   imports: [

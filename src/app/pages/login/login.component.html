@@ -1,3 +1,4 @@
+<div style="float:left;">
 <h2>Login</h2>
 <p *ngIf="userDNE" class="alert alert-danger">User ID Does Not Exist!</p>
 <p *ngIf="wrongPassword" class="alert alert-danger">Password is incorrect!</p>
@@ -9,3 +10,6 @@
     <input type="password" id="password" name="password" ngModel><br><br>
     <input type="submit" value="Login">
 </form>
+</div>
+<a class="btn btn-primary" href="/signup" style="float:left;">Signup</a>
+    

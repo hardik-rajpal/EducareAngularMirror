@@ -6,9 +6,12 @@ import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {CourseItemComponent} from './components/course-item/course-item.component'
 import { CreateCourseComponent } from './components/create-course/create-course.component';
 import { AssignmentComponent } from './pages/assignment/assignment.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 const routes: Routes = [
-  {path: 'login',component:LoginComponent},
+  {path: 'login',component:LoginComponent, data:{logout:false}},
+  {path: 'logout', component:LoginComponent, data:{logout:true}},
   {path: 'signup',component:SignupComponent},
+  {path: 'profile', component:ProfileComponent},
   {path: 'dashboard', component:DashboardComponent},
   {path: 'courses/:code', component:CourseItemComponent},
   {path: 'create_course', component:CreateCourseComponent},
@@ -20,4 +23,8 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+  authorize(){
+    console.log("i did oth")
+  }
+}

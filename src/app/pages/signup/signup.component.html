@@ -1,3 +1,4 @@
+<div style="float:left;">
 <h2>Signup</h2>
 <form  #usercreate = "ngForm" (ngSubmit) = "createUser(usercreate.value)">
     <label for="usernam">Full Name:</label>
@@ -8,3 +9,6 @@
     <input type="text" id="password" name="password" ngModel><br><br>
     <button type="submit">Submit</button>
 </form>
+</div>
+<a class="btn btn-primary" href="/login">Log In</a>
+    

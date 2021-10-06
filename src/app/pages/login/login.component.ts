@@ -1,6 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Output, ViewChild, EventEmitter} from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { Router,ActivatedRoute } from '@angular/router';
+
 // import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-login',
@@ -11,12 +12,15 @@ export class LoginComponent implements OnInit {
   wrongPassword:boolean = false;
   userDNE:boolean = false;
   // server_url=environment.server_url;
-  @ViewChild('userid') idfield!:ElementRef;
-  @ViewChild('password') pwfield!:ElementRef;
+  @Output() authorize:EventEmitter<any> = new EventEmitter();
   constructor(private userservice:UserService,
     private router:Router,
     private activatedRoute:ActivatedRoute) { }
-  sendcreds(user_data:any){
+    setAuthorized(userid:any){
+      localStorage.setItem('userid', userid);
+      
+    }
+    sendcreds(user_data:any){
     let id = user_data.name;
     let pw = user_data.password;
     this.userservice.sendAuthData(id, pw).subscribe(data=>{
@@ -29,18 +33,24 @@ export class LoginComponent implements OnInit {
         this.userDNE = true;
       }
       else{
-        localStorage.setItem('userid', id)
-        this.router.navigate(["/dashboard"])
+        // this.authorize.emit(id)
+        this.setAuthorized(id)
         this.wrongPassword = false;
         this.userDNE = false;
+        // this.router.navigate(["/dashboard"])
+        window.location.assign("/dashboard")
+        //above function ensures reload of navbar
         console.log(data.userID)
       }
     })
   } 
   ngOnInit(): void {
-    localStorage.setItem('userid', 'None')
-    this.userservice.getProfileData('200050048').subscribe(data=>{
-      console.log(data);
+    this.activatedRoute.data.subscribe(val=>{
+      console.log(val)
+      if(val.logout==true &&localStorage.getItem('userid')!=null){
+        localStorage.removeItem('userid')
+        window.location.reload()
+      }
     })
   }
 

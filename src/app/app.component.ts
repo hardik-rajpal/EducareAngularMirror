@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,7 @@ import { Component,OnInit } from '@angular/core';
 })
 export class AppComponent {
   title = 'educare';
+  isauth:boolean = false;
+  ngOnInit(){
+  }
 }

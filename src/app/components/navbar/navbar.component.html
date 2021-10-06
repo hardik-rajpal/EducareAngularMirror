@@ -3,6 +3,7 @@
     <a href="/dashboard">Dashboard</a>
     <a href="/grades">My Grades</a>
     <a href="/create_course">Create Course</a>
-    <a href="/signup">Signup</a>
-    <a href="/login">Login</a>
+    <a *ngIf="isauth" href="/profile">Profile</a>
+    <a *ngIf="isauth" href="/logout">Log out</a>
+    <!-- <button (click)="loguserid()">Check ls</button> -->
 </div> 

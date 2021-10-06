@@ -12,9 +12,9 @@ export class SignupComponent implements OnInit {
   }
   createUser(tosend:string){
     console.log(tosend)
-
     this.userService.sendCreateReq(tosend).subscribe(data=>{
       console.log(data)
+      window.location.assign('/login')
     });
   }
 
