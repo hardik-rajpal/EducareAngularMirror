@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { CourseItemComponent } from './components/course-item/course-item.component';
 import { AssignmentComponent } from './pages/assignment/assignment.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ProfcourseComponent } from './pages/profcourse/profcourse.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     CourseComponent,
     CourseItemComponent,
     AssignmentComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProfcourseComponent
     
   ],
   imports: [

@@ -7,12 +7,14 @@ import {CourseItemComponent} from './components/course-item/course-item.componen
 import { CreateCourseComponent } from './components/create-course/create-course.component';
 import { AssignmentComponent } from './pages/assignment/assignment.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ProfcourseComponent } from './pages/profcourse/profcourse.component';
 const routes: Routes = [
   {path: 'login',component:LoginComponent, data:{logout:false}},
   {path: 'logout', component:LoginComponent, data:{logout:true}},
   {path: 'signup',component:SignupComponent},
   {path: 'profile', component:ProfileComponent},
   {path: 'dashboard', component:DashboardComponent},
+  {path: 'courses/profview/:code', component:ProfcourseComponent},
   {path: 'courses/:code', component:CourseItemComponent},
   {path: 'create_course', component:CreateCourseComponent},
   {path: 'assignments/:coursecode/:enum', component:AssignmentComponent}

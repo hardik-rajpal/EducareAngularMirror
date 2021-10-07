@@ -18,4 +18,11 @@ export class AssignmentService {
     }
     return this.http.get<any>(this.apiroot+courseid +enumstr,httpop)
   }
+  createAssignment(data:any, courseid:string){
+    // let enumstr = '/'+enumL.toString()+'/'
+    const httpCreateOp = {
+      params:new HttpParams().append('assignmentdata',data)
+    }
+    return this.http.post<any>(this.apiroot + courseid +'/create/', httpCreateOp);
+  }
 }

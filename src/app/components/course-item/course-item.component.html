@@ -4,7 +4,7 @@
 </h3>
 <ul>
     <div *ngFor="let task of assignments" (click)="navigateToSub(task)">
-        <h1 class="alert alert-info" >Assignment {{task.number}}</h1>
+        <h1 class="alert alert-info" >Assignment {{task.number}}: {{task.title}}</h1>
         
     </div>
 

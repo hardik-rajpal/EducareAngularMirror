@@ -61,7 +61,7 @@ export class CourseItemComponent implements OnInit {
   navigateToSub(task:any){
     let id = localStorage.getItem('userid')
     console.log(task)
-    if(this.courseItem.instructors.includes(id)){
+    if(this.courseItem.students.includes(id)){
       this.router.navigate(['./assignments/'+task.number], {relativeTo:this.route})
       this.router.navigate(['/assignments/'+this.courseItem.courseID+'/'+task.number], {relativeTo:this.route})
     }

@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class CourseComponent implements OnInit {
   @Input() courses!:any;
+  @Input() isprof!:boolean;
   // courses : CourseItem[];
 
   constructor (
@@ -38,7 +39,11 @@ export class CourseComponent implements OnInit {
   showForm = false;
   value = "Create a new Course";
   navigate(id:string){
-    this.router.navigate(["/courses/" + id])
+    let newroute = "/courses/";
+    if(this.isprof){
+      newroute = newroute + "profview/";
+    }
+    this.router.navigate([newroute + id])
   }
   createCourse() {
     this.showForm = !this.showForm;
