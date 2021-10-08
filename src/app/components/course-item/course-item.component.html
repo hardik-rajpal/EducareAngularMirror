@@ -5,9 +5,12 @@
 <ul>
     <div *ngFor="let task of assignments" (click)="navigateToSub(task)">
         <h1 class="alert alert-info" >Assignment {{task.number}}: {{task.title}}</h1>
-        
     </div>
-
+</ul>
+<ul>
+    <div *ngFor="let post of posts" (click)="navigateToPost(post)">
+        <h1 class="alert alert-info" >Post {{post.number}}: {{post.title}}</h1>
+    </div>
 </ul>
 
 

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { AssignmentComponent } from 'src/app/pages/assignment/assignment.component';
 import { AssignmentService } from 'src/app/services/assignment.service';
 import { CourseService } from 'src/app/services/course.service';
+import { PostService } from 'src/app/services/post.service';
 import { CreateCourseComponent } from '../create-course/create-course.component';
 import { CourseItem } from './CourseItem';
 
@@ -28,6 +29,9 @@ export class CourseItemComponent implements OnInit {
     instructors:[],
     students:[]
   };
+  posts: any[]=[
+    {instruction:''}
+  ]
   assignments: any[]=[
     {instruction:''}
   ];
@@ -35,6 +39,7 @@ export class CourseItemComponent implements OnInit {
   constructor (private route: ActivatedRoute,
     private courseService:CourseService,
     private assignmentService:AssignmentService,
+    private postService:PostService,
     private router:Router) {
     // this.courseItem = {
     //   code: "AA101",
@@ -57,6 +62,10 @@ export class CourseItemComponent implements OnInit {
       this.assignments = data
       console.log(data)
     })
+    this.postService.getPostData(courseid).subscribe(data=>{
+      this.posts = data
+      console.log(data)
+    })
   }
   navigateToSub(task:any){
     let id = localStorage.getItem('userid')
@@ -64,6 +73,17 @@ export class CourseItemComponent implements OnInit {
     if(this.courseItem.students.includes(id)){
       this.router.navigate(['./assignments/'+task.number], {relativeTo:this.route})
       this.router.navigate(['/assignments/'+this.courseItem.courseID+'/'+task.number], {relativeTo:this.route})
+    }
+    else{
+
+    }
+  }
+  navigateToPost(post:any){
+    let id = localStorage.getItem('userid')
+    console.log(post)
+    if(this.courseItem.students.includes(id)){
+      this.router.navigate(['./posts/'+post.number], {relativeTo:this.route})
+      this.router.navigate(['/posts/'+this.courseItem.courseID+'/'+post.number], {relativeTo:this.route})
     }
     else{
 

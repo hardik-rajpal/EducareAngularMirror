@@ -1,10 +1,33 @@
 <div class="container border">
-<button class="btn btn-success">+ Create Post</button>
-<button class="btn btn-success" (click)="makingAssignment=true">+ Create Assignment</button>
-<button class="btn btn-success">+ Create Assessment</button>
-
+<button class="btn btn-success" (click)="makingPost=true;makingAssignment=false;makingAssessment=false;">+ Create Post</button>
+<button class="btn btn-success" (click)="makingPost=false;makingAssignment=true;makingAssessment=false;">+ Create Assignment</button>
+<button class="btn btn-success" (click)="makingPost=false;makingAssignment=false;makingAssessment=true;">+ Create Assessment</button>
+<button class="btn btn-primary" (click)="makingAssignment=true">+ Add students</button>
+<button class="btn btn-primary">+ Add Instructors</button>
 </div>
+<form *ngIf="makingPost" #postForm = "ngForm" (ngSubmit) = "makePost(postForm.value)">
+    <label for="title">Title:</label><br>
+    <input type="text" name="title"  ngModel><br>
+    <label for="instruction">Instruction:</label><br>
+    <textarea name="instruction" ngModel></textarea><br>
+    <label for="releaseDate">Release Date:</label><br>
+    <input type="date" name="releaseDate" ngModel>
+    <button type="submit">Save and Publish</button><br>
+    <button (click)="makingAssignment=false">Discard</button><br>
+</form>
 <form *ngIf="makingAssignment" #assignForm = "ngForm" (ngSubmit) = "makeAssignmentData(assignForm.value)">
+    <label for="title">Title:</label><br>
+    <input type="text" name="title"  ngModel><br>
+    <label for="instruction">Instruction:</label><br>
+    <textarea name="instruction" ngModel></textarea><br>
+    <label for="releaseDate">Release Date:</label><br>
+    <input type="date" name="releaseDate" ngModel>
+    <label for="dueDate">Due Date:</label><br>
+    <input type="date" name="dueDate" ngModel>
+    <button type="submit">Save and Publish</button><br>
+    <button (click)="makingAssignment=false">Discard</button><br>
+</form>
+<form *ngIf="makingAssessment" #assessForm = "ngForm" (ngSubmit) = "makeAssignmentData(assessForm.value)">
     <label for="title">Title:</label><br>
     <input type="text" name="title"  ngModel><br>
     <label for="instruction">Instruction:</label><br>

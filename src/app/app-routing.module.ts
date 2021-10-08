@@ -8,6 +8,7 @@ import { CreateCourseComponent } from './components/create-course/create-course.
 import { AssignmentComponent } from './pages/assignment/assignment.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfcourseComponent } from './pages/profcourse/profcourse.component';
+import { PostComponent } from './pages/post/post.component';
 const routes: Routes = [
   {path: 'login',component:LoginComponent, data:{logout:false}},
   {path: 'logout', component:LoginComponent, data:{logout:true}},
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'courses/profview/:code', component:ProfcourseComponent},
   {path: 'courses/:code', component:CourseItemComponent},
   {path: 'create_course', component:CreateCourseComponent},
-  {path: 'assignments/:coursecode/:enum', component:AssignmentComponent}
+  {path: 'assignments/:coursecode/:enum', component:AssignmentComponent},
+  {path: 'posts/:coursecode/:enum', component:PostComponent}
 
 ];
 
