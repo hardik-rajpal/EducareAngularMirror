@@ -1,6 +1,12 @@
 <div class="container">
-<h1>Assignment {{data.number}}</h1>
-<p>Instruction: {{data.instruction}}</p>
-<p>Release Date:{{data.releaseDate}}</p>
-<p>Due Date:{{data.dueDate}}</p>
+<h1>Assignment: {{taskdata.title}}</h1>
+<p>Instruction: {{taskdata.instruction}}</p>
+<p>Release Date:{{taskdata.releaseDate}}</p>
+<p>Due Date:{{taskdata.dueDate}}</p>
+</div>
+<div class="container">
+<h1>Your Submission:</h1>
+<p>Grade: {{submissiondata.grade}}</p>
+<p>Your Comments:{{submissiondata.comments}}</p>
+<p>Grader's Feedback:{{submissiondata.feedback}}</p>
 </div>

@@ -25,4 +25,11 @@ export class AssignmentService {
     }
     return this.http.post<any>(this.apiroot + courseid +'/create/', httpCreateOp);
   }
+  getSubmissionData(courseid:string, enumL:number, userid:string=''){
+    if(userid==""){
+      userid = 'all'
+    }
+    let suffix = courseid + '/' + enumL +'/submissions/'+ userid + '/'
+    return this.http.get<any>(this.apiroot+suffix,httpop)
+  }
 }
