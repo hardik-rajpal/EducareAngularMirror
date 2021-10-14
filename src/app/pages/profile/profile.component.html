@@ -1,1 +1,25 @@
-<p>profile works!</p>
+<p>{{userdata.username}}</p>
+<p>{{userdata.userID}}</p>
+<p>{{userdata.email}}</p>
+<button (click)="editprofile=!editprofile">Edit Details</button>
+<button *ngIf="!changepw" (click)="changepw=!changepw">Change Password</button>
+<form *ngIf="editprofile" #editprofileForm = "ngForm" (ngSubmit) = "submiteditprofile(editprofileForm.value)">
+    <label>Username:</label>
+    <input type="text" name="username" ngModel><br>
+    <label>Email</label>
+    <input type="email" name="email" ngModel><br>
+    <label>Date of Birth</label>
+    <input type="date" name="dob" ngModel><br>
+    <label>Confirm Password</label>
+    <input type="password" name="password" ngModel><br>
+    <button type="submit" >Save Changes</button><button (click)="editprofile=!editprofile">Discard</button>
+</form>
+<form *ngIf="changepw" #changepwForm = "ngForm" (ngSubmit) = "submitchangepw(changepwForm.value)">
+    <label>Current Password</label>
+    <input type="password" name="currpw" ngModel><br>
+    <label>New Password</label>
+    <input type="password" name="newpw1" ngModel><br>
+    <label>New Password, going twice.</label>
+    <input type="password" name="newpw2" ngModel><br>
+    <button type="submit" >Change Password</button>
+</form>

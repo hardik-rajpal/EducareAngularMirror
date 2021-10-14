@@ -28,4 +28,16 @@ export class UserService {
     }
     return this.http.post<any>(this.apiroot + 'create/', createHttpOp)
   }
+  sendChangePWReq(userid:string,pwdata:any){
+    const createHttpOp = {
+      params:new HttpParams().append('pwdata',pwdata)
+    }
+    return this.http.post<any>(this.apiroot + userid + '/changepw/', createHttpOp)
+  }
+  setProfileData(userid:string,profileData:any){
+    const createHttpOp = {
+      params:new HttpParams().append('profiledata',profileData)
+    }
+    return this.http.post<any>(this.apiroot + userid + '/editprofile/', createHttpOp)
+  }
 }

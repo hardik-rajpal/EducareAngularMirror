@@ -4,9 +4,15 @@
 <p>Release Date:{{taskdata.releaseDate}}</p>
 <p>Due Date:{{taskdata.dueDate}}</p>
 </div>
-<div class="container">
+<button *ngIf="!(submitted||submitting)" (click)="submitting=true;">Add Submission</button>
+<form *ngIf="submitting"  #submissionForm = "ngForm" (ngSubmit) = "submitFile(submissionForm.value)">
+    <input type="file" name="file" (change)="onChange($event)" ngModel>
+    <button type="submit">Submit</button>
+</form>
+<div class="container" *ngIf="submitted">
 <h1>Your Submission:</h1>
 <p>Grade: {{submissiondata.grade}}</p>
 <p>Your Comments:{{submissiondata.comments}}</p>
 <p>Grader's Feedback:{{submissiondata.feedback}}</p>
+<button>Edit Submission</button>
 </div>

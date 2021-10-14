@@ -39,3 +39,17 @@
     <button type="submit">Save and Publish</button><br>
     <button (click)="makingAssignment=false">Discard</button><br>
 </form>
+<div style="width: 50%;border:1px solid green; padding:10px;">
+    <h2>Assignments</h2>
+    <div *ngFor="let task of assignments" style="border: 2px solid black;">
+        <h3>{{task.title}}</h3>
+        <p style="overflow: hidden;">{{task.instruction}}</p>
+    </div>
+</div>
+<div style="width: 50%;border:1px solid green; padding:10px;">
+    <h2>Posts</h2>
+    <div *ngFor="let post of posts" style="border: 2px solid black;margin:3px;">
+        <h3>{{post.title}}</h3>
+        <p style="overflow: hidden;">{{post.instruction}}</p>
+    </div>
+</div>

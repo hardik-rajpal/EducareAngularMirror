@@ -20,6 +20,27 @@ export class ProfcourseComponent implements OnInit {
     courseID:'',
     courseCode:'',
   }
+  assignments = [
+    {
+      dueDate: "2021-10-11",
+      files: null,
+      instruction: "",
+      number: 0,
+      published: false,
+      releaseDate: "",
+      title: ""
+    }
+  ]
+  posts = [
+    {
+      files: null,
+      instruction: "",
+      number: 1,
+      published: false,
+      releaseDate: "2021-10-09",
+      title: "Vocabularo"
+    }
+  ]
   makingAssignment:boolean = false;
   makingPost:boolean = false;
   makingAssessment:boolean = false;
@@ -29,17 +50,17 @@ export class ProfcourseComponent implements OnInit {
     private route:ActivatedRoute,
     private router:Router) { }
   makeAssignmentData(data:any){
-    console.log(data);
+    // console.log(data);
     // this.postform.reset()
     this.assignmentService.createAssignment(data, this.courseid).subscribe(resp=>{
-      console.log(resp)
+      // console.log(resp)
     });
   }
   makePost(data:any){
     this.postform.reset()
-    console.log(data);
+    // console.log(data);
     this.postService.createPost(data, this.courseid).subscribe(resp=>{
-      console.log(resp)
+      // console.log(resp)
     });
     
   }
@@ -47,16 +68,23 @@ export class ProfcourseComponent implements OnInit {
     this.courseid = JSON.parse(JSON.stringify(this.route.snapshot.paramMap.get('code') || '{}'));
     this.courseService.getCourseData(this.courseid).subscribe(data=>{
       this.course = data
-      console.log(this.course);
+      // console.log(this.course);
       if(this.course.instructors.includes(localStorage.getItem('userid'))){
-        console.log("is prof")
+        this.assignmentService.getAssignmentData(this.courseid).subscribe(data=>{
+          // console.log(data);
+          this.assignments = data;
+        })
+        this.postService.getPostData(this.courseid).subscribe(data=>{
+          this.posts = data;
+        })
+        // console.log("is prof")
       }
       else{
         this.router.navigate(["/dashboard"])
         //user not in instructors list. Redirect to dashboard.
       }
     })
-    console.log(this.courseid + "Is the id");
+    // console.log(this.courseid + "Is the id");
   }
 
 }
