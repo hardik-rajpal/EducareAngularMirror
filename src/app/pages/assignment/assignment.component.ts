@@ -10,20 +10,31 @@ import { AssignmentService } from 'src/app/services/assignment.service';
 export class AssignmentComponent implements OnInit {
   courseid!:string
   userid!:string
+  filehost:string = 'http://127.0.0.1:8000'
+  submDate!:Date;
   num!:any
+  befduedate:boolean = true;
   taskdata={
     number:0,
     title:"",
     instruction:"",
     releaseDate:"",
-    dueDate:""
+    dueDate:"",
+    acceptSubmission:false,
+    files:{
+      url:'',
+      name:''
+    }
   }
-  file:any
+  file:any = {
+    name:"",
+    url:""
+  }
   submissiondata = {
     readAssignment:false,
-    files:null,
+    files:"null",
     grade:0,
-    time:null,
+    time:"",
     feedback:"",
     comments:""
   }
@@ -32,7 +43,7 @@ export class AssignmentComponent implements OnInit {
   constructor(private route:ActivatedRoute,
     private assignmentService:AssignmentService) { }
   onChange(event:any){
-    this.file = event.target.files[0]
+    this.file = event.target.files[0];
   }
   submitFile(data:any){
       console.log(data.file)
@@ -40,6 +51,7 @@ export class AssignmentComponent implements OnInit {
       this.assignmentService.makeSubmission(this.courseid, this.num, this.userid, this.file).subscribe(data=>{
         console.log(data);
       });
+      window.location.reload()
     }
   ngOnInit(): void {
     let courseid, num, id;
@@ -53,6 +65,13 @@ export class AssignmentComponent implements OnInit {
     this.assignmentService.getAssignmentData(courseid, num).subscribe(data=>{
       console.log(data)
       this.taskdata = data
+      let loc:string = data.files
+      this.taskdata.files = {
+        name:loc.split('/')[loc.split('/').length-1],
+        url:this.filehost + loc  
+      }
+      console.log(this.taskdata)
+          
     })
     id = localStorage.getItem('userid');
     
@@ -63,6 +82,16 @@ export class AssignmentComponent implements OnInit {
         this.submissiondata = data;
         if(this.submissiondata.files!=null){
           this.submitted = true;
+          let loc:string = this.submissiondata.files
+          this.file.name=loc.split('/')[loc.split('/').length-1]
+          this.file.url = this.filehost + loc
+          console.log(this.file.url)
+          this.submDate = new Date(data.time.split('+')[0])
+          this.submissiondata.time = [this.submDate.getHours().toString() + ':' +this.submDate.getMinutes().toString()+','+this.submDate.getDate().toString(),this.submDate.getMonth().toString(), this.submDate.getFullYear().toString()].join('/');
+          // console.log()
+          
+        }
+        else{
         }
       })
     }

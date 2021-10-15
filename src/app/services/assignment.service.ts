@@ -33,9 +33,15 @@ export class AssignmentService {
     return this.http.get<any>(this.apiroot+suffix,httpop)
   }
   makeSubmission(courseid:string, enumL:number, userid:string, file:any){
+    let suffix = courseid + '/' + enumL +'/submissions/'+ userid + '/submit/';
+
     let fdata = new FormData();
     fdata.append('file', file, file.name);
-    let suffix = courseid + '/' + enumL +'/submissions/'+ userid + '/submit/';
-    return this.http.post<any>(this.apiroot + suffix, fdata);
+
+    let uploadData = new FormData();
+    uploadData.append('userid', userid);
+    uploadData.append('file', file, file.name);
+
+    return this.http.post<any>(this.apiroot + suffix, uploadData);
   }
 }
