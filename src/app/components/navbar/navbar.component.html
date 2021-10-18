@@ -1,8 +1,8 @@
 <div class="topnav">
-    <a class="active" href="#home">Home</a>
-    <a href="/dashboard">Dashboard</a>
-    <a href="/grades">My Grades</a>
-    <a href="/create_course">Create Course</a>
+    <a *ngIf="isauth" class="active" href="/dashboard">Dashboard</a>
+    <!-- <a *ngIf="isauth" href="/dashboard">Dashboard</a> -->
+    <a *ngIf="isauth" href="/grades">My Grades</a>
+    <a *ngIf="isauth" href="/create_course">Create Course</a>
     <a *ngIf="isauth" href="/profile">Profile</a>
     <a *ngIf="isauth" href="/logout">Log out</a>
     <!-- <button (click)="loguserid()">Check ls</button> -->

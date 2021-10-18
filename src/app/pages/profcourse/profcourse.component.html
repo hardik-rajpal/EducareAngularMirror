@@ -42,7 +42,7 @@
 <div style="width: 50%;border:1px solid green; padding:10px;">
     <h2>Assignments</h2>
     <div *ngFor="let task of assignments" style="border: 2px solid black;">
-        <h3>{{task.title}}</h3>
+        <h3>{{task.title}}<button id="{{task.number}}"  (click)="setFeedback(task.number)"><i class="fa fa-upload"></i>Feedback</button><button id="{{task.number}}"><i class="fa fa-download"></i>Submissions</button></h3>
         <p style="overflow: hidden;">{{task.instruction}}</p>
     </div>
 </div>

@@ -73,6 +73,7 @@ export class ProfcourseComponent implements OnInit {
         this.assignmentService.getAssignmentData(this.courseid).subscribe(data=>{
           // console.log(data);
           this.assignments = data;
+          console.log(this.assignments)
         })
         this.postService.getPostData(this.courseid).subscribe(data=>{
           this.posts = data;
@@ -86,5 +87,7 @@ export class ProfcourseComponent implements OnInit {
     })
     // console.log(this.courseid + "Is the id");
   }
-
+  setFeedback(task_num:Number){
+    console.log(task_num);
+  }
 }
