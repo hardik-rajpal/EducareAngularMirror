@@ -11,7 +11,7 @@ const httpop = {
 })
 export class UserService {
 
-  apiroot:string = 'http://127.0.0.1:8000/users/';
+  apiroot:string = 'https://educare-django.herokuapp.com/users/';
   constructor(private http:HttpClient) {}
   getProfileData(userid:string){
     return this.http.get<any>(this.apiroot + userid+'/', httpop)
