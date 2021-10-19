@@ -9,25 +9,35 @@
     <p>Release Date: {{taskdata.releaseDate}}</p>
     <hr/>
     <p>Due Date: {{taskdata.dueDate}}</p>
+    <hr/>
 </div>
 
 <div class="container" *ngIf="submitted">
-    <h1>Your Submission:</h1>
+    <br>
+    <h4>Your Submission: </h4>
+    <hr/>
+    <b>Files:</b> <br>
     <a href="{{file.url}}"  download>{{file.name}}</a><br>
-    <p>Submitted at:</p>
-    <time>{{submissiondata.time}}</time>
-    <p>Grade: {{submissiondata.grade}}</p>
-    <p>Your Comments:{{submissiondata.comments}}</p>
-    <p>Grader's Feedback:{{submissiondata.feedback}}</p>
+    <hr/>
+    <p><b>Submitted at</b>: <time>{{submissiondata.time}}</time></p>
+    <hr/>
+    <p><b>Grade</b>: {{submissiondata.grade}}</p>
+    <hr/>
+    <p><b>Your Comments</b>: {{submissiondata.comments}}</p>
+    <hr/>
+    <p><b>Grader's Feedback</b>: {{submissiondata.feedback}}</p>
 </div>
 
+<div class="container">
 <p *ngIf="!(taskdata.acceptSubmission||submitted)" class="alert alert-danger">The deadline's gone by.</p>
+</div>
 
-<div *ngIf="(taskdata.acceptSubmission)">
-<button *ngIf="(!submitting) && submitted" (click)="submitting=true;">Edit Submission</button>
-<button *ngIf="!(submitted||submitting)" (click)="submitting=true;">Add Submission</button>
-<form *ngIf="submitting"  #submissionForm = "ngForm" (ngSubmit) = "submitFile(submissionForm.value)">
-    <input type="file" name="file" (change)="onChange($event)" ngModel>
-    <button type="submit">Submit</button>
-</form>
+<div *ngIf="(taskdata.acceptSubmission)" class="container">
+    <button *ngIf="(!submitting) && submitted" (click)="submitting=true;" class="btn btn-outline-success">Edit Submission</button>
+    <button *ngIf="!(submitted||submitting)" (click)="submitting=true;" class="btn btn-outline-success">Add Submission</button>
+    <form *ngIf="submitting"  #submissionForm = "ngForm" (ngSubmit) = "submitFile(submissionForm.value)">
+        <input type="file" name="file" (change)="onChange($event)" ngModel>
+        <button type="submit" class="btn btn-outline-success">Submit</button>
+    </form>
+    <hr/>
 </div>

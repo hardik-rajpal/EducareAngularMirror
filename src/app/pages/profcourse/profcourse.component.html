@@ -1,55 +1,100 @@
-<div class="container border">
-<button class="btn btn-success" (click)="makingPost=true;makingAssignment=false;makingAssessment=false;">+ Create Post</button>
-<button class="btn btn-success" (click)="makingPost=false;makingAssignment=true;makingAssessment=false;">+ Create Assignment</button>
-<button class="btn btn-success" (click)="makingPost=false;makingAssignment=false;makingAssessment=true;">+ Create Assessment</button>
-<button class="btn btn-primary" (click)="makingAssignment=true">+ Add students</button>
-<button class="btn btn-primary">+ Add Instructors</button>
-</div>
-<form *ngIf="makingPost" #postForm = "ngForm" (ngSubmit) = "makePost(postForm.value)">
-    <label for="title">Title:</label><br>
-    <input type="text" name="title"  ngModel><br>
-    <label for="instruction">Instruction:</label><br>
-    <textarea name="instruction" ngModel></textarea><br>
-    <label for="releaseDate">Release Date:</label><br>
-    <input type="date" name="releaseDate" ngModel>
-    <button type="submit">Save and Publish</button><br>
-    <button (click)="makingAssignment=false">Discard</button><br>
-</form>
-<form *ngIf="makingAssignment" #assignForm = "ngForm" (ngSubmit) = "makeAssignmentData(assignForm.value)">
-    <label for="title">Title:</label><br>
-    <input type="text" name="title"  ngModel><br>
-    <label for="instruction">Instruction:</label><br>
-    <textarea name="instruction" ngModel></textarea><br>
-    <label for="releaseDate">Release Date:</label><br>
-    <input type="date" name="releaseDate" ngModel>
-    <label for="dueDate">Due Date:</label><br>
-    <input type="date" name="dueDate" ngModel>
-    <button type="submit">Save and Publish</button><br>
-    <button (click)="makingAssignment=false">Discard</button><br>
-</form>
-<form *ngIf="makingAssessment" #assessForm = "ngForm" (ngSubmit) = "makeAssignmentData(assessForm.value)">
-    <label for="title">Title:</label><br>
-    <input type="text" name="title"  ngModel><br>
-    <label for="instruction">Instruction:</label><br>
-    <textarea name="instruction" ngModel></textarea><br>
-    <label for="releaseDate">Release Date:</label><br>
-    <input type="date" name="releaseDate" ngModel>
-    <label for="dueDate">Due Date:</label><br>
-    <input type="date" name="dueDate" ngModel>
-    <button type="submit">Save and Publish</button><br>
-    <button (click)="makingAssignment=false">Discard</button><br>
-</form>
-<div style="width: 50%;border:1px solid green; padding:10px;">
-    <h2>Assignments</h2>
-    <div *ngFor="let task of assignments" style="border: 2px solid black;">
-        <h3>{{task.title}}<button id="{{task.number}}"  (click)="setFeedback(task.number)"><i class="fa fa-upload"></i>Feedback</button><button id="{{task.number}}"><i class="fa fa-download"></i>Submissions</button></h3>
-        <p style="overflow: hidden;">{{task.instruction}}</p>
+<div class="container">
+
+    <div class="btn-group-vertical" style="margin: 20px; margin-left: 0px;">
+        <a class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;" (click)="makingPost=true;makingAssignment=false;makingAssessment=false;">+ Create Post</a>
+        <a class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;" (click)="makingPost=false;makingAssignment=true;makingAssessment=false;">+ Create Assignment</a>
+        <a class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;" (click)="makingPost=false;makingAssignment=false;makingAssessment=true;">+ Create Assessment</a>
+        <a class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;">+ Add Instructors</a>
+        <a class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;">+ Add Students</a>
     </div>
-</div>
-<div style="width: 50%;border:1px solid green; padding:10px;">
-    <h2>Posts</h2>
-    <div *ngFor="let post of posts" style="border: 2px solid black;margin:3px;">
-        <h3>{{post.title}}</h3>
-        <p style="overflow: hidden;">{{post.instruction}}</p>
+
+
+
+    <form *ngIf="makingPost" #postForm = "ngForm" (ngSubmit) = "makePost(postForm.value)">
+        <div class="form-floating">
+            <input type="text" class="form-control" id="title" placeholder="Title" name="title" ngModel>
+            <label for="title" class="form-label">Title of Post</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" id="instruction" placeholder="Instruction" name="instruction" ngModel></textarea>
+            <label for="instruction" class="form-label">Instruction</label>
+        </div>
+        <div class="form-floating">
+            <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" ngModel>
+            <label for="releaseDate" class="form-label">Release Date</label>
+        </div>
+        <button class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
+        <button class="btn btn-outline-danger" (click)="makingPost=false" style="margin: 10px;">Discard</button>
+    </form>
+
+    <form *ngIf="makingAssignment" #assignForm = "ngForm" (ngSubmit) = "makeAssignmentData(assignForm.value)">
+        <div class="form-floating">
+            <input type="text" class="form-control" id="title" placeholder="Title" name="title" ngModel>
+            <label for="title" class="form-label">Title of Assignment</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" id="instruction" placeholder="Instruction" name="instruction" ngModel></textarea>
+            <label for="instruction" class="form-label">Instruction</label>
+        </div>
+        <div class="form-floating">
+            <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" ngModel>
+            <label for="releaseDate" class="form-label">Release Date</label>
+        </div>
+        <div class="form-floating">
+            <input type="date" class="form-control" id="dueDate" placeholder="DueDate" name="dueDate" ngModel>
+            <label for="dueDate" class="form-label">Due Date</label>
+        </div>
+        <button class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
+        <button class="btn btn-outline-danger" (click)="makingAssignment=false" style="margin: 10px;">Discard</button>
+    </form>
+
+    <form *ngIf="makingAssessment" #assessForm = "ngForm" (ngSubmit) = "makeAssignmentData(assessForm.value)">
+        <div class="form-floating">
+            <input type="text" class="form-control" id="title" placeholder="Title" name="title" ngModel>
+            <label for="title" class="form-label">Title of Assessment</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" id="instruction" placeholder="Instruction" name="instruction" ngModel></textarea>
+            <label for="instruction" class="form-label">Instruction</label>
+        </div>
+        <div class="form-floating">
+            <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" ngModel>
+            <label for="releaseDate" class="form-label">Release Date</label>
+        </div>
+        <div class="form-floating">
+            <input type="date" class="form-control" id="dueDate" placeholder="DueDate" name="dueDate" ngModel>
+            <label for="dueDate" class="form-label">Due Date</label>
+        </div>
+        <button class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
+        <button class="btn btn-outline-danger" (click)="makingAssessment=false" style="margin: 10px;">Discard</button>
+    </form>
+
+    <hr/>
+
+    <!-- <div style="width: 50%;border:1px solid green; padding:10px;"> -->
+
+    <h3>Posts <i class="bi bi-megaphone-fill" style="font-size: 2rem;"></i></h3>
+    <div *ngFor="let post of posts">
+        <div class="container" style="margin: 30px;">
+            <h5>{{post.number}}. {{post.title}}</h5>
+            <p style="overflow: hidden;"><b>Instruction</b>: {{post.instruction}}</p>
+        </div>
     </div>
+
+    <hr/>
+
+    <h3>Assignments <i class="bi bi-file-earmark-fill" style="font-size: 2rem;"></i></h3>
+    <div *ngFor="let task of assignments">
+        <div class="container" style="margin: 30px;">
+            <h5>{{task.number}}. {{task.title}}</h5>
+            <div class="btn-group">
+                <button class="btn btn-outline-dark" id="{{task.number}}" (click)="setFeedback(task.number)"><i class="bi bi-upload"></i> Feedback</button>
+                <button class="btn btn-outline-dark" id="{{task.number}}"><i class="bi bi-download"></i> Submissions</button>
+            </div>
+            <p style="overflow: hidden;"><b>Instruction</b>: {{task.instruction}}</p>
+        </div>
+    </div>
+
+    <hr/>
+
 </div>

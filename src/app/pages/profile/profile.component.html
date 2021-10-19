@@ -1,25 +1,66 @@
-<p>{{userdata.username}}</p>
-<p>{{userdata.userID}}</p>
-<p>{{userdata.email}}</p>
-<button (click)="editprofile=!editprofile">Edit Details</button>
-<button *ngIf="!changepw" (click)="changepw=!changepw">Change Password</button>
-<form *ngIf="editprofile" #editprofileForm = "ngForm" (ngSubmit) = "submiteditprofile(editprofileForm.value)">
-    <label>Username:</label>
-    <input type="text" name="username" ngModel><br>
-    <label>Email</label>
-    <input type="email" name="email" ngModel><br>
-    <label>Date of Birth</label>
-    <input type="date" name="dob" ngModel><br>
-    <label>Confirm Password</label>
-    <input type="password" name="password" ngModel><br>
-    <button type="submit" >Save Changes</button><button (click)="editprofile=!editprofile">Discard</button>
-</form>
-<form *ngIf="changepw" #changepwForm = "ngForm" (ngSubmit) = "submitchangepw(changepwForm.value)">
-    <label>Current Password</label>
-    <input type="password" name="currpw" ngModel><br>
-    <label>New Password</label>
-    <input type="password" name="newpw1" ngModel><br>
-    <label>New Password, going twice.</label>
-    <input type="password" name="newpw2" ngModel><br>
-    <button type="submit" >Change Password</button>
-</form>
+<div class="container">
+
+    <h4>Profile</h4>
+    <br>
+    <table class="table">
+        <tr>
+            <th scope="row">Username</th>
+            <td>{{userdata.username}}</td>
+        </tr>
+        <tr>
+            <th scope="row">User ID</th>
+            <td>{{userdata.userID}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Email</th>
+            <td>{{userdata.email}}</td>
+        </tr>
+    </table>
+
+    <button (click)="editprofile=!editprofile" class="btn btn-outline-danger" style="margin: 10px;">Edit Details</button>
+    <button (click)="changepw=!changepw" class="btn btn-outline-danger" style="margin: 10px;">Change Password</button>
+
+    <div class="container" style="margin: 10px;">
+
+        <form *ngIf="editprofile" #editprofileForm = "ngForm" (ngSubmit) = "submiteditprofile(editprofileForm.value)">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="username" placeholder="Username" name="username" ngModel>
+                <label for="username" class="form-label">Username</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" placeholder="Email" name="email" ngModel>
+                <label for="email" class="form-label">Email</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="dob" placeholder="DOB" name="dob" ngModel>
+                <label for="dob" class="form-label">Date of Birth</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="password" placeholder="Password" name="password" ngModel>
+                <label for="password" class="form-label">Confirm Password</label>
+            </div>
+            <button type="submit" class="btn btn-outline-success" style="margin: 10px;">Save Changes</button>
+            <button (click)="editprofile=!editprofile" class="btn btn-outline-danger" style="margin: 10px;">Discard</button>
+            <br><br>
+        </form>
+
+        <form *ngIf="changepw" #changepwForm = "ngForm" (ngSubmit) = "submitchangepw(changepwForm.value)">
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="currpw" placeholder="CurrPW" name="currpw" ngModel>
+                <label for="currpw" class="form-label">Current Password</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="newpw1" placeholder="NewPW1" name="newpw1" ngModel>
+                <label for="newpw1" class="form-label">New Password</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="newpw2" placeholder="NewPW2" name="newpw2" ngModel>
+                <label for="newpw2" class="form-label">New Password, going twice</label>
+            </div>
+            <button type="submit" class="btn btn-outline-success" style="margin: 10px;">Change Password</button>
+            <br>
+        </form>
+
+    </div>
+
+</div>
