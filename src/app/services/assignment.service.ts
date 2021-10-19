@@ -9,7 +9,7 @@ const httpop = {
   providedIn: 'root'
 })
 export class AssignmentService {
-  apiroot = "http://127.0.0.1:8000/assignments/"
+  apiroot = "https://educare-django.herokuapp.com/assignments/"
   constructor(private http:HttpClient) { }
   getAssignmentData(courseid:string, enumL=-1){
     let enumstr = '/'+enumL.toString() + '/';

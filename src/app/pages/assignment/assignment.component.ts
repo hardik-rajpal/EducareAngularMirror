@@ -10,7 +10,7 @@ import { AssignmentService } from 'src/app/services/assignment.service';
 export class AssignmentComponent implements OnInit {
   courseid!:string
   userid!:string
-  filehost:string = 'http://127.0.0.1:8000'
+  filehost:string = 'https://educare-django.herokuapp.com'
   submDate!:Date;
   num!:any
   befduedate:boolean = true;
