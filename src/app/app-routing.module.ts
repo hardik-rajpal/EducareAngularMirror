@@ -9,6 +9,7 @@ import { AssignmentComponent } from './pages/assignment/assignment.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfcourseComponent } from './pages/profcourse/profcourse.component';
 import { PostComponent } from './pages/post/post.component';
+
 const routes: Routes = [
   {path: 'login',component:LoginComponent, data:{logout:false}},
   {path: 'logout', component:LoginComponent, data:{logout:true}},
