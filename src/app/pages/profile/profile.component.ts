@@ -11,6 +11,7 @@ export class ProfileComponent implements OnInit {
     username:"",
     email:"",
     userID:"",
+    DOB:"",
 
   }
   newpwmismatch:boolean = false;
@@ -29,7 +30,8 @@ export class ProfileComponent implements OnInit {
       return;
     }
     this.userService.sendChangePWReq(this.userdata.userID,data).subscribe(data=>{
-      console.log(data)
+      alert("Change Successful!")
+      this.changepw = false;
     })
 
   }
@@ -44,6 +46,7 @@ export class ProfileComponent implements OnInit {
     if(id!=null){
       this.userService.getProfileData(id).subscribe(data=>{
         this.userdata = data;
+        console.log(this.userdata)
       })
     }
 

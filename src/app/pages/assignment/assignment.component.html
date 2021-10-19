@@ -3,9 +3,11 @@
     <hr/>
     <p><b>Instruction</b>: {{taskdata.instruction}}</p>
     <hr/>
+    <div *ngIf="taskhasfiles">
     <b>Files:</b> <br>
-    <a href="{{taskdata.files.url}}">{{taskdata.files.name}}</a>
+    <a href="{{taskdata.files.url}}" target="_blank">{{taskdata.files.name}}</a>
     <hr/>
+    </div>
     <p>Release Date: {{taskdata.releaseDate}}</p>
     <hr/>
     <p>Due Date: {{taskdata.dueDate}}</p>

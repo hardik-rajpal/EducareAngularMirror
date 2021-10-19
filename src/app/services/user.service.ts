@@ -1,5 +1,6 @@
 import { HttpClient,HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 const httpop = {
   headers: new HttpHeaders({
     'Content-Type':'application/json',
@@ -10,10 +11,12 @@ const httpop = {
   providedIn: 'root'
 })
 export class UserService {
-
-  apiroot:string = 'https://educare-django.herokuapp.com/users/';
+  // apiroot:string = 'https://educare-django.herokuapp.com/users/';
+  apiroot:string = environment.server_url+'/users/'
   constructor(private http:HttpClient) {}
   getProfileData(userid:string){
+    
+    
     return this.http.get<any>(this.apiroot + userid+'/', httpop)
   }
   sendAuthData(userid:string, password:string){

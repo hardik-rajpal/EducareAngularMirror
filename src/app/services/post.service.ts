@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders, HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 const httpop = {
   headers: new HttpHeaders({
     'Content-Type':'application/json',
@@ -9,7 +10,8 @@ const httpop = {
   providedIn: 'root'
 })
 export class PostService {
-  apiroot = "https://educare-django.herokuapp.com/posts/"
+  // apiroot = "https://educare-django.herokuapp.com/posts/"
+  apiroot:string = environment.server_url + '/posts/'
   constructor(private http:HttpClient) { }
   getPostData(courseid:string, enumL=-1){
     let enumstr = '/'+enumL.toString() + '/';

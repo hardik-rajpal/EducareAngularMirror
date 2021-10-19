@@ -4,14 +4,26 @@ import { AssignmentService } from 'src/app/services/assignment.service';
 import { CourseService } from 'src/app/services/course.service';
 import { PostService } from 'src/app/services/post.service';
 import { NgForm } from '@angular/forms';
+import {saveAs} from 'file-saver'
+import { environment } from 'src/environments/environment';
+const MIMETYPE = {
+  pdf:'application/pdf',
+  zip:'application/zip'
+}
 @Component({
   selector: 'app-profcourse',
   templateUrl: './profcourse.component.html',
   styleUrls: ['./profcourse.component.css']
 })
+
 export class ProfcourseComponent implements OnInit {
+  
   courseid!:string
   @ViewChild('postForm') postform!:NgForm
+  @ViewChild('assignForm') assignform!:NgForm
+  @ViewChild('assessForm') assessform!:NgForm
+  @ViewChild('hiddenSender') sender!:ElementRef
+  @ViewChild('hiddenGetter') getter!:ElementRef
   course:any = {
     id:0,
     instructors:[''],
@@ -41,19 +53,24 @@ export class ProfcourseComponent implements OnInit {
       title: "Vocabularo"
     }
   ]
+  filehost:string = environment.server_url
+  tasknumtemp!:number
   makingAssignment:boolean = false;
   makingPost:boolean = false;
   makingAssessment:boolean = false;
+  tempfileholder:any
   constructor(private assignmentService:AssignmentService,
     private courseService:CourseService,
     private postService:PostService,
     private route:ActivatedRoute,
     private router:Router) { }
   makeAssignmentData(data:any){
-    // console.log(data);
-    // this.postform.reset()
-    this.assignmentService.createAssignment(data, this.courseid).subscribe(resp=>{
-      // console.log(resp)
+    console.log(data)
+    console.log(this.tempfileholder)
+    
+    this.assignmentService.createAssignment(data, this.courseid, this.tempfileholder).subscribe(resp=>{
+    this.assignform.reset()
+      console.log(resp)
     });
   }
   makePost(data:any){
@@ -87,7 +104,32 @@ export class ProfcourseComponent implements OnInit {
     })
     // console.log(this.courseid + "Is the id");
   }
-  setFeedback(task_num:Number){
+  triggerFileChooser(task_num:number=-1){
     console.log(task_num);
+    this.tasknumtemp = task_num;
+    this.sender.nativeElement.click()
+    console.log(this.sender.nativeElement)
+  }
+  submitFeedback(event:any){
+    if(this.sender.nativeElement.files.length<1){
+      return
+    }
+    if(this.tasknumtemp==-1){
+      this.tempfileholder = event.target.files[0]
+      return
+    }
+    this.assignmentService.sendFeedback(this.courseid,this.tasknumtemp, event.target.files[0]).subscribe(data=>{
+      console.log(data)
+      this.sender.nativeElement.value = null
+      // event.target.files = null
+    })
+  }
+  downloadSubmissions(tasknum:number){
+    this.assignmentService.getSubmissions(this.courseid, tasknum).subscribe(data=>{
+      console.log(data)
+      this.getter.nativeElement.href = this.filehost + data.zippath
+      console.log(this.getter.nativeElement.href)
+      this.getter.nativeElement.click()
+    })
   }
 }

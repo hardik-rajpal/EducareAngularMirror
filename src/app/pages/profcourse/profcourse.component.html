@@ -27,7 +27,7 @@
         <button class="btn btn-outline-danger" (click)="makingPost=false" style="margin: 10px;">Discard</button>
     </form>
 
-    <form *ngIf="makingAssignment" #assignForm = "ngForm" (ngSubmit) = "makeAssignmentData(assignForm.value)">
+    <form *ngIf="makingAssignment" #assignForm = "ngForm" >
         <div class="form-floating">
             <input type="text" class="form-control" id="title" placeholder="Title" name="title" ngModel>
             <label for="title" class="form-label">Title of Assignment</label>
@@ -37,6 +37,9 @@
             <label for="instruction" class="form-label">Instruction</label>
         </div>
         <div class="form-floating">
+            <button class="btn btn-outline-info margined" (click)="triggerFileChooser()">Upload files</button>
+        </div>
+        <div class="form-floating">
             <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" ngModel>
             <label for="releaseDate" class="form-label">Release Date</label>
         </div>
@@ -44,7 +47,7 @@
             <input type="date" class="form-control" id="dueDate" placeholder="DueDate" name="dueDate" ngModel>
             <label for="dueDate" class="form-label">Due Date</label>
         </div>
-        <button class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
+        <button class="btn btn-outline-success" type="submit" style="margin: 10px;" (click)=makeAssignmentData(assignForm.value)>Save and Publish</button>
         <button class="btn btn-outline-danger" (click)="makingAssignment=false" style="margin: 10px;">Discard</button>
     </form>
 
@@ -88,13 +91,14 @@
         <div class="container" style="margin: 30px;">
             <h5>{{task.number}}. {{task.title}}</h5>
             <div class="btn-group">
-                <button class="btn btn-outline-dark" id="{{task.number}}" (click)="setFeedback(task.number)"><i class="bi bi-upload"></i> Feedback</button>
-                <button class="btn btn-outline-dark" id="{{task.number}}"><i class="bi bi-download"></i> Submissions</button>
+                <button class="btn btn-outline-dark" id="{{task.number}}" (click)="triggerFileChooser(task.number)"><i class="bi bi-upload"></i> Feedback</button>
+                <button class="btn btn-outline-dark" id="{{task.number}}" (click)="downloadSubmissions(task.number)"><i class="bi bi-download"></i> Submissions</button>
             </div>
             <p style="overflow: hidden;"><b>Instruction</b>: {{task.instruction}}</p>
         </div>
     </div>
 
     <hr/>
-
+<input type="file" style="visibility: hidden;" #hiddenSender (change)="submitFeedback($event)">
+<a style="visibility: hidden;" target="_blank" #hiddenGetter></a>
 </div>

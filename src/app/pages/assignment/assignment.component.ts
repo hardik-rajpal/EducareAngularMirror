@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AssignmentService } from 'src/app/services/assignment.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-assignment',
@@ -10,10 +11,11 @@ import { AssignmentService } from 'src/app/services/assignment.service';
 export class AssignmentComponent implements OnInit {
   courseid!:string
   userid!:string
-  filehost:string = 'https://educare-django.herokuapp.com'
+  filehost:string = environment.server_url
   submDate!:Date;
   num!:any
   befduedate:boolean = true;
+  taskhasfiles:boolean = false;
   taskdata={
     number:0,
     title:"",
@@ -66,9 +68,15 @@ export class AssignmentComponent implements OnInit {
       console.log(data)
       this.taskdata = data
       let loc:string = data.files
-      this.taskdata.files = {
-        name:loc.split('/')[loc.split('/').length-1],
-        url:this.filehost + loc  
+      if(loc==null){
+        this.taskhasfiles = false;
+      }
+      else{
+        this.taskhasfiles = true;
+        this.taskdata.files = {
+          name:loc.split('/')[loc.split('/').length-1],
+          url:this.filehost + loc  
+        }
       }
       console.log(this.taskdata)
           
