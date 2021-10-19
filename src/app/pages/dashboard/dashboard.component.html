@@ -1,5 +1,9 @@
-<h2>Hello, {{userid}}!</h2>
-<h1>Courses you attend:</h1>
-<app-course [isprof]="false" [courses]="studentCourses"></app-course>
-<h1>Courses you instruct:</h1>
-<app-course [isprof]="true" [courses]="instructorCourses"></app-course>
+<div style="margin: 20px;">
+    <h3>Hello, {{userid}}!</h3>
+    <hr/>
+    <h4>Courses you attend:</h4>
+    <app-course [isprof]="false" [courses]="studentCourses"></app-course>
+    <hr/>
+    <h4>Courses you instruct:</h4>
+    <app-course [isprof]="true" [courses]="instructorCourses"></app-course>
+</div>

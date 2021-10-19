@@ -1,24 +1,28 @@
 <div class="container">
-<h1>Assignment: {{taskdata.title}}</h1>
-<p>Instruction: {{taskdata.instruction}}</p>
-<div style="border: 3px solid black;">
-    <h5>Files:</h5>
-<a href="{{taskdata.files.url}}">{{taskdata.files.name}}</a>
+    <h4>Assignment: {{taskdata.title}}</h4>
+    <hr/>
+    <p><b>Instruction</b>: {{taskdata.instruction}}</p>
+    <hr/>
+    <b>Files:</b> <br>
+    <a href="{{taskdata.files.url}}">{{taskdata.files.name}}</a>
+    <hr/>
+    <p>Release Date: {{taskdata.releaseDate}}</p>
+    <hr/>
+    <p>Due Date: {{taskdata.dueDate}}</p>
 </div>
-<p>Release Date:{{taskdata.releaseDate}}</p>
-<p>Due Date:{{taskdata.dueDate}}</p>
-</div>
+
 <div class="container" *ngIf="submitted">
-<h1>Your Submission:</h1>
-<a href="{{file.url}}"  download>{{file.name}}</a><br>
-<p>Submitted at:</p>
-<time>{{submissiondata.time}}</time>
-<p>Grade: {{submissiondata.grade}}</p>
-<p>Your Comments:{{submissiondata.comments}}</p>
-<p>Grader's Feedback:{{submissiondata.feedback}}</p>
+    <h1>Your Submission:</h1>
+    <a href="{{file.url}}"  download>{{file.name}}</a><br>
+    <p>Submitted at:</p>
+    <time>{{submissiondata.time}}</time>
+    <p>Grade: {{submissiondata.grade}}</p>
+    <p>Your Comments:{{submissiondata.comments}}</p>
+    <p>Grader's Feedback:{{submissiondata.feedback}}</p>
 </div>
 
 <p *ngIf="!(taskdata.acceptSubmission||submitted)" class="alert alert-danger">The deadline's gone by.</p>
+
 <div *ngIf="(taskdata.acceptSubmission)">
 <button *ngIf="(!submitting) && submitted" (click)="submitting=true;">Edit Submission</button>
 <button *ngIf="!(submitted||submitting)" (click)="submitting=true;">Add Submission</button>
