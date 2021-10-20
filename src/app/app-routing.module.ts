@@ -11,6 +11,7 @@ import { ProfcourseComponent } from './pages/profcourse/profcourse.component';
 import { PostComponent } from './pages/post/post.component';
 
 const routes: Routes = [
+  {path:'', component:DashboardComponent},
   {path: 'login',component:LoginComponent, data:{logout:false}},
   {path: 'logout', component:LoginComponent, data:{logout:true}},
   {path: 'signup',component:SignupComponent},

@@ -74,7 +74,7 @@ export class AssignmentComponent implements OnInit {
         this.taskhasfiles = true;
         this.taskdata.files = {
           name:loc.split('/')[loc.split('/').length-1],
-          url:this.filehost + loc  
+          url:this.filehost+loc
         }
       }
       console.log(this.taskdata)
@@ -91,7 +91,7 @@ export class AssignmentComponent implements OnInit {
           this.submitted = true;
           let loc:string = this.submissiondata.files
           this.file.name=loc.split('/')[loc.split('/').length-1]
-          this.file.url = this.filehost + loc
+          this.file.url = loc
           console.log(this.file.url)
           this.submDate = new Date(data.time.split('+')[0])
           this.submissiondata.time = [this.submDate.getHours().toString() + ':' +this.submDate.getMinutes().toString()+','+this.submDate.getDate().toString(),this.submDate.getMonth().toString(), this.submDate.getFullYear().toString()].join('/');
