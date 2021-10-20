@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { CourseService } from 'src/app/services/course.service';
+import { UserService } from 'src/app/services/user.service';
 import { CourseComponent } from '../../components/course/course.component';
 @Component({
   selector: 'app-dashboard',
@@ -9,14 +10,21 @@ import { CourseComponent } from '../../components/course/course.component';
 export class DashboardComponent implements OnInit {
   studentCourses:any
   instructorCourses:any
-  userid!:string
-  constructor(private courseService:CourseService) { }
+  userdata:any = {
+    username:"",
+    userID:"",
+    email:""
+  }
+  constructor(private courseService:CourseService, private userService:UserService) { }
   ngOnInit(): void {
     let id = localStorage.getItem('userid')
     
     console.log(id)
     if(id!=null){
-      this.userid = id
+      this.userService.getProfileData(id).subscribe(data=>{
+        console.log(data)
+        this.userdata = data;
+      })
       this.courseService.getCoursesByStudent(id).subscribe(data=>{
         console.log(data)
         this.studentCourses = data
@@ -25,6 +33,9 @@ export class DashboardComponent implements OnInit {
         console.log(data)
         this.instructorCourses = data;
       })
+    }
+    else{
+      window.location.assign('/login')
     }
   }
 

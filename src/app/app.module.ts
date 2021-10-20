@@ -16,6 +16,7 @@ import { CourseItemComponent } from './components/course-item/course-item.compon
 import { AssignmentComponent } from './pages/assignment/assignment.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfcourseComponent } from './pages/profcourse/profcourse.component';
+import { CreateCourseComponent } from './components/create-course/create-course.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +26,7 @@ import { ProfcourseComponent } from './pages/profcourse/profcourse.component';
     NavbarComponent,
     DashboardComponent,
     CourseComponent,
+    CreateCourseComponent,
     CourseItemComponent,
     AssignmentComponent,
     ProfileComponent,

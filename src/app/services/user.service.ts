@@ -14,9 +14,7 @@ export class UserService {
   // apiroot:string = 'https://educare-django.herokuapp.com/users/';
   apiroot:string = environment.server_url+'/users/'
   constructor(private http:HttpClient) {}
-  getProfileData(userid:string){
-    
-    
+  getProfileData(userid:string="all"){
     return this.http.get<any>(this.apiroot + userid+'/', httpop)
   }
   sendAuthData(userid:string, password:string){

@@ -37,7 +37,9 @@
             <label for="instruction" class="form-label">Instruction</label>
         </div>
         <div class="form-floating">
+            <p #fileName>
             <button class="btn btn-outline-info margined" (click)="triggerFileChooser()">Upload files</button>
+            </p>
         </div>
         <div class="form-floating">
             <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" ngModel>
@@ -79,7 +81,7 @@
     <h3>Posts <i class="bi bi-megaphone-fill" style="font-size: 2rem;"></i></h3>
     <div *ngFor="let post of posts">
         <div class="container" style="margin: 30px;">
-            <h5>{{post.number}}. {{post.title}}</h5>
+            <h5>{{post.number+1}}. {{post.title}}</h5>
             <p style="overflow: hidden;"><b>Instruction</b>: {{post.instruction}}</p>
         </div>
     </div>
@@ -89,7 +91,7 @@
     <h3>Assignments <i class="bi bi-file-earmark-fill" style="font-size: 2rem;"></i></h3>
     <div *ngFor="let task of assignments">
         <div class="container" style="margin: 30px;">
-            <h5>{{task.number}}. {{task.title}}</h5>
+            <h5>{{task.number+1}}. {{task.title}}</h5>
             <div class="btn-group">
                 <button class="btn btn-outline-dark" id="{{task.number}}" (click)="triggerFileChooser(task.number)"><i class="bi bi-upload"></i> Feedback</button>
                 <button class="btn btn-outline-dark" id="{{task.number}}" (click)="downloadSubmissions(task.number)"><i class="bi bi-download"></i> Submissions</button>

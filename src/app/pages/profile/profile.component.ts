@@ -48,6 +48,8 @@ export class ProfileComponent implements OnInit {
         this.userdata = data;
         console.log(this.userdata)
       })
+    }else{
+      window.location.assign('/login')
     }
 
   }

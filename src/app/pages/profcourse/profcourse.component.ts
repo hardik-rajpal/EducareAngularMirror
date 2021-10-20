@@ -24,6 +24,7 @@ export class ProfcourseComponent implements OnInit {
   @ViewChild('assessForm') assessform!:NgForm
   @ViewChild('hiddenSender') sender!:ElementRef
   @ViewChild('hiddenGetter') getter!:ElementRef
+  @ViewChild('fileName') filename!:ElementRef
   course:any = {
     id:0,
     instructors:[''],
@@ -108,14 +109,15 @@ export class ProfcourseComponent implements OnInit {
     console.log(task_num);
     this.tasknumtemp = task_num;
     this.sender.nativeElement.click()
-    console.log(this.sender.nativeElement)
   }
   submitFeedback(event:any){
     if(this.sender.nativeElement.files.length<1){
+      // this.filename.nativeElement.innerHTML = ""
       return
     }
     if(this.tasknumtemp==-1){
       this.tempfileholder = event.target.files[0]
+      this.filename.nativeElement.innerHTML += event.target.files[0].name
       return
     }
     this.assignmentService.sendFeedback(this.courseid,this.tasknumtemp, event.target.files[0]).subscribe(data=>{

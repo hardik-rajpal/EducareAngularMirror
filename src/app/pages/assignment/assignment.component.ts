@@ -61,7 +61,6 @@ export class AssignmentComponent implements OnInit {
     num =  JSON.parse(JSON.stringify(this.route.snapshot.paramMap.get('enum') || '{}'));
     this.courseid = courseid
     this.num = num
-    
     console.log(courseid)
     console.log(num)
     this.assignmentService.getAssignmentData(courseid, num).subscribe(data=>{
@@ -100,8 +99,12 @@ export class AssignmentComponent implements OnInit {
           
         }
         else{
+
         }
       })
+    }
+    else{
+      window.location.assign('/login')
     }
 
   }

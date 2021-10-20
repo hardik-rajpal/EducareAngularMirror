@@ -17,15 +17,21 @@ export class PostComponent implements OnInit {
     private postService:PostService) { }
 
   ngOnInit(): void {
-    let courseid, num;
-    courseid = JSON.parse(JSON.stringify(this.route.snapshot.paramMap.get('coursecode') || '{}'));
-    num =  JSON.parse(JSON.stringify(this.route.snapshot.paramMap.get('enum') || '{}'));
-    console.log(courseid)
-    console.log(num)
-    this.postService.getPostData(courseid, num).subscribe(data=>{
-      console.log(data)
-      this.data = data
-    })
+    let id = localStorage.getItem('userid');
+    if(id!=null){
+      let courseid, num;
+      courseid = JSON.parse(JSON.stringify(this.route.snapshot.paramMap.get('coursecode') || '{}'));
+      num =  JSON.parse(JSON.stringify(this.route.snapshot.paramMap.get('enum') || '{}'));
+      console.log(courseid)
+      console.log(num)
+      this.postService.getPostData(courseid, num).subscribe(data=>{
+        console.log(data)
+        this.data = data
+      })
+    }
+    else{
+      window.location.assign('/login')
+    }
   }
 
 }
