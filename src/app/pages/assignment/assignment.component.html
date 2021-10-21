@@ -5,7 +5,7 @@
     <hr/>
     <div *ngIf="taskhasfiles">
     <b>Files:</b> <br>
-    <a href="{{taskdata.files.url}}" target="_blank">{{taskdata.files.name}}</a>
+    <downloader [url]="taskdata.files.url" [filename]="taskdata.files.name"></downloader>
     <hr/>
     </div>
     <p>Release Date: {{taskdata.releaseDate}}</p>
@@ -19,7 +19,7 @@
     <h4>Your Submission: </h4>
     <hr/>
     <b>Files:</b> <br>
-    <a href="{{file.url}}" target="_blank">{{file.name}}</a><br>
+    <downloader [url]="file.url" [filename]="file.name"></downloader>
     <hr/>
     <p><b>Submitted at</b>: <time>{{submissiondata.time}}</time></p>
     <hr/>

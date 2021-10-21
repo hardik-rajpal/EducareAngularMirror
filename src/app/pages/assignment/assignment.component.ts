@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as FileSaver from 'file-saver';
 import { AssignmentService } from 'src/app/services/assignment.service';
 import { environment } from 'src/environments/environment';
 

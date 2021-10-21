@@ -10,7 +10,7 @@
     <tr *ngFor="let post of posts" (click)="navigateToPost(post)">
         <td><i class="bi bi-megaphone-fill" style="font-size: 2rem;"></i></td>
         <td>
-            <h4>{{post.number}}</h4>
+            <h4>{{post.number+1}}</h4>
         </td>
         <td>
             <h4>{{post.title}}</h4>
@@ -29,7 +29,7 @@
     <tr *ngFor="let task of assignments" (click)="navigateToSub(task)">
         <td><i class="bi bi-file-earmark-fill" style="font-size: 2rem;"></i></td>
         <td>
-            <h4>{{task.number}}</h4>
+            <h4>{{task.number+1}}</h4>
         </td>
         <td>
             <h4>{{task.title}}</h4>

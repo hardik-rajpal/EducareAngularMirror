@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ɵresetJitOptions } from '@angular/core';
 import { HttpClient,HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import * as FileSaver from 'file-saver';
 const httpop = {
   headers: new HttpHeaders({
     'Content-Type':'application/json',
@@ -58,4 +59,5 @@ export class AssignmentService {
     let suffix = courseid + '/' + enumL +'/submissions/all/';
     return this.http.get<any>(this.apiroot + suffix, httpop);
   }
+
 }
