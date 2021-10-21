@@ -18,6 +18,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfcourseComponent } from './pages/profcourse/profcourse.component';
 import { CreateCourseComponent } from './components/create-course/create-course.component';
 import { DownloaderComponent } from './components/downloader/downloader.component';
+import { UploaderComponent } from './components/uploader/uploader.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,8 @@ import { DownloaderComponent } from './components/downloader/downloader.componen
     AssignmentComponent,
     ProfileComponent,
     ProfcourseComponent,
-    DownloaderComponent
+    DownloaderComponent,
+    UploaderComponent,
     
   ],
   imports: [

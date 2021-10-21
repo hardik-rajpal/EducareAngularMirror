@@ -38,7 +38,7 @@
     <button *ngIf="(!submitting) && submitted" (click)="submitting=true;" class="btn btn-outline-success">Edit Submission</button>
     <button *ngIf="!(submitted||submitting)" (click)="submitting=true;" class="btn btn-outline-success">Add Submission</button>
     <form *ngIf="submitting"  #submissionForm = "ngForm" (ngSubmit) = "submitFile(submissionForm.value)">
-        <input type="file" name="file" (change)="onChange($event)" ngModel>
+        <input type="file" name="file" (change)="onChange($event)" multiple="multiple" ngModel>
         <button type="submit" class="btn btn-outline-success">Submit</button>
     </form>
     <hr/>
