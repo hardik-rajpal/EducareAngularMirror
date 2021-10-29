@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { TagInputComponent, TagInputModule } from 'ngx-chips';
+import {MatChipsModule} from '@angular/material/chips';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PanelComponent } from './components/panel/panel.component';
@@ -42,7 +44,10 @@ import { UploaderComponent } from './components/uploader/uploader.component';
     AppRoutingModule,
     HttpClientModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    TagInputModule,
+    BrowserAnimationsModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

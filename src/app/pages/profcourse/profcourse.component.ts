@@ -105,6 +105,10 @@ export class ProfcourseComponent implements OnInit {
     })
     // console.log(this.courseid + "Is the id");
   }
+  collectFiles(files:any){
+    console.log(files);
+    this.tempfileholder = files[0]
+  }
   triggerFileChooser(task_num:number=-1){
     console.log(task_num);
     this.tasknumtemp = task_num;
