@@ -133,9 +133,9 @@ export class ProfcourseComponent implements OnInit {
   downloadSubmissions(tasknum:number){
     this.assignmentService.getSubmissions(this.courseid, tasknum).subscribe(data=>{
       console.log(data)
-      this.getter.nativeElement.href = this.filehost + data.zippath
-      console.log(this.getter.nativeElement.href)
-      this.getter.nativeElement.click()
+      // this.getter.nativeElement.href = this.filehost + data.zippath
+      // console.log(this.getter.nativeElement.href)
+      // this.getter.nativeElement.click()
     })
   }
 }

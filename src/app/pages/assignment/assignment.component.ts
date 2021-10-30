@@ -93,7 +93,8 @@ export class AssignmentComponent implements OnInit {
         if(this.submissiondata.files!=null){
           this.submitted = true;
           let loc:string = this.submissiondata.files
-          this.file.name=loc.split('/')[loc.split('/').length-1]
+
+          this.file.name=loc.split('/')[loc.split('/').length-1].split('?X-Amz')[0]
           this.file.url = loc
           console.log(this.file.url)
           this.submDate = new Date(data.time.split('+')[0])
