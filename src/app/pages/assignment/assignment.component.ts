@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class AssignmentComponent implements OnInit {
   courseid!:string
   userid!:string
-  filehost:string = environment.server_url
+  filehost:string = ''
   submDate!:Date;
   num!:any
   befduedate:boolean = true;
@@ -73,8 +73,10 @@ export class AssignmentComponent implements OnInit {
       }
       else{
         this.taskhasfiles = true;
+        let tempname = loc.split('/')[loc.split('/').length-1].split('?X-Amz')[0];
+        // tempname = tempname.substring(0, tempname.length -1);
         this.taskdata.files = {
-          name:loc.split('/')[loc.split('/').length-1],
+          name:tempname,
           url:this.filehost+loc
         }
       }
