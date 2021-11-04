@@ -1,4 +1,4 @@
-<button class="btn btn-outline-dark" (click)="dialogueBox()"><i class="bi bi-upload"></i> Files</button>
+<button class="btn btn-outline-dark" type="button" (click)="dialogueBox()"><i class="bi bi-upload"></i> Files</button>
 <mat-chip-list>
     <mat-chip *ngFor="let file of files" [removable]="true" (removed)="removeFile(file.name)">
         {{file.name}}

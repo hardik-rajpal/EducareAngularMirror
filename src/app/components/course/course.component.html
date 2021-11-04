@@ -3,5 +3,6 @@
         style="border-radius: 0px; height: 200px; width: 300px; margin: 10px;">
         <h3>{{course.courseCode}}</h3>
         <h6>{{course.courseName}}</h6>
+        <h4 *ngIf="course.new=='true'" style="color: green;"><i class="bi bi-exclamation-circle-fill"></i> New</h4>
     </button>
 </p>

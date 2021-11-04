@@ -14,10 +14,16 @@ export class AssignmentService {
   // apiroot = "https://educare-django.herokuapp.com/assignments/"
   apiroot = environment.server_url + '/assignments/'
   constructor(private http:HttpClient) { }
-  getAssignmentData(courseid:string, enumL=-1){
+  getAssignmentData(courseid:string, enumL=-1, forprof=false){
     let enumstr = '/'+enumL.toString() + '/';
     if(enumL==-1){
       enumstr = '/all/'
+    }
+    if(forprof){
+      enumstr = enumstr + '1/';
+    }
+    else{
+      enumstr = enumstr + '0/';
     }
     return this.http.get<any>(this.apiroot+courseid +enumstr,httpop)
   }

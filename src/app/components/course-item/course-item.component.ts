@@ -52,6 +52,7 @@ export class CourseItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     let courseid = JSON.parse(JSON.stringify(this.route.snapshot.paramMap.get('code') || '{}'));
     this.courseService.getCourseData(courseid).subscribe(data=>{
       console.log(data);
@@ -60,10 +61,12 @@ export class CourseItemComponent implements OnInit {
     });
     this.assignmentService.getAssignmentData(courseid).subscribe(data=>{
       this.assignments = data
+      this.assignments = this.assignments.reverse();
       console.log(data)
     })
     this.postService.getPostData(courseid).subscribe(data=>{
       this.posts = data
+      this.posts = this.posts.reverse();
       console.log(data)
     })
   }

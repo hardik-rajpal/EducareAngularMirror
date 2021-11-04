@@ -33,7 +33,6 @@ export class UploaderComponent implements OnInit {
         this.files.push(file)
       }
     }
-    // console.log(this.files)
     if(this.files.length>0){
       if(!this.many){
         this.sendfiles.emit([this.files[0]]);

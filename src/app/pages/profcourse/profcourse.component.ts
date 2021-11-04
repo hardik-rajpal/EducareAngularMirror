@@ -4,8 +4,8 @@ import { AssignmentService } from 'src/app/services/assignment.service';
 import { CourseService } from 'src/app/services/course.service';
 import { PostService } from 'src/app/services/post.service';
 import { NgForm } from '@angular/forms';
-import {saveAs} from 'file-saver'
 import { environment } from 'src/environments/environment';
+import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 const MIMETYPE = {
   pdf:'application/pdf',
   zip:'application/zip'
@@ -25,6 +25,7 @@ export class ProfcourseComponent implements OnInit {
   @ViewChild('hiddenSender') sender!:ElementRef
   @ViewChild('hiddenGetter') getter!:ElementRef
   @ViewChild('fileName') filename!:ElementRef
+  @ViewChild('uploader') uploader!:UploaderComponent
   course:any = {
     id:0,
     instructors:[''],
@@ -39,6 +40,8 @@ export class ProfcourseComponent implements OnInit {
       files: null,
       instruction: "",
       number: 0,
+      seenby:0,
+      submittedby:0,
       published: false,
       releaseDate: "",
       title: ""
@@ -56,6 +59,8 @@ export class ProfcourseComponent implements OnInit {
   ]
   filehost:string = environment.server_url
   tasknumtemp!:number
+  releaseNow:boolean = false;
+  datesinvalid:boolean = false;
   makingAssignment:boolean = false;
   makingPost:boolean = false;
   makingAssessment:boolean = false;
@@ -65,20 +70,57 @@ export class ProfcourseComponent implements OnInit {
     private postService:PostService,
     private route:ActivatedRoute,
     private router:Router) { }
-  makeAssignmentData(data:any){
+    makeAssignmentData(data:any){
     console.log(data)
     console.log(this.tempfileholder)
-    
     this.assignmentService.createAssignment(data, this.courseid, this.tempfileholder).subscribe(resp=>{
     this.assignform.reset()
-      console.log(resp)
+    this.releaseNow = false;
+    this.uploader.files = []
+    window.alert("Successfully Made Assignment!")
+    }, error=>{
+      window.alert("Error. Please check the form.");
     });
+  }
+  validateDates(){
+    
+    let today = new Date;
+    let reltime = this.assignform.value.releaseTime;
+    let duetime = this.assignform.value.dueTime;
+    let releaseDate = this.assignform.value.releaseDate;
+    let dueDate = this.assignform.value.dueDate;
+    if(!this.releaseNow){
+      if(!(releaseDate=="")){
+        let rdate = new Date(releaseDate);
+        if(rdate.getDate()<today.getDate()){
+          this.datesinvalid = true;
+          return;
+        }
+      }
+    }
+    if(!(dueDate=="")){
+      let ddate = new Date(dueDate);
+      if(ddate<today){
+        this.datesinvalid = true;
+        return;
+      }
+      if(!(releaseDate=="")){
+        let rdate = new Date(releaseDate);
+        if(ddate.getDate()<=rdate.getDate()){
+          this.datesinvalid = true;
+          return;
+        }
+      }
+    }
+    this.datesinvalid = false;
   }
   makePost(data:any){
     this.postform.reset()
     // console.log(data);
     this.postService.createPost(data, this.courseid).subscribe(resp=>{
-      // console.log(resp)
+      window.alert("Successfully Made Assignment!")
+    }, error=>{
+      window.alert("Error. Please check the form.");
     });
     
   }
@@ -112,6 +154,7 @@ export class ProfcourseComponent implements OnInit {
   triggerFileChooser(task_num:number=-1){
     console.log(task_num);
     this.tasknumtemp = task_num;
+    console.log("Called");
     this.sender.nativeElement.click()
   }
   submitFeedback(event:any){

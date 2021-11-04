@@ -31,7 +31,7 @@
 </div>
 
 <div class="container">
-<p *ngIf="!(taskdata.acceptSubmission||submitted)" class="alert alert-danger">The deadline's gone by.</p>
+<p *ngIf="(!(taskdata.acceptSubmission||submitted))&&(taskdata.published)" class="alert alert-danger">The deadline's gone by.</p>
 </div>
 
 <div *ngIf="(taskdata.acceptSubmission)" class="container">

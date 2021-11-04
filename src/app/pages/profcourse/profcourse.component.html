@@ -27,7 +27,7 @@
         <button class="btn btn-outline-danger" (click)="makingPost=false" style="margin: 10px;">Discard</button>
     </form>
 
-    <form *ngIf="makingAssignment" #assignForm = "ngForm" >
+    <form *ngIf="makingAssignment" #assignForm = "ngForm" (ngSubmit) = "makeAssignmentData(assignForm.value)">
         <div class="form-floating">
             <input type="text" class="form-control" id="title" placeholder="Title" name="title" ngModel>
             <label for="title" class="form-label">Title of Assignment</label>
@@ -37,20 +37,28 @@
             <label for="instruction" class="form-label">Instruction</label>
         </div>
         <div class="form-floating">
-            <p #fileName>
-                <uploader (sendfiles)="collectFiles($event)"></uploader>
-            <button class="btn btn-outline-info margined" (click)="triggerFileChooser()">Upload files</button>
-            </p>
+            <!-- <p #fileName> -->
+                <uploader (sendfiles)="collectFiles($event)" #uploader></uploader>
+            <!-- <button class="btn btn-outline-info margined" (click)="triggerFileChooser()">Upload files</button> -->
+            <!-- </p> -->
         </div>
-        <div class="form-floating">
-            <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" ngModel>
+        <p class="alert alert-danger" *ngIf="datesinvalid">Please ensure that the release date and due date
+    are not in the past and that due date is after the release date. </p>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="releaseNow" (change)="releaseNow=!releaseNow" ngModel>
+            <label for="releaseNow" class="form-check-label">Publish Immediately</label>
+        </div>
+        <div class="form-floating" *ngIf="!releaseNow">
+            <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" (change)="validateDates()" ngModel>
             <label for="releaseDate" class="form-label">Release Date</label>
         </div>
+
         <div class="form-floating">
-            <input type="date" class="form-control" id="dueDate" placeholder="DueDate" name="dueDate" ngModel>
+            <input type="date" class="form-control" id="dueDate" placeholder="DueDate" name="dueDate" (change)="validateDates()" ngModel>
             <label for="dueDate" class="form-label">Due Date</label>
         </div>
-        <button class="btn btn-outline-success" type="submit" style="margin: 10px;" (click)=makeAssignmentData(assignForm.value)>Save and Publish</button>
+        <button *ngIf="releaseNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
+        <button *ngIf="!releaseNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Draft</button>
         <button class="btn btn-outline-danger" (click)="makingAssignment=false" style="margin: 10px;">Discard</button>
     </form>
 
@@ -71,7 +79,8 @@
             <input type="date" class="form-control" id="dueDate" placeholder="DueDate" name="dueDate" ngModel>
             <label for="dueDate" class="form-label">Due Date</label>
         </div>
-        <button class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
+        <button *ngIf="releaseNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
+        <button *ngIf="!releaseNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Draft</button>
         <button class="btn btn-outline-danger" (click)="makingAssessment=false" style="margin: 10px;">Discard</button>
     </form>
 
@@ -93,6 +102,10 @@
     <div *ngFor="let task of assignments">
         <div class="container" style="margin: 30px;">
             <h5>{{task.number+1}}. {{task.title}}</h5>
+            <div class="btn-group-horizontal" style="margin: 0px; margin-left: 0px;">
+                <p class="btn btn-secondary text-left" style="text-align: left;margin:3px;padding: 0px;padding-left: 3px;padding-right:3px;"><i class="bi bi-eye"></i> {{task.seenby}}</p>
+                <p class="btn btn-secondary text-left" style="text-align: left;margin:3px; padding: 0px;padding-left: 3px;padding-right:3px;"><i class="bi bi-check"></i> {{task.submittedby}}</p>
+            </div>
             <div class="btn-group">
                 <button class="btn btn-outline-dark" id="{{task.number}}" (click)="triggerFileChooser(task.number)"><i class="bi bi-upload"></i> Feedback</button>
                 <button class="btn btn-outline-dark" id="{{task.number}}" (click)="downloadSubmissions(task.number)"><i class="bi bi-download"></i> Submissions</button>

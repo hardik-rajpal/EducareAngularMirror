@@ -23,6 +23,7 @@ export class AssignmentComponent implements OnInit {
     instruction:"",
     releaseDate:"",
     dueDate:"",
+    published:false,
     acceptSubmission:false,
     files:{
       url:'',
