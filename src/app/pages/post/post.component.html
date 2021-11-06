@@ -5,4 +5,8 @@
     <hr/>
     <p><b>Release Date</b>: {{data.releaseDate}}</p>
     <hr/>
+    <b>Discussion</b>:
+    <div>
+    <app-commentstack [comments]="data.comments"></app-commentstack>    
+    </div>
 </div>

@@ -9,7 +9,6 @@ import { CoursePost } from './CoursePost';
 export class CoursePostComponent implements OnInit {
 
   @Input() post:any;
-  //filenames : string[] = [];
 
   constructor() { 
     // this.post = {

@@ -1,0 +1,10 @@
+<div class="comments">
+    <button *ngIf="(!commenting)&&(level==0)" (click)="commenting=true" style="font-size: x-small;">+ Comment</button>
+    <button *ngIf="(!commenting)&&(level>0)" (click)="commenting=true" style="font-size: x-small;">+ Reply</button>
+    <form *ngIf="commenting">
+    <input type="text"><button>Post</button>
+    </form>
+    <div *ngFor="let comment of comments">
+        <app-comment [data]="comment" [level]="level"></app-comment>
+    </div>
+</div>

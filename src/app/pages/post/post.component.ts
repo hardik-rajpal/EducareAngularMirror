@@ -11,6 +11,7 @@ export class PostComponent implements OnInit {
     number:0,
     title:'',
     instruction:"",
+    comments:[],
     releaseDate:"",
   }
   constructor(private route:ActivatedRoute,
@@ -26,7 +27,9 @@ export class PostComponent implements OnInit {
       console.log(num)
       this.postService.getPostData(courseid, num).subscribe(data=>{
         console.log(data)
-        this.data = data
+        let tempdata = data;
+        tempdata.comments = JSON.parse(data.comments)
+        this.data = tempdata;
       })
     }
     else{
