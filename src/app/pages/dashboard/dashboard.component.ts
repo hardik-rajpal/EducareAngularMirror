@@ -8,8 +8,9 @@ import { CourseComponent } from '../../components/course/course.component';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  studentCourses:any
-  instructorCourses:any
+  studentCourses:any = []
+  instructorCourses:any = []
+  wizardCourses:any = []
   userdata:any = {
     username:"",
     userID:"",
@@ -32,6 +33,10 @@ export class DashboardComponent implements OnInit {
       this.courseService.getCoursesByInstructor(id).subscribe(data=>{
         console.log(data)
         this.instructorCourses = data;
+      })
+      this.courseService.getCoursesByWizard(id).subscribe(data=>{
+        console.log(data)
+        this.wizardCourses = data;
       })
     }
     else{

@@ -15,20 +15,16 @@
             <textarea class="form-control" id="createCourseDesc" rows="3" placeholder="Description of the course" name="desc" ngModel></textarea>
             <label for="createCourseDesc" class="form-label">Course description</label>
         </div>
-
-        <table #table>
-            <tr><th>Instructors:</th><th>Students:</th></tr>
-            <tr *ngFor="let user of users" id="row_{{user.userID}}">
-                <td id="ins_{{user.userID}}">
-                    <label for="{{user.userID}}">{{user.userID}}</label>
-                    <input type="checkbox"  (change)="logical($event)" name="i{{user.userID}}" ngModel>
-                </td>
-                <td id="stu_{{user.userID}}">
-                    <label for="{{user.userID}}">{{user.userID}}</label>
-                    <input type="checkbox"  (change)="logical($event)" name="s{{user.userID}}" ngModel>
-                </td>
-            </tr>
-        </table>
+        <div class="form-floating mb-3">
+            <select id="year" name="year" ngModel>
+                <option *ngFor="let year of years">{{year}}</option>
+            </select>
+            <select id="sem" name="sem" ngModel>
+                <option *ngFor="let sem of sems">{{sem}}</option>
+            </select>
+        </div>
+        <uploader (sendfiles)="collectFiles($event)" #uploader></uploader>
+        <br>
         <input class="btn btn-outline-success" type="submit" value="Submit">
     </form>
 

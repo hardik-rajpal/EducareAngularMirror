@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
+import {CourseService} from 'src/app/services/course.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -10,48 +11,126 @@ import { environment } from 'src/environments/environment';
 })
 export class CreateCourseComponent implements OnInit {
   @ViewChild('createForm') form!:NgForm;
-  @ViewChild('table') table!:ElementRef;
-  server_url = environment.server_url;
-  users:any[] = [{
-    userid:"",
-    username:""
-  }]
-  constructor(private userService:UserService) { }
-
+  constructor(private userService:UserService, private courseService:CourseService) { }
+  userid!:string
+  userlist!:any[]
+  courselist!:any[]
+  years=[1999]
+  configdata:any={};
+  courseExists:boolean = false;
+  sems = ["Semester 1", "Semester 2"]
   ngOnInit(): void {
-    this.userService.getProfileData().subscribe(data=>{
-      this.users = data
+    let id = localStorage.getItem("userid");
+    if(id!=null){
+      this.userid = id;
+    }
+    else{
+      //redirect
+    }
+    // this.userService.getProfileData("all").subscribe((userlist)=>{
+    //   this.userlist = userlist;
+    // })
+    this.courseService.getCourseData("all").subscribe((courselist)=>{
+      this.courselist = courselist;
     })
+    let date = new Date()
+    this.years = [date.getFullYear()];
+    this.years.push(this.years[this.years.length-1]+1);
+  }
+  getCourseID(data:any){
+    return data.code + 'y'+data.year.toString()+'s'+data.sem.split(' ')[1];
   }
   createcourse(data:any){
-    console.log(data)
+    let courseid = this.getCourseID(data)
+    for(let course of this.courselist){
+      if(course.courseID==courseid){
+        this.courseExists = true;
+        return;
+      }
+    }
+    data.courseID = courseid;
+    if(this.validatekeys(this.configdata)){
+      data.roles = this.configdata;
+    }
+    console.log(data);
+    this.courseService.createCourse(data).subscribe(dataa=>{
+      console.log(dataa);
+    });
     //clean data. Remove non-players.
     //send data.
   }
-  logical(event:any){
-    let opp:any = {
-      'stu':'ins',
-      'ins':'stu'
+  validatekeys(data:any){
+    let keys = Object.keys(data);
+    return (keys.includes("instructors")&&keys.includes("wizards")&&keys.includes("students"));
+    // console.log();
+  }
+  validateIntersect(data:any){
+    let keys = Object.keys(data);
+    let arrconcat:string[] = [];
+    for(let key of keys){
+      arrconcat = arrconcat.concat(data[key]);
     }
-    let id = event.target.parentElement.id.split("_")[1];
-    let tag = event.target.parentElement.id.split("_")[0];
-    // console.log()
-    // console.log(this.table.nativeElement.children)
-    // console.log('#'+event.target.id.split("_")[0]+'_ins')
-    for( let child of this.table.nativeElement.children){
-      if(child.id.split("_")[1]===id){
-        // console.log('#' +opp[tag]+"_"+id)
-        let check1 =child.querySelector('#' + tag+"_"+id).querySelector('input').checked
-        let check2 = child.querySelector('#' + opp[tag]+"_"+id  ).querySelector('input').checked 
-        // console.log(check1 + check2)
-        if(check1==false){return}
-        if(check1==check2){
-          child.querySelector('#' + opp[tag]+"_"+id  ).querySelector('input').checked = !check2;
+    for(let ele of arrconcat){
+      if(arrconcat.filter(e=>e==ele).length>1){
+        return false;
+      }
+    }
+    return true;
+  }
+  validateUserExistence(data:any){
+    let keys = Object.keys(data);
+    let arrconcat:string[] = [];
+    for(let key of keys){
+      arrconcat = arrconcat.concat(data[key]);
+    }
+    for(let userid of arrconcat){
+      if(this.userlist.find(obj=>obj.userID==userid)==undefined){
+        return false;
+      }
+    }
+    return true;
+  }
+  validate(data:any){
+    console.log(this.form.value);
+    if(this.validatekeys(data)){
+      if(data.instructors.includes(this.userid)){
+        if(this.validateIntersect(data)){
+          if(this.validateUserExistence(data)){
+            return true;
+          }
+          else{
+            //report;
+          }
         }
-          
+        else{
+          // report
         }
       }
-    
-    // console.log()
+      else{
+        //report
+      }
+
+    }
+    else{
+      //report alert
+      console.log("Invalid keys");
+    }
+  return false;
+  }
+  collectFiles(ev:any){
+    console.log(ev);
+    let fr = new FileReader();
+    fr.onload = ()=>{
+      let text = fr.result?.toString();
+      if(text!=undefined){
+        let data = JSON.parse(text);
+        if(this.validate(data)){
+          this.configdata = data
+        }
+      }
+
+    }
+    fr.readAsText(ev[0]);
+
   }
 }

@@ -65,6 +65,7 @@ export class ProfcourseComponent implements OnInit {
   makingPost:boolean = false;
   makingAssessment:boolean = false;
   tempfileholder:any
+  accesslevel = 1;
   constructor(private assignmentService:AssignmentService,
     private courseService:CourseService,
     private postService:PostService,
@@ -128,22 +129,36 @@ export class ProfcourseComponent implements OnInit {
     this.courseid = JSON.parse(JSON.stringify(this.route.snapshot.paramMap.get('code') || '{}'));
     this.courseService.getCourseData(this.courseid).subscribe(data=>{
       this.course = data
-      // console.log(this.course);
-      if(this.course.instructors.includes(localStorage.getItem('userid'))){
-        this.assignmentService.getAssignmentData(this.courseid).subscribe(data=>{
-          // console.log(data);
-          this.assignments = data;
-          console.log(this.assignments)
-        })
-        this.postService.getPostData(this.courseid).subscribe(data=>{
-          this.posts = data;
-        })
-        // console.log("is prof")
+      let userid = localStorage.getItem('userid');
+      if(userid!=null){
+        let iswiz = this.course.wizardcards.filter((v:any)=>{console.log(Object.keys(v)[0]);return Object.keys(v)[0]==userid}).length>0;
+        this.course.wizardcards.forEach((v:any)=>{console.log(Object.keys(v))})
+        console.log([userid])
+        console.log(this.course.wizardcards.filter((v:any)=>{Object.keys(v)==[userid]}))
+        let allowed = iswiz||this.course.instructors.includes(userid);
+        if(allowed){
+          this.assignmentService.getAssignmentData(this.courseid).subscribe(data=>{
+            this.assignments = data;
+            console.log(this.assignments)
+          })
+          this.postService.getPostData(this.courseid).subscribe(data=>{
+            this.posts = data;
+          })
+          // console.log("is prof")
+          if(iswiz){
+            this.accesslevel = this.course.wizardcards.filter((v:any)=>{return Object.keys(v)[0]==userid})[0][userid];
+            // console.log(this.accesslevel)
+          }
+          else{
+            this.accesslevel = 4;  
+          }
+        }
+        else{
+          this.router.navigate(["/dashboard"])
+          //user not in instructors list. Redirect to dashboard.
+        }
       }
-      else{
-        this.router.navigate(["/dashboard"])
-        //user not in instructors list. Redirect to dashboard.
-      }
+
     })
     // console.log(this.courseid + "Is the id");
   }

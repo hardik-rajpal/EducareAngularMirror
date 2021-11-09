@@ -15,13 +15,22 @@ export class CourseService {
   apiroot = environment.server_url + /courses/;
   constructor(private http:HttpClient) { }
   getCoursesByStudent(userid:string){
-    return this.http.get<any>(this.apiroot+'byuser/False/' + userid +'/', httpop)
+    return this.http.get<any>(this.apiroot+'byuser/student/' + userid +'/', httpop)
   }
   getCoursesByInstructor(userid:string){
-    return this.http.get<any>(this.apiroot+'byuser/True/' + userid +'/', httpop)
+    return this.http.get<any>(this.apiroot+'byuser/instructor/' + userid +'/', httpop)
+  }
+  getCoursesByWizard(userid:string){
+    return this.http.get<any>(this.apiroot+'byuser/wizard/' + userid +'/', httpop)
   }
   getCourseData(courseid:string){
     return this.http.get<any>(this.apiroot+courseid+'/', httpop)
+  }
+  createCourse(data:any){
+    const createHttpOp = {
+      params:new HttpParams().append('data', data)
+    }
+    return this.http.post<any>(this.apiroot + 'create/', createHttpOp);
   }
 
 }
