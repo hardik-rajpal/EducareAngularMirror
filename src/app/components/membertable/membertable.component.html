@@ -1,0 +1,34 @@
+<div style="border: 3px solid black;">
+<h5>{{title}}
+    <button *ngIf="!editing" (click)="editing=true">Edit</button>
+    <button *ngIf="editing" (click)="editing=false;sendList()">Save</button>
+    <button >Download</button>
+
+</h5>
+Add students by file:     <uploader (sendfiles)="collectFiles($event)" #uploader></uploader>
+<table>
+    <tr>
+        <th>User ID</th>
+        <div *ngIf="title=='Students'">
+            <th>Grade</th>
+            <th>Submissions</th>
+        </div>
+        <div *ngIf="title=='Wizards'">
+            <th>Access Level</th>
+        </div>
+    </tr>
+    <tr *ngFor="let memberid of memberids" style="border: 3px solid black;">
+        <td>{{memberid}}</td>
+        <div *ngIf="title=='Students'">
+            <td>grade data</td>
+            <td>submissiondata</td>
+        </div>
+        <div *ngIf="title=='Wizards'">
+            <td>leveldata</td>
+        </div>
+        <td>
+            <button *ngIf="editing" (click)="remove(memberid)">x</button>
+        </td>
+    </tr>
+</table>
+</div>

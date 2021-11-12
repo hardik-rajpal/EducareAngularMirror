@@ -5,9 +5,7 @@
         <a *ngIf="accesslevel>1" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;" (click)="makingPost=true;makingAssignment=false;makingAssessment=false;">+ Create Post</a>
         <a *ngIf="accesslevel>2" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;" (click)="makingPost=false;makingAssignment=true;makingAssessment=false;">+ Create Assignment</a>
         <a *ngIf="accesslevel>2" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;" (click)="makingPost=false;makingAssignment=false;makingAssessment=true;">+ Create Assessment</a>
-        <a *ngIf="accesslevel>2" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;">+ Add Students</a>
-        <a *ngIf="accesslevel>2" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;">+ Add Wizards</a>
-        <a *ngIf="accesslevel>3" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;">+ Add Instructors</a>
+        <a *ngIf="accesslevel>2" href="/members/{{course.courseID}}" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;">Members</a>
     </div>
 
 

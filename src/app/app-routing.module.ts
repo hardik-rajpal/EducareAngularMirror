@@ -9,6 +9,7 @@ import { AssignmentComponent } from './pages/assignment/assignment.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfcourseComponent } from './pages/profcourse/profcourse.component';
 import { PostComponent } from './pages/post/post.component';
+import { MembersComponent } from './pages/members/members.component';
 
 const routes: Routes = [
   {path:'', component:DashboardComponent},
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'courses/:code', component:CourseItemComponent},
   {path: 'create_course', component:CreateCourseComponent},
   {path: 'assignments/:coursecode/:enum', component:AssignmentComponent},
-  {path: 'posts/:coursecode/:enum', component:PostComponent}
+  {path: 'posts/:coursecode/:enum', component:PostComponent},
+  {path: 'members/:coursecode', component:MembersComponent}
 
 ];
 

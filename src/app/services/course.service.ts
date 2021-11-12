@@ -26,6 +26,9 @@ export class CourseService {
   getCourseData(courseid:string){
     return this.http.get<any>(this.apiroot+courseid+'/', httpop)
   }
+  getMemberData(courseid:string, role:string='members'){
+    return this.http.get<any>(this.apiroot + courseid+'/'+role+'/', httpop);
+  }
   createCourse(data:any){
     const createHttpOp = {
       params:new HttpParams().append('data', data)
