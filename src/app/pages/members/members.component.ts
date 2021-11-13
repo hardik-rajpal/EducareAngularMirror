@@ -42,8 +42,18 @@ export class MembersComponent implements OnInit {
     for(let card of data){
       keys.push(Object.keys(card)[0])
     }
-    console.log(keys)
+    // console.log(keys)
     return keys
+  }
+  sendEditedList(data:any[]){
+    console.log(data)
+    
+    console.log(data[0][Object.keys(data[0])[0]])
+    let roleobj = data.pop()
+    console.log(roleobj['role'])
+    this.courseService.sendMemberData(this.courseid, roleobj['role'], data).subscribe(data=>{
+      console.log(data)
+    })
   }
   ngOnInit(): void {
     let id = localStorage.getItem('userid');

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-membertable',
@@ -10,6 +10,7 @@ export class MembertableComponent implements OnInit {
   @Input('members') members:any[]=[];
   @Input('level') level!:number;
   @Input('memberids') memberids:string[]=[];
+  @Output('sendlist') sendlist:EventEmitter<any> = new EventEmitter();
   editing:boolean = false;
   constructor() { }
   remove(id:string){
@@ -23,6 +24,9 @@ export class MembertableComponent implements OnInit {
     }
   }
   sendList(){
+    this.members.push({'role':this.title.toLowerCase()})
+    console.log(this.members)
+    this.sendlist.emit(this.members)
     //send list out.
   }
   collectFiles(ev:any){
