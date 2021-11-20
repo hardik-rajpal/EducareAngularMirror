@@ -47,12 +47,14 @@ export class MembersComponent implements OnInit {
   }
   sendEditedList(data:any[]){
     console.log(data)
-    
     console.log(data[0][Object.keys(data[0])[0]])
     let roleobj = data.pop()
     console.log(roleobj['role'])
     this.courseService.sendMemberData(this.courseid, roleobj['role'], data).subscribe(data=>{
-      console.log(data)
+      data = JSON.parse(data);
+      // console.log(this.members[roleobj['role']])
+      this.members[roleobj['role']] = data[roleobj['role']];
+      // console.log(this.members[roleobj['role']])
     })
   }
   ngOnInit(): void {
