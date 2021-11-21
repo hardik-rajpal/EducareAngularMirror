@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+// import { EventEmitter } from 'stream';
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
@@ -7,13 +8,15 @@ import { CommonModule } from '@angular/common';
 })
 export class CommentComponent implements OnInit {
   @Input('data') data:any={
-    username:"",
-    userid:"",
-    datetime:"",
-    content:"",
+    id:0,
+    author:"",
+    authorid:"",
+    datemade:"",
+    text:"",
     replies:[]
   }
   @Input('level') level:number = 0;
+  @Output() newReply:EventEmitter<any> = new EventEmitter(); 
   constructor() { }
 
   ngOnInit(): void {

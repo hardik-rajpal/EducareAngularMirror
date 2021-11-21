@@ -28,7 +28,7 @@ export class PostComponent implements OnInit {
       this.postService.getPostData(courseid, num).subscribe(data=>{
         console.log(data)
         let tempdata = data;
-        tempdata.comments = JSON.parse(data.comments)
+        tempdata.comments = data.comments
         this.data = tempdata;
       })
     }

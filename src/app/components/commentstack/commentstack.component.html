@@ -2,7 +2,7 @@
     <button *ngIf="(!commenting)&&(level==0)" (click)="commenting=true" style="font-size: x-small;">+ Comment</button>
     <button *ngIf="(!commenting)&&(level>0)" (click)="commenting=true" style="font-size: x-small;">+ Reply</button>
     <form *ngIf="commenting">
-    <input type="text"><button>Post</button>
+    <input type="text" #replybox><button (click)="addReply()">Post</button><button (click)="commenting=false">Cancel</button>
     </form>
     <div *ngFor="let comment of comments">
         <app-comment [data]="comment" [level]="level"></app-comment>
