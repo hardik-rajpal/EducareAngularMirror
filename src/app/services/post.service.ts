@@ -27,10 +27,4 @@ export class PostService {
     }
     return this.http.post<any>(this.apiroot + courseid +'/create/', httpCreateOp);
   }
-  addComment(comment:any, courseid:string,enumL:number){
-    const httpCommentOp = {
-      params:new HttpParams().append('comment',comment)
-    }
-    return this.http.post<any>(this.apiroot + courseid+'/'+enumL.toString()+'/comments/', httpCommentOp);
-  }
 }

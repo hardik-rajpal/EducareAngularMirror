@@ -1,4 +1,4 @@
-<div style="margin: 20px;">
+<div style="margin: 20px;float: left;">
     <h3>Hello, {{userdata.username}}!</h3>
     <hr/>
     <div *ngIf="studentCourses.length>0">
@@ -15,4 +15,8 @@
     <h4>Courses you run:</h4>
     <app-course [isprof]="true" [courses]="wizardCourses"></app-course>
     </div>
+
+</div>
+<div style="float:right;">
+    <app-todolist></app-todolist>
 </div>

@@ -9,6 +9,7 @@ import { PostService } from 'src/app/services/post.service';
 export class PostComponent implements OnInit {
   data={
     number:0,
+    id:0,
     title:'',
     instruction:"",
     comments:[],

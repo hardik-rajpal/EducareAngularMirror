@@ -25,7 +25,7 @@
     <hr/>
     <p><b>Grade</b>: {{submissiondata.grade}}</p>
     <hr/>
-    <p><b>Your Comments</b>: {{submissiondata.comments}}</p>
+    <p><b>Comments</b>:<app-commentstack [parent]="'Submission'" [parentID]="submissiondata.id" [comments]="submissiondata.comments"></app-commentstack></p>
     <hr/>
     <p><b>Grader's Feedback</b>: {{submissiondata.feedback}}</p>
 </div>

@@ -27,6 +27,7 @@ import { CommentComponent } from './components/comment/comment.component';
 import { MembersComponent } from './pages/members/members.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MembertableComponent } from './components/membertable/membertable.component';
+import { TodolistComponent } from './components/todolist/todolist.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +49,7 @@ import { MembertableComponent } from './components/membertable/membertable.compo
     CommentComponent,
     MembersComponent,
     MembertableComponent,
+    TodolistComponent,
     
   ],
   imports: [

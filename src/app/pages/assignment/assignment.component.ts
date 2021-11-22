@@ -40,7 +40,8 @@ export class AssignmentComponent implements OnInit {
     grade:0,
     time:"",
     feedback:"",
-    comments:""
+    id:0,
+    comments:[]
   }
   submitted:boolean = false;
   submitting:boolean=false;
