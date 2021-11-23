@@ -1,10 +1,35 @@
-<div class="comments">
-    <button *ngIf="(!commenting)&&(level==0)" (click)="commenting=true" style="font-size: x-small;">+ Comment</button>
-    <button *ngIf="(!commenting)&&(level>0)" (click)="commenting=true" style="font-size: x-small;">+ Reply</button>
-    <form *ngIf="commenting">
-    <input type="text" #replybox><button (click)="addReply()">Post</button><button (click)="commenting=false">Cancel</button>
-    </form>
+
+<button *ngIf="(!commenting)&&(level==0)&&(!disabled)" (click)="commenting=true" style="font-size: x-small;">+ Comment</button>
+<form *ngIf="commenting">
+<input type="text" id="-1" #postreplybox><button (click)="addReply(-1)">Post</button><button (click)="commenting=false">Cancel</button>
+</form>
+<div class="commentstack">
     <div *ngFor="let comment of comments">
-        <app-comment [data]="comment" [level]="level"></app-comment>
+        <div class="{{getClassName(level)}}">
+            <table style="border: 1px black solid;">
+                <tr>
+                    <td>
+                        <p style="margin: 0;padding: 0;">{{comment.author}}:</p>
+                    </td>
+                    <td rowspan="1">
+                        {{comment.text}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    <p style="margin: 0;padding: 0;font-size: x-small;display: inline;">{{comment.datemade}}</p>
+                    <!-- <button *ngIf="(!comment.commenting)&&(level==0)&&(!disabled)" (click)="comment.commenting=true" style="font-size: x-small;">+ Comment</button> -->
+                    </td>
+                    <td>
+                        <button *ngIf="(!comment.commenting)&&(!disabled)&&comment.replyable" (click)="comment.commenting=true" style="font-size: x-small;">+ Reply</button>
+                        <form *ngIf="comment.commenting">
+                        <input type="text" id="{{comment.id}}" #replybox><button (click)="addReply(comment.id)">Post</button><button (click)="commenting=false">Cancel</button>
+                        </form>    
+    
+                    </td>
+                </tr>
+            </table>
+        <app-commentstack [disabled]="disabled" [parent]="'Comment'" [comments]="comment.replies" [parentID]="comment.id" [level]="level + 1" #stacks></app-commentstack>
+        </div>
     </div>
 </div>

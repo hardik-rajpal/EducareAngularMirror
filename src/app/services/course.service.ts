@@ -29,8 +29,8 @@ export class CourseService {
   getMemberData(courseid:string, role:string='members'){
     return this.http.get<any>(this.apiroot + courseid+'/'+role+'/', httpop);
   }
-  getToDo(userid:string){
-    return this.http.get<any>(this.apiroot + 'byuser/student/'+userid+'/todo/', httpop);
+  getToDo(userid:string,role:string='student'){
+    return this.http.get<any>(this.apiroot + 'byuser/'+role+'/'+userid+'/todo/', httpop);
   }
   sendMemberData(courseid:string, role:string, list:any){
     const memberHttpOp = {

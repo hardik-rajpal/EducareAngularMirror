@@ -1,3 +1,28 @@
-<div style="width: 400px;height: 600px;border: 3px black solid;">
-
+<div style="width: 350px;border: 3px black solid;margin: 20px;">
+    <h3>Upcoming</h3>
+    <div *ngFor="let item of StudentItems" style="border: 3px black solid;">
+        <h6>{{item.date}}</h6>
+        <div *ngFor="let obj of item.dueList">
+            <i *ngIf="obj.type=='Task'" class="bi bi-file-earmark-fill" style="font-size: 2rem;display: inline;float: left;"></i>
+            <h4 style="display: inline;">{{obj.courseCode}}:{{obj.type}} {{obj.number}}</h4>
+            <h5 style="float: right;">Due at {{obj.dueTime}}</h5>
+            <h5>{{obj.title}}</h5>
+            <p>{{obj.peerProgress}}% students have submitted.</p>
+        </div>
+    </div>
+    <div *ngFor="let item of ProfItems" style="border: 3px black solid;">
+        <h6>{{item.date}}</h6>
+        <div *ngFor="let obj of item.dueList">
+            <i *ngIf="obj.type=='Task'" class="bi bi-file-earmark-fill" style="font-size: 2rem;display: inline;float: left;"></i>
+            <h4 style="display: inline;">{{obj.courseCode}}:{{obj.type}} {{obj.number}}</h4>
+            <!-- <h5 style="float: right;"></h5> -->
+            <h5>{{obj.title}}</h5>
+            <p>{{obj.leftToGrade}} of {{obj.totalSubmissions}} subsmissions ungraded.</p>
+        </div>
+    </div>
+    <div *ngIf="ProfItems.length==0 && StudentItems.length==0" style="text-align: center;">
+        
+        <h3>All Caught Up! </h3>
+        <h1 style="color: green;"><i class="bi bi-check-all"></i></h1>
+    </div>
 </div>

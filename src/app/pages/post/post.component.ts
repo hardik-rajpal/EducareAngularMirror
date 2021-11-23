@@ -14,6 +14,7 @@ export class PostComponent implements OnInit {
     instruction:"",
     comments:[],
     releaseDate:"",
+    discussable:true,
   }
   constructor(private route:ActivatedRoute,
     private postService:PostService) { }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild,EventEmitter,Output, ViewChildren } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommentService } from 'src/app/services/comment.service';
 import {PostService} from '../../services/post.service';
@@ -8,52 +8,108 @@ import {PostService} from '../../services/post.service';
   styleUrls: ['./commentstack.component.css']
 })
 export class CommentstackComponent implements OnInit {
-  @Input('comments') comments:any[]=[];
-  @Input('id') commentId:number = -1;
+  maxIndentableDepth = 3;
   @Input('level') level:number = 0;
+  @Input('disabled') disabled:boolean = false;
+  @ViewChild('holder') holderdiv!:ElementRef;
+  commenting = false;
+  @Input('comments') comments:any[]=[];
   postNum:number = 0;
   @Input('parentID') parentID:number = -1;
-  @Input('parent') parent:string = "Post";//could be Submission
+  @Input('parent') parent:string = "Post";//could be Submission or Comment
   courseid:string = ""
-  @ViewChild('replybox') replybox!:ElementRef;
-  commenting:boolean = false;
-  constructor(private postService:PostService, private commentService:CommentService,private route:ActivatedRoute) { }
-  ngAfterViewInit(){
-    console.log(this.comments);
+  replyable:boolean = false;
+  @ViewChildren('replybox') replybox!:ElementRef[];
+  @ViewChild('postreplybox') postreplybox!:ElementRef;
+  @ViewChildren('stacks') stacks!:CommentstackComponent[];
+  getClassName(level:number){
+    if(level<this.maxIndentableDepth){
+      return "container"
+    }
+    else{
+      return "notcontainer"
+    }
   }
+  ngAfterViewInit(){
+    // console.log(this.comments)
+    // this.comments.sort(function(a,b){
+    //   return b.id-a.id
+    // })
+    // console.log(this.comments)
+  }
+  toggleReplyButton(commentid:number,showbutton:boolean=true){
+    console.log(commentid)
+    let comment = this.comments.find(function(v){
+      console.log(v)
+      return v.id==commentid
+    })
+    if(showbutton){
+      this.replyable=true;
+      comment.replyable = true;
+  }
+  else{
+    comment.replyable = false;
+  }
+
+
+
+  }
+
+  constructor(private postService:PostService, private commentService:CommentService,private route:ActivatedRoute) { }
+  
   ngOnInit(): void {
-    console.log(this.comments);
+    // console.log(this.comments);
     let courseid = JSON.parse(JSON.stringify(this.route.snapshot.paramMap.get('coursecode') || '{}'));
     let postnum = JSON.parse(JSON.stringify(this.route.snapshot.paramMap.get('enum') || '{}'));
     this.courseid = courseid;
     this.postNum = postnum;
     // console.log(this.comments);
   }
-  addReply(){
-    console.log("Parent: "+ this.parent)
-
-    console.log(this.replybox.nativeElement.value)
+  addReply(commentid:number){
     let id = localStorage.getItem('userid')
-    if(id)
-    this.commenting = false;
+    let rightbox;
+    let parentOfNewComment = "Comment";
+    if(commentid!=-1){
+      for(let box of this.replybox){
+        if(box.nativeElement.id==commentid.toString()){
+          rightbox = box;
+        }
+      }  
+    }
+    else{
+      rightbox = this.postreplybox;
+      commentid = this.parentID;//which is post id in top most case.
+      parentOfNewComment = "Post"
+    }
     let data:any = {
       courseid:this.courseid,
-      parentid:this.parentID,
-      toCommentId:this.commentId,
-      text:this.replybox.nativeElement.value,
+      parentid:commentid,
+      text:rightbox?.nativeElement.value,
       authorid:id,
-      parent:this.parent
-
+      parent:parentOfNewComment//"Post" by default. can be "Submission." But irrelevant if this.commentId!=-1
     }
     this.commentService.addComment(data,this.courseid,this.postNum).subscribe(data=>{
-      console.log(data)
-      console.log(this.comments)
-      this.comments = data
+      let comment;
+      if(parentOfNewComment=="Post"){
+        this.comments = data;
+        this.commenting = false;        
+      }
+      else{
+        for(let comm of this.comments){
+          if(comm.id==commentid){
+            comment = comm;
+          }
+        }
+        comment.replies = data
+        comment.commenting = false;
+      }
+
     })
+
     // console.log(text)
   }
   deleteComment(){
-    this.commentService.deleteComment(this.commentId, this.courseid, this.postNum).subscribe(data=>{
+    this.commentService.deleteComment(this.parentID, this.courseid, this.postNum).subscribe(data=>{
       console.log(data)
     })
   }
