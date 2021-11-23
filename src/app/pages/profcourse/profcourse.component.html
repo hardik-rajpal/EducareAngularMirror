@@ -52,10 +52,17 @@
             <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" (change)="validateDates()" ngModel>
             <label for="releaseDate" class="form-label">Release Date</label>
         </div>
-
+        <div class="form-floating" *ngIf="!releaseNow">
+            <input type="time" class="form-control" id="releaseTime" placeholder="ReleaseTime" name="releaseTime"(change)="validateDates()" ngModel>
+            <label for="releaseTime" class="form-label">Release Time</label>
+        </div>
         <div class="form-floating">
             <input type="date" class="form-control" id="dueDate" placeholder="DueDate" name="dueDate" (change)="validateDates()" ngModel>
             <label for="dueDate" class="form-label">Due Date</label>
+        </div>
+        <div class="form-floating">
+            <input type="time" class="form-control" id="dueTime" placeholder="DueTime" name="dueTime" (change)="validateDates()"ngModel>
+            <label for="dueTime" class="form-label">Due Time</label>
         </div>
         <button *ngIf="releaseNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
         <button *ngIf="!releaseNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Draft</button>

@@ -61,7 +61,7 @@ export class ProfcourseComponent implements OnInit {
   tasknumtemp!:number
   releaseNow:boolean = false;
   datesinvalid:boolean = false;
-  makingAssignment:boolean = false;
+  makingAssignment:boolean = true;
   makingPost:boolean = false;
   makingAssessment:boolean = false;
   tempfileholder:any
@@ -72,9 +72,13 @@ export class ProfcourseComponent implements OnInit {
     private route:ActivatedRoute,
     private router:Router) { }
     makeAssignmentData(data:any){
-    console.log(data)
+
+    let dupdata = {...data};
     console.log(this.tempfileholder)
-    this.assignmentService.createAssignment(data, this.courseid, this.tempfileholder).subscribe(resp=>{
+    dupdata['releaseDate']+=('T'+data['releaseTime']+':00')
+    dupdata['dueDate']+=('T'+data['dueTime']+':00')
+    console.log(dupdata)
+    this.assignmentService.createAssignment(dupdata, this.courseid, this.tempfileholder).subscribe(resp=>{
     this.assignform.reset()
     this.releaseNow = false;
     this.uploader.files = []
@@ -92,22 +96,23 @@ export class ProfcourseComponent implements OnInit {
     let dueDate = this.assignform.value.dueDate;
     if(!this.releaseNow){
       if(!(releaseDate=="")){
-        let rdate = new Date(releaseDate);
-        if(rdate.getDate()<today.getDate()){
+        let rdate = new Date(releaseDate+'T'+reltime +':00');
+        console.log(releaseDate+'T'+reltime +':00')
+        if(rdate.valueOf()<today.valueOf()){
           this.datesinvalid = true;
           return;
         }
       }
     }
     if(!(dueDate=="")){
-      let ddate = new Date(dueDate);
+      let ddate = new Date(dueDate+'T'+duetime+':00');
       if(ddate<today){
         this.datesinvalid = true;
         return;
       }
       if(!(releaseDate=="")){
-        let rdate = new Date(releaseDate);
-        if(ddate.getDate()<=rdate.getDate()){
+        let rdate = new Date(releaseDate +'T'+reltime+':00');
+        if(ddate.valueOf()<=rdate.valueOf()){
           this.datesinvalid = true;
           return;
         }
