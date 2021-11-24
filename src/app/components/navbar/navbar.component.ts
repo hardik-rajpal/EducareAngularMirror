@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
       this.isauth = false;
     }
     else{
-      console.log("gu")
+      // console.log("gu")
       this.isauth = true;
     }
   }

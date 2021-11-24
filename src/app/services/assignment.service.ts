@@ -65,5 +65,15 @@ export class AssignmentService {
     let suffix = courseid + '/' + enumL +'/submissions/all/';
     return this.http.get<any>(this.apiroot + suffix, httpop);
   }
-
+  getGradesData(courseid:string,userid:string,enumL:number=-1){
+    let suffix = 'grades/' + courseid + '/' + userid;
+    if(enumL==-1){
+      suffix+='/all/'
+    } 
+    else{
+      suffix+= ('/'+enumL.toString()+'/')
+    }
+    // grades/<str:courseid>/<str:userid>/all
+    return this.http.get<any>(this.apiroot+suffix, httpop);
+  }
 }
