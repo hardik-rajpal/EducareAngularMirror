@@ -19,9 +19,18 @@
             <textarea class="form-control" id="instruction" placeholder="Instruction" name="instruction" ngModel></textarea>
             <label for="instruction" class="form-label">Instruction</label>
         </div>
-        <div class="form-floating">
-            <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" ngModel>
+        <uploader (sendfiles)="collectFiles($event)" #uploader></uploader>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="releasePostNow" (change)="releasePostNow=!releasePostNow" ngModel>
+            <label for="releasePostNow" class="form-check-label">Publish Immediately</label>
+        </div>
+        <div class="form-floating" *ngIf="!releasePostNow">
+            <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" (change)="validateDates(postForm)" ngModel>
             <label for="releaseDate" class="form-label">Release Date</label>
+        </div>
+        <div class="form-floating" *ngIf="!releasePostNow">
+            <input type="time" class="form-control" id="releaseTime" placeholder="ReleaseTime" name="releaseTime"(change)="validateDates(postForm)" ngModel>
+            <label for="releaseTime" class="form-label">Release Time</label>
         </div>
         <button class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
         <button class="btn btn-outline-danger" (click)="makingPost=false" style="margin: 10px;">Discard</button>
@@ -45,27 +54,27 @@
         <p class="alert alert-danger" *ngIf="datesinvalid">Please ensure that the release date and due date
     are not in the past and that due date is after the release date. </p>
         <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="releaseNow" (change)="releaseNow=!releaseNow" ngModel>
-            <label for="releaseNow" class="form-check-label">Publish Immediately</label>
+            <input type="checkbox" class="form-check-input" name="releaseTaskNow" (change)="releaseTaskNow=!releaseTaskNow" ngModel>
+            <label for="releaseTaskNow" class="form-check-label">Publish Immediately</label>
         </div>
-        <div class="form-floating" *ngIf="!releaseNow">
-            <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" (change)="validateDates()" ngModel>
+        <div class="form-floating" *ngIf="!releaseTaskNow">
+            <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" (change)="validateDates(assignForm)" ngModel>
             <label for="releaseDate" class="form-label">Release Date</label>
         </div>
-        <div class="form-floating" *ngIf="!releaseNow">
-            <input type="time" class="form-control" id="releaseTime" placeholder="ReleaseTime" name="releaseTime"(change)="validateDates()" ngModel>
+        <div class="form-floating" *ngIf="!releaseTaskNow">
+            <input type="time" class="form-control" id="releaseTime" placeholder="ReleaseTime" name="releaseTime"(change)="validateDates(assignForm)" ngModel>
             <label for="releaseTime" class="form-label">Release Time</label>
         </div>
         <div class="form-floating">
-            <input type="date" class="form-control" id="dueDate" placeholder="DueDate" name="dueDate" (change)="validateDates()" ngModel>
+            <input type="date" class="form-control" id="dueDate" placeholder="DueDate" name="dueDate" (change)="validateDates(assignForm)" ngModel>
             <label for="dueDate" class="form-label">Due Date</label>
         </div>
         <div class="form-floating">
-            <input type="time" class="form-control" id="dueTime" placeholder="DueTime" name="dueTime" (change)="validateDates()"ngModel>
+            <input type="time" class="form-control" id="dueTime" placeholder="DueTime" name="dueTime" (change)="validateDates(assignForm)"ngModel>
             <label for="dueTime" class="form-label">Due Time</label>
         </div>
-        <button *ngIf="releaseNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
-        <button *ngIf="!releaseNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Draft</button>
+        <button *ngIf="releaseTaskNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
+        <button *ngIf="!releaseTaskNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Draft</button>
         <button class="btn btn-outline-danger" (click)="makingAssignment=false" style="margin: 10px;">Discard</button>
     </form>
 
@@ -82,12 +91,13 @@
             <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" ngModel>
             <label for="releaseDate" class="form-label">Release Date</label>
         </div>
+        
         <div class="form-floating">
             <input type="date" class="form-control" id="dueDate" placeholder="DueDate" name="dueDate" ngModel>
             <label for="dueDate" class="form-label">Due Date</label>
         </div>
-        <button *ngIf="releaseNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
-        <button *ngIf="!releaseNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Draft</button>
+        <button *ngIf="releaseTaskNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
+        <button *ngIf="!releaseTaskNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Draft</button>
         <button class="btn btn-outline-danger" (click)="makingAssessment=false" style="margin: 10px;">Discard</button>
     </form>
 

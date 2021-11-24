@@ -13,18 +13,20 @@ export class PostService {
   // apiroot = "https://educare-django.herokuapp.com/posts/"
   apiroot:string = environment.server_url + '/posts/'
   constructor(private http:HttpClient) { }
-  getPostData(courseid:string, enumL=-1){
+  getPostData(courseid:string, enumL=-1,role='student'){
     let enumstr = '/'+enumL.toString() + '/';
     if(enumL==-1){
       enumstr = '/all/'
     }
-    return this.http.get<any>(this.apiroot+courseid +enumstr,httpop)
+    return this.http.get<any>(this.apiroot+courseid +enumstr+role+'/',httpop)
   }
-  createPost(data:any, courseid:string){
+  createPost(data:any, courseid:string,file:any){
     // let enumstr = '/'+enumL.toString()+'/'
-    const httpCreateOp = {
-      params:new HttpParams().append('postdata',data)
+    let uploadData = new FormData();
+    uploadData.append('data', JSON.stringify(data))
+    if(file!=null){
+      uploadData.append('file', file, file.name);
     }
-    return this.http.post<any>(this.apiroot + courseid +'/create/', httpCreateOp);
+    return this.http.post<any>(this.apiroot + courseid +'/create/', uploadData);
   }
 }

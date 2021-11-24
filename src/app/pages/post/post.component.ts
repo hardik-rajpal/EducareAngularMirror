@@ -15,6 +15,7 @@ export class PostComponent implements OnInit {
     comments:[],
     releaseDate:"",
     discussable:true,
+    published:false
   }
   constructor(private route:ActivatedRoute,
     private postService:PostService) { }

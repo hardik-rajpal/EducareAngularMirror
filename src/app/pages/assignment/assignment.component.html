@@ -8,7 +8,8 @@
     <downloader [url]="taskdata.files.url" [filename]="taskdata.files.name"></downloader>
     <hr/>
     </div>
-    <p>Released on: {{taskdata.releaseDate}}, {{taskdata.releaseTime}}</p>
+    <p *ngIf="taskdata.published">Released on: {{taskdata.releaseDate}}, {{taskdata.releaseTime}}</p>
+    <p *ngIf="!taskdata.published">Will be released at: {{taskdata.releaseDate}}, {{taskdata.releaseTime}}</p>
     <hr/>
     <p>Due by: {{taskdata.dueDate}}, {{taskdata.dueTime}}</p>
     <hr/>

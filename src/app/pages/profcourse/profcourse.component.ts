@@ -59,7 +59,9 @@ export class ProfcourseComponent implements OnInit {
   ]
   filehost:string = environment.server_url
   tasknumtemp!:number
-  releaseNow:boolean = false;
+  releaseTaskNow:boolean = false;
+  releasePostNow:boolean = false;
+  releaseAssessmentNow:boolean = false;
   datesinvalid:boolean = false;
   makingAssignment:boolean = true;
   makingPost:boolean = false;
@@ -72,7 +74,6 @@ export class ProfcourseComponent implements OnInit {
     private route:ActivatedRoute,
     private router:Router) { }
     makeAssignmentData(data:any){
-
     let dupdata = {...data};
     console.log(this.tempfileholder)
     dupdata['releaseDate']+=('T'+data['releaseTime']+':00')
@@ -80,21 +81,18 @@ export class ProfcourseComponent implements OnInit {
     console.log(dupdata)
     this.assignmentService.createAssignment(dupdata, this.courseid, this.tempfileholder).subscribe(resp=>{
     this.assignform.reset()
-    this.releaseNow = false;
+    this.releaseTaskNow = false;
     this.uploader.files = []
     window.alert("Successfully Made Assignment!")
     }, error=>{
       window.alert("Error. Please check the form.");
     });
   }
-  validateDates(){
-    
+  validateDates(form:NgForm){
     let today = new Date;
-    let reltime = this.assignform.value.releaseTime;
-    let duetime = this.assignform.value.dueTime;
-    let releaseDate = this.assignform.value.releaseDate;
-    let dueDate = this.assignform.value.dueDate;
-    if(!this.releaseNow){
+    let reltime = form.value.releaseTime;
+    let releaseDate = form.value.releaseDate;
+    if(!this.releaseTaskNow){
       if(!(releaseDate=="")){
         let rdate = new Date(releaseDate+'T'+reltime +':00');
         console.log(releaseDate+'T'+reltime +':00')
@@ -104,27 +102,36 @@ export class ProfcourseComponent implements OnInit {
         }
       }
     }
-    if(!(dueDate=="")){
-      let ddate = new Date(dueDate+'T'+duetime+':00');
-      if(ddate<today){
-        this.datesinvalid = true;
-        return;
-      }
-      if(!(releaseDate=="")){
-        let rdate = new Date(releaseDate +'T'+reltime+':00');
-        if(ddate.valueOf()<=rdate.valueOf()){
+    if(form!=this.postform){
+      let duetime = form.value.dueTime;
+      let dueDate = form.value.dueDate;
+      if(!(dueDate=="")){
+        let ddate = new Date(dueDate+'T'+duetime+':00');
+        if(ddate<today){
           this.datesinvalid = true;
           return;
         }
+        if(!(releaseDate=="")){
+          let rdate = new Date(releaseDate +'T'+reltime+':00');
+          if(ddate.valueOf()<=rdate.valueOf()){
+            this.datesinvalid = true;
+            return;
+          }
+        }
       }
     }
+
+    
     this.datesinvalid = false;
   }
   makePost(data:any){
-    this.postform.reset()
+    
     // console.log(data);
-    this.postService.createPost(data, this.courseid).subscribe(resp=>{
+    this.postService.createPost(data, this.courseid,this.tempfileholder).subscribe(resp=>{
+      this.releasePostNow = false;
+      this.uploader.files = []
       window.alert("Successfully Made Assignment!")
+      this.postform.reset()
     }, error=>{
       window.alert("Error. Please check the form.");
     });
@@ -146,7 +153,7 @@ export class ProfcourseComponent implements OnInit {
             this.assignments = data;
             console.log(this.assignments)
           })
-          this.postService.getPostData(this.courseid).subscribe(data=>{
+          this.postService.getPostData(this.courseid,-1,'instructor').subscribe(data=>{
             this.posts = data;
           })
           // console.log("is prof")
