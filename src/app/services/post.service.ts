@@ -29,4 +29,13 @@ export class PostService {
     }
     return this.http.post<any>(this.apiroot + courseid +'/create/', uploadData);
   }
+  updatePost(data:any, courseid:string,num:number,file:any){
+    // let enumstr = '/'+enumL.toString()+'/'
+    let uploadData = new FormData();
+    uploadData.append('data', JSON.stringify(data))
+    if(file!=null){
+      uploadData.append('file', file, file.name);
+    }
+    return this.http.post<any>(this.apiroot + courseid +'/'+num.toString()+'/update/', uploadData);
+  }
 }

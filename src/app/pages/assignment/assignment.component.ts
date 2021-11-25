@@ -16,10 +16,10 @@ export class AssignmentComponent implements OnInit {
   submDate!:Date;
   num!:any
   befduedate:boolean = true;
-  taskhasfiles:boolean = false;
   taskdata={
     number:0,
     title:"",
+    hasfiles:true,
     instruction:"",
     releaseDate:"",
     dueDate:"",
@@ -71,18 +71,7 @@ export class AssignmentComponent implements OnInit {
     this.assignmentService.getAssignmentData(courseid, num).subscribe(data=>{
       console.log(data)
       this.taskdata = data
-      let loc:string = data.files
-      if(loc==null){
-        this.taskhasfiles = false;
-      }
-      else{
-        this.taskhasfiles = true;
-        this.taskdata.files = {
-          name:loc.split('/')[loc.split('/').length-1],
-          url:this.filehost+loc
-        }
-      }
-      console.log(this.taskdata)
+      
           
     })
     id = localStorage.getItem('userid');

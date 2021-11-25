@@ -23,7 +23,6 @@ import { DownloaderComponent } from './components/downloader/downloader.componen
 import { UploaderComponent } from './components/uploader/uploader.component';
 import { CommentstackComponent } from './components/commentstack/commentstack.component';
 import { PostComponent } from './pages/post/post.component';
-import { CommentComponent } from './components/comment/comment.component';
 import { MembersComponent } from './pages/members/members.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MembertableComponent } from './components/membertable/membertable.component';
@@ -48,7 +47,6 @@ import { GradesComponent } from './pages/grades/grades.component';
     DownloaderComponent,
     UploaderComponent,
     CommentstackComponent,
-    CommentComponent,
     MembersComponent,
     MembertableComponent,
     TodolistComponent,

@@ -36,20 +36,32 @@ export class ProfcourseComponent implements OnInit {
   }
   assignments = [
     {
-      dueDate: "2021-10-11",
-      files: null,
       instruction: "",
       number: 0,
       seenby:0,
       submittedby:0,
       published: false,
+      graded:false,
       releaseDate: "",
+      releaseTime:"",
+      dueDate:"",
+      dueTime:"",
+      weight:2,
+      hasfiles:false,
+      files:{
+        name:'',
+        url:''
+      },
       title: ""
     }
   ]
   posts = [
-    {
-      files: null,
+    { 
+      hasfiles:true,
+      files: {
+        name:'',
+        url:''
+      },
       instruction: "",
       number: 1,
       published: false,
@@ -58,6 +70,7 @@ export class ProfcourseComponent implements OnInit {
     }
   ]
   taskdata:any = {}
+  postdata:any = {}
   filehost:string = environment.server_url
   tasknumtemp!:number
   releaseTaskNow:boolean = false;
@@ -76,6 +89,12 @@ export class ProfcourseComponent implements OnInit {
     private postService:PostService,
     private route:ActivatedRoute,
     private router:Router) { }
+    hideAllForms(){
+      this.makingAssignment = false;
+      this.makingPost = false;
+      this.editingAssignment = false;
+      this.editingPost = false;
+    }
     makeAssignmentData(data:any){
       let dupdata = {...data};
       console.log(this.tempfileholder)
@@ -84,11 +103,13 @@ export class ProfcourseComponent implements OnInit {
       dupdata['dueDate']+=('T'+data['dueTime']+':00')  
       if(this.editingAssignment){
         console.log(dupdata.releaseDate)
-        this.assignmentService.updateAssignment(dupdata, this.courseid,this.taskdata.number).subscribe(data=>{
-          console.log(data)
-          // this.assignform.reset()
+
+        this.assignmentService.updateAssignment(dupdata, this.courseid,this.taskdata.number, this.tempfileholder).subscribe(data=>{
+          this.assignform.reset()
           this.releaseTaskNow = false;
-          // this.uploader.files = []
+          this.hideAllForms();
+          this.uploader.files = []
+          this.assignments = data;
           window.alert("Successfully saved your changes!")
         },error=>{
           window.alert("Error. Please check the changes you've made.")
@@ -96,11 +117,12 @@ export class ProfcourseComponent implements OnInit {
     
       }
       else{
-        this.assignmentService.createAssignment(dupdata, this.courseid, this.tempfileholder).subscribe(resp=>{
+        this.assignmentService.createAssignment(dupdata, this.courseid, this.tempfileholder).subscribe(data=>{
           this.assignform.reset()
           this.releaseTaskNow = false;
           this.uploader.files = []
           window.alert("Successfully Made Assignment!")
+          this.assignments = data
         }, error=>{
           window.alert("Error. Please check the form.");
         });
@@ -115,9 +137,13 @@ export class ProfcourseComponent implements OnInit {
       if(!(releaseDate=="")){
         let rdate = new Date(releaseDate+'T'+reltime +':00');
         console.log(releaseDate+'T'+reltime +':00')
-        if(rdate.valueOf()<today.valueOf()){
+        if(rdate.valueOf()<today.valueOf()&&(!(this.editingAssignment||this.editingPost))){
+          console.log("H");
           this.datesinvalid = true;
           return;
+        }
+        else{
+          this.datesinvalid = false;
         }
       }
     }
@@ -127,6 +153,7 @@ export class ProfcourseComponent implements OnInit {
       if(!(dueDate=="")){
         let ddate = new Date(dueDate+'T'+duetime+':00');
         if(ddate<today){
+          console.log("H");
           this.datesinvalid = true;
           return;
         }
@@ -143,45 +170,62 @@ export class ProfcourseComponent implements OnInit {
     
     this.datesinvalid = false;
   }
-  markAsGraded(tasknumber:number){
+  deleteElement(type:string, num:number){
+    if(type=='post'){
+      this.postService.updatePost({delete:true},this.courseid, num, null).subscribe(data=>{
+        this.posts = data
+      })
+
+    }
+    else if(type=='assignment'){
+      this.assignmentService.updateAssignment({delete:true}, this.courseid, num).subscribe(data=>{
+        this.assignments = data
+      })
+    }
+  }
+  markAsGraded(tasknumber:number,notretract:boolean=true){
     let updateData = {
-      releaseGrades:true
+      releaseGrades:true&&notretract
     }
     this.assignmentService.updateAssignment(updateData, this.courseid, tasknumber).subscribe(data=>{
-      console.log(data)
+      this.assignments = data
+      // console.log(data)
     });
   }
-  loadFormToEdit(tasknumber:number,form:NgForm){
-    if(form==this.assignform){
+  loadFormToEdit(tasknumber:number,form:string){
+    if(form=='assignform'){
       this.taskdata['number'] = tasknumber
-      this.makingAssessment = false;this.editingAssignment=true;this.makingPost = false;
+      this.hideAllForms();this.editingAssignment = true;
       this.assignmentService.getAssignmentData(this.courseid, tasknumber, true).subscribe(data=>{
         data.releaseTaskNow = false;
         delete data.number
         delete data.published
+        delete data.seenby
+        delete data.submittedby
         console.log({...data})
         if(data.files!=""){
-          // this.uploader.names = [data.files.split('/')[data.files.split('/').length-1]]
           delete data.files
         }
+        delete data.hasfiles
         delete data.graded
         delete data.acceptSubmission
-        console.log(data.releaseDate)
-        let temparray:any[] = data.releaseTime.split(':')
-        temparray.pop()
-        
-        data.releaseTime = [...temparray].join(':')
-        temparray = data.dueTime.split(':')
-        temparray.pop()
-        data.dueTime =[...temparray].join(':')
-        
-        form.setValue(data);
+        this.assignform.setValue(data);
       })
     }
-    else if(form==this.postform){
-      this.makingAssessment = false;this.makingAssignment=true;this.makingPost = false;
+    else if(form=='postform'){
+      this.postdata['number'] = tasknumber
+      this.hideAllForms(); this.editingPost = true;
       this.postService.getPostData(this.courseid, tasknumber, 'instructor').subscribe(data=>{
         console.log(data)
+        data.releasePostNow = false;
+        delete data.id
+        delete data.number
+
+        delete data.comments
+        delete data.files
+        delete data.published
+        console.log(form)
+        this.postform.setValue(data);
       })
     }
     }
@@ -189,14 +233,26 @@ export class ProfcourseComponent implements OnInit {
   makePost(data:any){
     
     // console.log(data);
-    this.postService.createPost(data, this.courseid,this.tempfileholder).subscribe(resp=>{
-      this.releasePostNow = false;
-      this.uploader.files = []
-      window.alert("Successfully Made Assignment!")
-      this.postform.reset()
-    }, error=>{
-      window.alert("Error. Please check the form.");
-    });
+    let dupdata = {...data}
+    dupdata['releaseDate']+=('T'+data['releaseTime']+':00')
+    if(this.editingPost){
+      this.postService.updatePost(dupdata, this.courseid, this.postdata.number, this.tempfileholder).subscribe(data=>{
+        console.log(data)
+        this.posts = data
+        window.alert("Successfully saved your changes!")
+        this.releasePostNow = false;
+      })
+    }else{
+      this.postService.createPost(data, this.courseid,this.tempfileholder).subscribe(data=>{
+        this.releasePostNow = false;
+        this.uploader.files = []
+        window.alert("Successfully Made Assignment!")
+        this.postform.reset()
+      }, error=>{
+        window.alert("Error. Please check the form.");
+        this.posts = data;
+      });  
+    }
     
   }
   ngOnInit(): void {
@@ -211,7 +267,7 @@ export class ProfcourseComponent implements OnInit {
         console.log(this.course.wizardcards.filter((v:any)=>{Object.keys(v)==[userid]}))
         let allowed = iswiz||this.course.instructors.includes(userid);
         if(allowed){
-          this.assignmentService.getAssignmentData(this.courseid).subscribe(data=>{
+          this.assignmentService.getAssignmentData(this.courseid,-1,true).subscribe(data=>{
             this.assignments = data;
             console.log(this.assignments)
           })
@@ -259,7 +315,6 @@ export class ProfcourseComponent implements OnInit {
     this.assignmentService.sendFeedback(this.courseid,this.tasknumtemp, event.target.files[0]).subscribe(data=>{
       console.log(data)
       this.sender.nativeElement.value = null
-      // event.target.files = null
     })
   }
   downloadSubmissions(tasknum:number){

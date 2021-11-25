@@ -79,7 +79,7 @@ export class CommentstackComponent implements OnInit {
     else{
       rightbox = this.postreplybox;
       commentid = this.parentID;//which is post id in top most case.
-      parentOfNewComment = "Post"
+      parentOfNewComment = this.parent
     }
     let data:any = {
       courseid:this.courseid,
@@ -90,7 +90,7 @@ export class CommentstackComponent implements OnInit {
     }
     this.commentService.addComment(data,this.courseid,this.postNum).subscribe(data=>{
       let comment;
-      if(parentOfNewComment=="Post"){
+      if(parentOfNewComment==this.parent){
         this.comments = data;
         this.commenting = false;        
       }

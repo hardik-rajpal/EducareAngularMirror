@@ -14,8 +14,14 @@ export class PostComponent implements OnInit {
     instruction:"",
     comments:[],
     releaseDate:"",
+    releaseTime:"",
     discussable:true,
-    published:false
+    published:false,
+    hasfiles:true,
+    files:{
+      name:'',
+      url:''
+    }
   }
   constructor(private route:ActivatedRoute,
     private postService:PostService) { }
