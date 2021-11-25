@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentService } from 'src/app/services/assignment.service';
 import { CourseService } from 'src/app/services/course.service';
 import { PostService } from 'src/app/services/post.service';
-import { NgForm } from '@angular/forms';
+import { NgForm, NgModelGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { UploaderComponent } from 'src/app/components/uploader/uploader.component';
 const MIMETYPE = {
@@ -57,6 +57,7 @@ export class ProfcourseComponent implements OnInit {
       title: "Vocabularo"
     }
   ]
+  taskdata:any = {}
   filehost:string = environment.server_url
   tasknumtemp!:number
   releaseTaskNow:boolean = false;
@@ -64,7 +65,9 @@ export class ProfcourseComponent implements OnInit {
   releaseAssessmentNow:boolean = false;
   datesinvalid:boolean = false;
   makingAssignment:boolean = true;
+  editingAssignment:boolean = false;
   makingPost:boolean = false;
+  editingPost:boolean = false;
   makingAssessment:boolean = false;
   tempfileholder:any
   accesslevel = 1;
@@ -74,19 +77,35 @@ export class ProfcourseComponent implements OnInit {
     private route:ActivatedRoute,
     private router:Router) { }
     makeAssignmentData(data:any){
-    let dupdata = {...data};
-    console.log(this.tempfileholder)
-    dupdata['releaseDate']+=('T'+data['releaseTime']+':00')
-    dupdata['dueDate']+=('T'+data['dueTime']+':00')
-    console.log(dupdata)
-    this.assignmentService.createAssignment(dupdata, this.courseid, this.tempfileholder).subscribe(resp=>{
-    this.assignform.reset()
-    this.releaseTaskNow = false;
-    this.uploader.files = []
-    window.alert("Successfully Made Assignment!")
-    }, error=>{
-      window.alert("Error. Please check the form.");
-    });
+      let dupdata = {...data};
+      console.log(this.tempfileholder)
+      console.log(dupdata)
+      dupdata['releaseDate']+=('T'+data['releaseTime']+':00')
+      dupdata['dueDate']+=('T'+data['dueTime']+':00')  
+      if(this.editingAssignment){
+        console.log(dupdata.releaseDate)
+        this.assignmentService.updateAssignment(dupdata, this.courseid,this.taskdata.number).subscribe(data=>{
+          console.log(data)
+          // this.assignform.reset()
+          this.releaseTaskNow = false;
+          // this.uploader.files = []
+          window.alert("Successfully saved your changes!")
+        },error=>{
+          window.alert("Error. Please check the changes you've made.")
+        });
+    
+      }
+      else{
+        this.assignmentService.createAssignment(dupdata, this.courseid, this.tempfileholder).subscribe(resp=>{
+          this.assignform.reset()
+          this.releaseTaskNow = false;
+          this.uploader.files = []
+          window.alert("Successfully Made Assignment!")
+        }, error=>{
+          window.alert("Error. Please check the form.");
+        });
+      }
+
   }
   validateDates(form:NgForm){
     let today = new Date;
@@ -124,6 +143,49 @@ export class ProfcourseComponent implements OnInit {
     
     this.datesinvalid = false;
   }
+  markAsGraded(tasknumber:number){
+    let updateData = {
+      releaseGrades:true
+    }
+    this.assignmentService.updateAssignment(updateData, this.courseid, tasknumber).subscribe(data=>{
+      console.log(data)
+    });
+  }
+  loadFormToEdit(tasknumber:number,form:NgForm){
+    if(form==this.assignform){
+      this.taskdata['number'] = tasknumber
+      this.makingAssessment = false;this.editingAssignment=true;this.makingPost = false;
+      this.assignmentService.getAssignmentData(this.courseid, tasknumber, true).subscribe(data=>{
+        data.releaseTaskNow = false;
+        delete data.number
+        delete data.published
+        console.log({...data})
+        if(data.files!=""){
+          // this.uploader.names = [data.files.split('/')[data.files.split('/').length-1]]
+          delete data.files
+        }
+        delete data.graded
+        delete data.acceptSubmission
+        console.log(data.releaseDate)
+        let temparray:any[] = data.releaseTime.split(':')
+        temparray.pop()
+        
+        data.releaseTime = [...temparray].join(':')
+        temparray = data.dueTime.split(':')
+        temparray.pop()
+        data.dueTime =[...temparray].join(':')
+        
+        form.setValue(data);
+      })
+    }
+    else if(form==this.postform){
+      this.makingAssessment = false;this.makingAssignment=true;this.makingPost = false;
+      this.postService.getPostData(this.courseid, tasknumber, 'instructor').subscribe(data=>{
+        console.log(data)
+      })
+    }
+    }
+
   makePost(data:any){
     
     // console.log(data);

@@ -20,10 +20,10 @@ export class AssignmentService {
       enumstr = '/all/'
     }
     if(forprof){
-      enumstr = enumstr + '1/';
+      enumstr = enumstr + 'instructor/';
     }
     else{
-      enumstr = enumstr + '0/';
+      enumstr = enumstr + 'student/';
     }
     return this.http.get<any>(this.apiroot+courseid +enumstr,httpop)
   }
@@ -75,5 +75,17 @@ export class AssignmentService {
     }
     // grades/<str:courseid>/<str:userid>/all
     return this.http.get<any>(this.apiroot+suffix, httpop);
+  }
+  updateAssignment(data:any, courseid:string, num:number,file:any=null){
+  
+    let uploadData = new FormData();
+    uploadData.append('data', JSON.stringify(data))
+    if(file!=null){
+      uploadData.append('file', file, file.name);
+    }
+
+    // console.log(uploadData)
+    // return
+    return this.http.post<any>(this.apiroot + courseid +'/'+num.toString()+'/update/',uploadData);
   }
 }

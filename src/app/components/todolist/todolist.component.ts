@@ -51,14 +51,14 @@ export class TodolistComponent implements OnInit {
   ngOnInit(): void {
     let id = localStorage.getItem('userid')
     this.courseService.getToDo(id!,'student').subscribe(data=>{
-      console.log(JSON.parse(data))
+      console.log(data)
       // this.StudentItems = JSON.parse(data);
-      this.StudentItems = this.sortDatewise(JSON.parse(data));
+      this.StudentItems = this.sortDatewise(data);
     })
     this.courseService.getToDo(id!, 'instructor').subscribe(data=>{
       // this.ProfItems = JSON.parse(data)
-      this.ProfItems = this.sortDatewise(JSON.parse(data))
-      console.log(JSON.parse(data))
+      this.ProfItems = this.sortDatewise(data)
+      console.log(data)
     })
   }
 

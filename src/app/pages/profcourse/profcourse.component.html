@@ -36,7 +36,7 @@
         <button class="btn btn-outline-danger" (click)="makingPost=false" style="margin: 10px;">Discard</button>
     </form>
 
-    <form *ngIf="makingAssignment" #assignForm = "ngForm" (ngSubmit) = "makeAssignmentData(assignForm.value)">
+    <form *ngIf="makingAssignment||editingAssignment" #assignForm = "ngForm" (ngSubmit) = "makeAssignmentData(assignForm.value)">
         <div class="form-floating">
             <input type="text" class="form-control" id="title" placeholder="Title" name="title" ngModel>
             <label for="title" class="form-label">Title of Assignment</label>
@@ -57,6 +57,11 @@
             <input type="checkbox" class="form-check-input" name="releaseTaskNow" (change)="releaseTaskNow=!releaseTaskNow" ngModel>
             <label for="releaseTaskNow" class="form-check-label">Publish Immediately</label>
         </div>
+        <div class="form-floating">
+            <input type="number" class="form-control" name="weight" max="100" min="1" ngModel>
+            <label for="weight" class="form-label">Weight of Assignment</label>
+        </div>
+
         <div class="form-floating" *ngIf="!releaseTaskNow">
             <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" (change)="validateDates(assignForm)" ngModel>
             <label for="releaseDate" class="form-label">Release Date</label>
@@ -118,16 +123,18 @@
     <h3>Assignments <i class="bi bi-file-earmark-fill" style="font-size: 2rem;"></i></h3>
     <div *ngFor="let task of assignments">
         <div class="container" style="margin: 30px;">
-            <h5>{{task.number+1}}. {{task.title}}</h5>
+            <h5>{{task.number+1}}. {{task.title}} <button class="btn btn-outline-dark" id="{{task.number}}" (click)="loadFormToEdit(task.number,assignform)"><i class="bi bi-pencil"></i>Edit</button></h5>
             <div class="btn-group-horizontal" style="margin: 0px; margin-left: 0px;">
                 <p class="btn btn-secondary text-left" style="text-align: left;margin:3px;padding: 0px;padding-left: 3px;padding-right:3px;"><i class="bi bi-eye"></i> {{task.seenby}}</p>
                 <p class="btn btn-secondary text-left" style="text-align: left;margin:3px; padding: 0px;padding-left: 3px;padding-right:3px;"><i class="bi bi-check"></i> {{task.submittedby}}</p>
             </div>
+            <p style="overflow: hidden;"><b>Instruction</b>: {{task.instruction}}</p>
             <div class="btn-group">
                 <button class="btn btn-outline-dark" id="{{task.number}}" (click)="triggerFileChooser(task.number)"><i class="bi bi-upload"></i> Feedback</button>
-                <button class="btn btn-outline-dark" id="{{task.number}}" (click)="downloadSubmissions(task.number)"><i class="bi bi-download"></i> Submissions</button>
+                <button class="btn btn-outline-dark" id="{{task.number}}" (click)="downloadSubmissions(task.number)"><i class="bi bi-download"></i>Submissions</button>
+                <button class="btn btn-outline-dark" id="{{task.number}}" (click)="markAsGraded(task.number)"><i class="bi bi-check"></i>Release Grades</button>
             </div>
-            <p style="overflow: hidden;"><b>Instruction</b>: {{task.instruction}}</p>
+
         </div>
     </div>
 
