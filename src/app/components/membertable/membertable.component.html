@@ -24,16 +24,21 @@
     <table #table class="table" style="margin: 10px; margin-bottom: 30px;">
 
         <colgroup>
+            <col span="1" style="width: 20%;">
             <col span="1" style="width: 28%;">
-            <col span="1" style="width: 28%;">
-            <col span="1" style="width: 28%;">
-            <col span="1" style="width: 16%;">
+            <ng-container *ngIf="data['memberdata']!=undefined">
+                <col *ngFor="let taskgrade of data['memberdata'][0].taskGrades" span="1" style="width: 5%;">
+            </ng-container>
+            <col span="1" style="width: 10%;">
         </colgroup>
 
         <tr>
             <th>User ID</th>
-            <th *ngIf="title=='Students'">Grade</th>
-            <th *ngIf="title=='Students'">Submissions</th>
+            <th>UserName</th>
+            <ng-container *ngIf="title=='Students'&&data['memberdata']!=undefined" >
+                <th *ngFor="let taskgrade of data['memberdata'][0].taskGrades">{{taskgrade.name}}</th>
+            </ng-container>
+            <th *ngIf="title=='Students'">Cumulative Score</th>
             <th *ngIf="title=='Wizards'">Access Level</th>
             <th *ngIf="title=='Wizards'"></th>          <!--empty, to align-->
             <th *ngIf="title=='Instructors'"></th>      <!--empty-->
@@ -43,8 +48,12 @@
         <tr *ngFor="let datum of data['memberdata']">
             <td>{{datum.userID}}</td>
             <td>{{datum.username}}</td>
-            <td *ngIf="title=='Students'">grade data</td>
-            <td *ngIf="title=='Students'">submissiondata</td>
+            <!-- <td *ngIf="title=='Students"></td> -->
+            <ng-container *ngIf="true">
+                <td *ngFor="let taskgrade of datum.taskGrades" (click)="saveUserSubmission(datum.userID)"><u>{{taskgrade.score}}</u></td>
+            </ng-container>
+            <td *ngIf="title=='Students'">{{datum.score}}</td>
+
             <td *ngIf="title=='Wizards'">
                 {{getLevelbyId(datum)}}
                 <div *ngIf="editing" style="display: inline;">

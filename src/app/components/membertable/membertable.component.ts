@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import * as FileSaver from 'file-saver';
+import { AssignmentService } from 'src/app/services/assignment.service';
 
 @Component({
   selector: 'app-membertable',
@@ -11,13 +12,22 @@ export class MembertableComponent implements OnInit {
   @Input('courseid') courseid:string="";
   @Input('data') data = {
     'members':[
-      {'userID':''}
+      {'userID':'a'}
     ],
     'memberdata':[
-      {'userID':'1',
-        'username':'un'}
+        {'userID':'1',
+        'username':'un',
+        'score':'tbg',
+        "taskGrades": [
+          {
+            "name":"a",
+            "score": 5.1
+          }
+          ]
+        }
     ]
   };
+  datain:boolean = false
   @Input('level') level!:number;
   @Input('memberids') memberids:string[]=[];
   @Output('sendlist') sendlist:EventEmitter<any> = new EventEmitter();
@@ -34,7 +44,7 @@ export class MembertableComponent implements OnInit {
     'instructors':['User ID'],
     'wizards':['User ID', 'Access Level']
   }
-  constructor() { }
+  constructor(private assignmentService:AssignmentService) { }
   remove(id:string){
     for(let i =0;i<this.data['members'].length;i++){
       if(this.data['memberdata'][i]['userID']==id){
@@ -52,13 +62,12 @@ export class MembertableComponent implements OnInit {
     //send list out.
   }
   downloadList(){
-    console.log(this.data)
-    let data = [...this.data.members]
-    console.log(data)
+    console.log(this.data['memberdata'])
+    let data = [...this.data['memberdata']]
     let textdata = JSON.stringify(data);
     textdata = textdata.split('},{').join('},\n{')
     let blob = new Blob([textdata]);
-    // FileSaver.saveAs(blob, this.courseid+'_'+this.title.toLowerCase()+".txt")
+    FileSaver.saveAs(blob, this.courseid+'_'+this.title.toLowerCase()+".txt")
 
     // console.log()
   }
@@ -71,7 +80,14 @@ export class MembertableComponent implements OnInit {
     }
     return keys
   }
+  saveUserSubmission(userid:string){
+    this.assignmentService.getSubmissionData(this.courseid, 1, userid).subscribe(data=>{
+      FileSaver.saveAs(new Blob([JSON.stringify(data)]), this.courseid+'_'+userid+'.txt')
+      FileSaver.saveAs( data.files, this.courseid+'_'+userid+'_file'+'.txt')
+      
+    })
 
+  }
   addMembers(){
     let inputstr:string = this.inputelem.nativeElement.value;
     inputstr =  inputstr.replace(' ', '');
