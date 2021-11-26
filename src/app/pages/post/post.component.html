@@ -10,9 +10,9 @@
         Files:
         <downloader [url]="data.files.url" [filename]="data.files.name"></downloader>
     </div>
-
+    <hr/>
     <b>Discussion</b>:
     <div>
-    <app-commentstack [disabled]="!data.discussable" [parentID]="data.id" [comments]="data.comments"></app-commentstack>    
+        <app-commentstack [disabled]="!data.discussable" [parentID]="data.id" [comments]="data.comments"></app-commentstack>
     </div>
 </div>
