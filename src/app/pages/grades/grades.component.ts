@@ -7,14 +7,18 @@ import { CourseService } from 'src/app/services/course.service';
   styleUrls: ['./grades.component.css']
 })
 export class GradesComponent implements OnInit {
-  courses:any[] = []
+  studentCourses:any[] = []
+  instructorCourses:any[] = []
   constructor(private courseService:CourseService) { }
 
   ngOnInit(): void {
     let userid = localStorage.getItem('userid')!
     this.courseService.getCoursesByStudent(userid).subscribe(data=>{
       console.log(data)
-      this.courses = data;
+      this.studentCourses = data;
+    })
+    this.courseService.getCoursesByInstructor(userid).subscribe(data=>{
+      this.instructorCourses = data
     })
   // console.log(localStorage.getItem('blah'))
   // console.log(localStorage.getItem('blah')!)

@@ -73,7 +73,6 @@ export class AssignmentService {
     else{
       suffix+= ('/'+enumL.toString()+'/')
     }
-    // grades/<str:courseid>/<str:userid>/all
     return this.http.get<any>(this.apiroot+suffix, httpop);
   }
   updateAssignment(data:any, courseid:string, num:number,file:any=null){
