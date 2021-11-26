@@ -185,10 +185,14 @@ export class ProfcourseComponent implements OnInit {
   }
   markAsGraded(tasknumber:number,notretract:boolean=true){
     let updateData = {
-      releaseGrades:true&&notretract
+      releaseGrades:notretract
     }
     this.assignmentService.updateAssignment(updateData, this.courseid, tasknumber).subscribe(data=>{
       this.assignments = data
+      if(this.assignments.find(v=>v.number==tasknumber)!.graded!=notretract){
+        window.alert('Failed to Release Grades. Please grade all submissions.')
+      }
+      // console.log()
       // console.log(data)
     });
   }
@@ -313,8 +317,8 @@ export class ProfcourseComponent implements OnInit {
       return
     }
     this.assignmentService.sendFeedback(this.courseid,this.tasknumtemp, event.target.files[0]).subscribe(data=>{
-      console.log(data)
       this.sender.nativeElement.value = null
+      window.alert("Succesfully posted feedback!")
     })
   }
   downloadSubmissions(tasknum:number){

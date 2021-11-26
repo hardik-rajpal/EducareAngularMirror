@@ -140,8 +140,10 @@
                 <button style="float: right;" class="btn btn-outline-dark" id="{{task.number}}" (click)="deleteElement('assignment',task.number)"><i class="bi bi-trash"></i>Delete</button>
             </h5>
             <div class="btn-group-horizontal" style="margin: 0px; margin-left: 0px;">
-                <p class="btn btn-secondary text-left" style="text-align: left;margin:3px;padding: 0px;padding-left: 3px;padding-right:3px;"><i class="bi bi-eye"></i> {{task.seenby}}</p>
-                <p class="btn btn-secondary text-left" style="text-align: left;margin:3px; padding: 0px;padding-left: 3px;padding-right:3px;"><i class="bi bi-check"></i> {{task.submittedby}}</p>
+                <p *ngIf="course.students.length>task.seenby" class="btn btn-secondary text-left" style="text-align: left;margin:3px;padding: 0px;padding-left: 3px;padding-right:3px;"><i class="bi bi-eye"></i> {{task.seenby}}</p>
+                <p *ngIf="course.students.length>task.submittedby"class="btn btn-secondary text-left" style="text-align: left;margin:3px; padding: 0px;padding-left: 3px;padding-right:3px;"><i class="bi bi-check"></i> {{task.submittedby}}</p>
+                <p *ngIf="course.students.length==task.seenby"class="btn btn-success text-left" style="text-align: left;margin:3px;padding: 0px;padding-left: 3px;padding-right:3px;"><i class="bi bi-eye"></i> {{task.seenby}}</p>
+                <p *ngIf="course.students.length==task.submittedby" class="btn btn-success text-left" style="text-align: left;margin:3px; padding: 0px;padding-left: 3px;padding-right:3px;"><i class="bi bi-check"></i> {{task.submittedby}}</p>
             </div>
             <p style="overflow: hidden;"><b>Instruction</b>: {{task.instruction}}</p>
             <div *ngIf="task.hasfiles">
@@ -154,7 +156,7 @@
                 <button class="btn btn-outline-dark" id="{{task.number}}" (click)="downloadSubmissions(task.number)"><i class="bi bi-download"></i>Submissions</button>
                 <button class="btn btn-outline-dark" id="{{task.number}}" (click)="triggerFileChooser(task.number)"><i class="bi bi-upload"></i> Feedback</button>
                 <button *ngIf="!task.graded" class="btn btn-outline-success" id="{{task.number}}" (click)="markAsGraded(task.number)"><i class="bi bi-check"></i>Release Grades</button>
-                <button *ngIf="task.graded" class="btn btn-outline-danger" id="{{task.number}}" (click)="markAsGraded(task.number,false)"><i class="bi bi-check"></i>Retract Grades</button>
+                <button *ngIf="task.graded" class="btn btn-outline-danger" id="{{task.number}}" (click)="markAsGraded(task.number,false)"><i class="bi bi-x-circle"></i>Retract Grades</button>
             </div>
 
         </div>
