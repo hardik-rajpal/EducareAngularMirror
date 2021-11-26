@@ -31,7 +31,6 @@ export class TodolistComponent implements OnInit {
         return v.dueDate==date;
       })
       items.push({...newitemobj})
-
       // console.log()
     }
     // console.log(this.StudentItems)
@@ -39,7 +38,6 @@ export class TodolistComponent implements OnInit {
       console.log(new Date(a.date).valueOf()-new Date(b.date).valueOf());
       return (new Date(a.date).valueOf()-new Date(b.date).valueOf())
     })
-    // console.log(this.StudentItems)
     for(let item of items){
       item.date = new Date(item.date).toLocaleDateString('en-GB', {
         day: 'numeric', month: 'short', year: 'numeric'
@@ -57,6 +55,10 @@ export class TodolistComponent implements OnInit {
     })
     this.courseService.getToDo(id!, 'instructor').subscribe(data=>{
       // this.ProfItems = JSON.parse(data)
+      this.ProfItems = this.sortDatewise(data)
+      console.log(data)
+    })
+    this.courseService.getToDo(id!, 'wizard').subscribe(data=>{
       this.ProfItems = this.sortDatewise(data)
       console.log(data)
     })

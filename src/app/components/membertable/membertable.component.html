@@ -40,22 +40,23 @@
             <th *ngIf="title=='Instructors'"></th>      <!--empty-->
         </tr>
 
-        <tr *ngFor="let memberid of memberids">
-            <td>{{memberid}}</td>
+        <tr *ngFor="let datum of data['memberdata']">
+            <td>{{datum.userID}}</td>
+            <td>{{datum.username}}</td>
             <td *ngIf="title=='Students'">grade data</td>
             <td *ngIf="title=='Students'">submissiondata</td>
             <td *ngIf="title=='Wizards'">
-                {{getLevelbyId(memberid)}}
+                {{getLevelbyId(datum)}}
                 <div *ngIf="editing" style="display: inline;">
-                <button class="btn btn-outline-success btn-sm" (click)="changeLevelbyId(memberid,+1)"><i class="bi bi-arrow-up"></i></button>
-                <button class="btn btn-outline-danger btn-sm" (click)="changeLevelbyId(memberid,-1)"><i class="bi bi-arrow-down"></i></button>
+                <button class="btn btn-outline-success btn-sm" (click)="changeLevelbyId(datum.userID,+1)"><i class="bi bi-arrow-up"></i></button>
+                <button class="btn btn-outline-danger btn-sm" (click)="changeLevelbyId(datum.userID,-1)"><i class="bi bi-arrow-down"></i></button>
                 </div>
             </td>
             <td *ngIf="title=='Wizards'"></td>          <!--empty-->
             <td *ngIf="title=='Instructors'"></td>      <!--empty-->
             <td *ngIf="title=='Instructors'"></td>      <!--empty-->
             <td>
-                <button type="button" class="btn btn-outline-danger btn-sm" *ngIf="editing" (click)="remove(memberid)"><i class="bi bi-x-circle"></i> Remove</button>
+                <button type="button" class="btn btn-outline-danger btn-sm" *ngIf="editing" (click)="remove(datum.userID)"><i class="bi bi-x-circle"></i> Remove</button>
             </td>
         </tr>
         

@@ -90,7 +90,7 @@ export class CommentstackComponent implements OnInit {
     }
     this.commentService.addComment(data,this.courseid,this.postNum).subscribe(data=>{
       let comment;
-      if(parentOfNewComment==this.parent){
+      if(this.parent!='Comment'){
         this.comments = data;
         this.commenting = false;        
       }

@@ -14,7 +14,7 @@
                     </span>
                 </p>
                 <i *ngIf="obj.type=='Task'" class="bi bi-file-earmark-fill" style="font-size: 2rem; display: inline; float: left;"></i>
-                <h4 style="display: inline;">{{obj.courseCode}}: {{obj.type}} {{obj.number}}</h4>
+                <a [routerLink] = "['/assignments/'+obj.courseID+'/'+obj.number.toString()]"><h4 style="display: inline;">{{obj.courseCode}}: {{obj.type}} {{obj.number}}</h4></a>
                 <h5 style="margin-left: 3rem;">{{obj.title}}</h5>
                 <p>{{obj.peerProgress}}% students have submitted.</p>
             </td>
@@ -29,7 +29,7 @@
                     {{ item.date | date : 'EEEE' }}, {{item.date}}
                 </p>
                 <i *ngIf="obj.type=='Task'" class="bi bi-file-earmark-fill" style="font-size: 2rem; display: inline; float: left;"></i>
-                <h4 style="display: inline;">{{obj.courseCode}}: {{obj.type}} {{obj.number}}</h4>
+                <a [routerLink]="['/courses/profview/'+obj.courseID]"  fragment="task{{obj.number}}"><h4 style="display: inline;">{{obj.courseCode}}: {{obj.type}} {{obj.number}}</h4></a>
                 <h5 style="margin-left: 3rem;">{{obj.title}}</h5>
                 <p>{{obj.leftToGrade}} of {{obj.totalSubmissions}} submissions ungraded.</p>
             </td>

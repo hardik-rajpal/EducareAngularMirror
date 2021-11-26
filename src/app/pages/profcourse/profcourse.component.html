@@ -134,6 +134,7 @@
 
     <h3>Assignments <i class="bi bi-file-earmark-fill" style="font-size: 2rem;"></i></h3>
     <div *ngFor="let task of assignments">
+        
         <div class="container" style="margin: 30px;">
             <h5>{{task.number+1}}. {{task.title}} 
                 <button class="btn btn-outline-dark" id="{{task.number}}" (click)="loadFormToEdit(task.number,'assignform')"><i class="bi bi-pencil"></i>Edit</button>
