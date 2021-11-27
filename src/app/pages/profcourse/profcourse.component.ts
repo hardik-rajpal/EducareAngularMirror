@@ -69,6 +69,7 @@ export class ProfcourseComponent implements OnInit {
       title: "Vocabularo"
     }
   ]
+  userid:string = ''
   taskdata:any = {}
   postdata:any = {}
   filehost:string = environment.server_url
@@ -96,6 +97,7 @@ export class ProfcourseComponent implements OnInit {
       this.editingPost = false;
     }
     makeAssignmentData(data:any){
+
       let dupdata = {...data};
       console.log(this.tempfileholder)
       console.log(dupdata)
@@ -117,10 +119,10 @@ export class ProfcourseComponent implements OnInit {
     
       }
       else{
-        this.assignmentService.createAssignment(dupdata, this.courseid, this.tempfileholder).subscribe(data=>{
-          this.assignform.reset()
-          this.releaseTaskNow = false;
-          this.uploader.files = []
+        this.assignmentService.createAssignment(dupdata, this.courseid, this.userid,this.tempfileholder).subscribe(data=>{
+          // this.assignform.reset()
+          // this.releaseTaskNow = false;
+          // this.uploader.files = []
           window.alert("Successfully Made Assignment!")
           this.assignments = data
         }, error=>{
@@ -178,7 +180,7 @@ export class ProfcourseComponent implements OnInit {
 
     }
     else if(type=='assignment'){
-      this.assignmentService.updateAssignment({delete:true}, this.courseid, num).subscribe(data=>{
+      this.assignmentService.updateAssignment({delete:true}, this.courseid,this.userid, num).subscribe(data=>{
         this.assignments = data
       })
     }
@@ -187,7 +189,7 @@ export class ProfcourseComponent implements OnInit {
     let updateData = {
       releaseGrades:notretract
     }
-    this.assignmentService.updateAssignment(updateData, this.courseid, tasknumber).subscribe(data=>{
+    this.assignmentService.updateAssignment(updateData, this.courseid, this.userid,tasknumber).subscribe(data=>{
       this.assignments = data
       if(this.assignments.find(v=>v.number==tasknumber)!.graded!=notretract){
         window.alert('Failed to Release Grades. Please grade all submissions.')
@@ -265,6 +267,7 @@ export class ProfcourseComponent implements OnInit {
       this.course = data
       let userid = localStorage.getItem('userid');
       if(userid!=null){
+        this.userid = userid;
         let iswiz = this.course.wizardcards.filter((v:any)=>{console.log(Object.keys(v)[0]);return Object.keys(v)[0]==userid}).length>0;
         this.course.wizardcards.forEach((v:any)=>{console.log(Object.keys(v))})
         console.log([userid])

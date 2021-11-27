@@ -18,6 +18,7 @@ export class MembertableComponent implements OnInit {
         {'userID':'1',
         'username':'un',
         'score':'tbg',
+        'email':'',
         "taskGrades": [
           {
             "name":"a",

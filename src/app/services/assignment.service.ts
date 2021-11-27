@@ -27,7 +27,7 @@ export class AssignmentService {
     }
     return this.http.get<any>(this.apiroot+courseid +enumstr,httpop)
   }
-  createAssignment(data:any, courseid:string, file:any=null){
+  createAssignment(data:any, courseid:string, userid:string,file:any=null){
     // let enumstr = '/'+enumL.toString()+'/'
     console.log("Here")
     let uploadData = new FormData();
@@ -38,7 +38,7 @@ export class AssignmentService {
 
     // console.log(uploadData)
     // return
-    return this.http.post<any>(this.apiroot + courseid +'/create/',uploadData);
+    return this.http.post<any>(this.apiroot + courseid+'/'+ userid +'/create/',uploadData);
   }
   getSubmissionData(courseid:string, enumL:number, userid:string=''){
     if(userid==""){
@@ -75,7 +75,7 @@ export class AssignmentService {
     }
     return this.http.get<any>(this.apiroot+suffix, httpop);
   }
-  updateAssignment(data:any, courseid:string, num:number,file:any=null){
+  updateAssignment(data:any, courseid:string, userid:string,num:number,file:any=null){
   
     let uploadData = new FormData();
     uploadData.append('data', JSON.stringify(data))
@@ -85,6 +85,6 @@ export class AssignmentService {
 
     // console.log(uploadData)
     // return
-    return this.http.post<any>(this.apiroot + courseid +'/'+num.toString()+'/update/',uploadData);
+    return this.http.post<any>(this.apiroot + courseid +'/'+userid +'/'+num.toString()+'/update/',uploadData);
   }
 }

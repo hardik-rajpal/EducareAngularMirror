@@ -23,18 +23,31 @@
 
     <table #table class="table" style="margin: 10px; margin-bottom: 30px;">
 
-        <colgroup>
+        <colgroup *ngIf="title=='Students'">
             <col span="1" style="width: 20%;">
+            <col span="1" style="width: 28%;">
             <col span="1" style="width: 28%;">
             <ng-container *ngIf="data['memberdata']!=undefined">
                 <col *ngFor="let taskgrade of data['memberdata'][0].taskGrades" span="1" style="width: 5%;">
             </ng-container>
             <col span="1" style="width: 10%;">
         </colgroup>
+        <colgroup *ngIf="title=='Instructors'">
+            <col span="1" style="width: 20%;">
+            <col span="1" style="width: 28%;">
+            <col span="1" style="width: 40%;">
+        </colgroup>
+        <colgroup *ngIf="title=='Wizards'">
+            <col span="1" style="width: 20%;">
+            <col span="1" style="width: 28%;">
+            <col span="1" style="width: 30%;">
+            <col span="1" style="width: 30%;">
+        </colgroup>
 
         <tr>
             <th>User ID</th>
             <th>UserName</th>
+            <th>Email</th>
             <ng-container *ngIf="title=='Students'&&data['memberdata']!=undefined" >
                 <th *ngFor="let taskgrade of data['memberdata'][0].taskGrades">{{taskgrade.name}}</th>
             </ng-container>
@@ -48,6 +61,7 @@
         <tr *ngFor="let datum of data['memberdata']">
             <td>{{datum.userID}}</td>
             <td>{{datum.username}}</td>
+            <td>{{datum.email}}</td>
             <!-- <td *ngIf="title=='Students"></td> -->
             <ng-container *ngIf="true">
                 <td *ngFor="let taskgrade of datum.taskGrades" (click)="saveUserSubmission(datum.userID)"><u>{{taskgrade.score}}</u></td>

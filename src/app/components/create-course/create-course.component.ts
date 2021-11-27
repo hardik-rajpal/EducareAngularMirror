@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import {CourseService} from 'src/app/services/course.service';
 import { environment } from 'src/environments/environment';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-course',
@@ -11,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CreateCourseComponent implements OnInit {
   @ViewChild('createForm') form!:NgForm;
-  constructor(private userService:UserService, private courseService:CourseService) { }
+  constructor(private userService:UserService, private courseService:CourseService, private router:Router) { }
   userid!:string
   userlist!:any[]
   courselist!:any[]
@@ -27,9 +28,9 @@ export class CreateCourseComponent implements OnInit {
     else{
       //redirect
     }
-    // this.userService.getProfileData("all").subscribe((userlist)=>{
-    //   this.userlist = userlist;
-    // })
+    this.userService.getProfileData("all").subscribe((userlist)=>{
+      this.userlist = userlist;
+    })
     this.courseService.getCourseData("all").subscribe((courselist)=>{
       this.courselist = courselist;
     })
@@ -53,8 +54,14 @@ export class CreateCourseComponent implements OnInit {
       data.roles = this.configdata;
     }
     console.log(data);
-    this.courseService.createCourse(data).subscribe(dataa=>{
-      console.log(dataa);
+    this.courseService.createCourse(data, this.userid).subscribe(data=>{
+      console.log(data)
+      if(data.errorids.length>0){
+        window.alert(`Some user ids were not found!:${data.errorids}`)
+      }else{
+        window.alert('Successfully created course!');
+        this.router.navigate(['/courses/profview/'+data.courseID])
+      }
     });
     //clean data. Remove non-players.
     //send data.
