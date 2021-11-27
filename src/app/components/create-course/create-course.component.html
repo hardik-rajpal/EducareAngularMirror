@@ -15,16 +15,13 @@
             <textarea class="form-control" id="createCourseDesc" rows="3" placeholder="Description of the course" name="desc" ngModel></textarea>
             <label for="createCourseDesc" class="form-label">Course description</label>
         </div>
-        <div class="form-floating mb-3">
-            <select id="year" name="year" ngModel>
-                <option *ngFor="let year of years">{{year}}</option>
-            </select>
-            <select id="sem" name="sem" ngModel>
-                <option *ngFor="let sem of sems">{{sem}}</option>
-            </select>
-        </div>
-        <uploader (sendfiles)="collectFiles($event)" #uploader></uploader>
-        <br>
+        <select class="form-select mb-3" style="width: 100px; margin-right: 20px; display: inline;" id="year" name="year" ngModel>
+            <option *ngFor="let year of years">{{year}}</option>
+        </select>
+        <select class="form-select mb-3" style="width: 150px; display: inline;" id="sem" name="sem" ngModel>
+            <option *ngFor="let sem of sems">{{sem}}</option>
+        </select>
+        <uploader style="display: block;" (sendfiles)="collectFiles($event)" #uploader></uploader>
         <input class="btn btn-outline-success" type="submit" value="Submit">
     </form>
 

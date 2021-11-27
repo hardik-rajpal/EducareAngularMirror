@@ -19,14 +19,18 @@
             <textarea class="form-control" id="instruction" placeholder="Instruction" name="instruction" ngModel></textarea>
             <label for="instruction" class="form-label">Instruction</label>
         </div>
-        <uploader (sendfiles)="collectFiles($event)" #uploader></uploader>
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="releasePostNow" (change)="releasePostNow=!releasePostNow" ngModel>
-            <label for="releasePostNow" class="form-check-label">Publish Immediately</label>
+        <div style="margin: 10px;">
+            <uploader (sendfiles)="collectFiles($event)" #uploader></uploader>
         </div>
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="discussable" ngModel>
-            <label for="discussable" class="form-check-label">Discussable</label>
+        <div style="margin: 10px;">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="releasePostNow" (change)="releasePostNow=!releasePostNow" ngModel>
+                <label for="releasePostNow" class="form-check-label">Publish Immediately</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="discussable" ngModel>
+                <label for="discussable" class="form-check-label">Discussable</label>
+            </div>
         </div>
         <div class="form-floating" *ngIf="!releasePostNow">
             <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" (change)="validateDates(postForm)" ngModel>
@@ -49,15 +53,11 @@
             <textarea class="form-control" id="instruction" placeholder="Instruction" name="instruction" ngModel></textarea>
             <label for="instruction" class="form-label">Instruction</label>
         </div>
-        <div class="form-floating">
-            <!-- <p #fileName> -->
-                <uploader (sendfiles)="collectFiles($event)" #uploader></uploader>
-            <!-- <button class="btn btn-outline-info margined" (click)="triggerFileChooser()">Upload files</button> -->
-            <!-- </p> -->
+        <div style="margin: 10px;">
+            <uploader (sendfiles)="collectFiles($event)" #uploader></uploader>
         </div>
-        <p class="alert alert-danger" *ngIf="datesinvalid">Please ensure that the due date
-    is not in the past and is after the release date.</p>
-        <div class="form-check">
+        <p class="alert alert-danger" *ngIf="datesinvalid">Please ensure that the due date is not in the past and is after the release date.</p>
+        <div class="form-check" style="margin: 10px;">
             <input type="checkbox" class="form-check-input" name="releaseTaskNow" (change)="releaseTaskNow=!releaseTaskNow" ngModel>
             <label for="releaseTaskNow" class="form-check-label">Publish Immediately</label>
         </div>
@@ -122,16 +122,17 @@
                 <button style="float: right;" class="btn btn-outline-dark" id="{{post.number}}" (click)="deleteElement('post',post.number)"><i class="bi bi-trash"></i>Delete</button>
             </h5>
             <p style="overflow: hidden;"><b>Instruction</b>: {{post.instruction}}</p>
-            <div *ngIf="post.hasfiles">
+            <div *ngIf="post.hasfiles" style="margin: 10px;">
                 Files: <downloader [url]="post.files.url" [filename]="post.files.name"></downloader>
             </div>
-            <a href="posts/{{courseid}}/{{post.number}}" target="_blank">Discussion</a>
+            <a href="posts/{{courseid}}/{{post.number}}" target="_blank">Discussion <i class="bi bi-chat-text"></i></a>
                 
         </div>
     </div>
 
     <hr/>
 
+    
     <h3>Assignments <i class="bi bi-file-earmark-fill" style="font-size: 2rem;"></i></h3>
     <div *ngFor="let task of assignments">
         <div class="container" style="margin: 30px;">
@@ -146,17 +147,19 @@
                 <p *ngIf="course.students.length==task.submittedby" class="btn btn-success text-left" style="text-align: left;margin:3px; padding: 0px;padding-left: 3px;padding-right:3px;"><i class="bi bi-check"></i> {{task.submittedby}}</p>
             </div>
             <p style="overflow: hidden;"><b>Instruction</b>: {{task.instruction}}</p>
-            <div *ngIf="task.hasfiles">
-            Files: <downloader [url]="task.files.url" [filename]="task.files.name"></downloader>
+            <div *ngIf="task.hasfiles" style="margin-left: 10px;">
+                Files: <downloader [url]="task.files.url" [filename]="task.files.name"></downloader>
             </div>
-            <p *ngIf="task.weight!=null" class="alert alert-success">Weightage: {{task.weight}}</p>
-            <p *ngIf="task.weight==null" class="alert alert-warning">Weightage not set</p>
+            <div style="margin: 10px;">
+                <p *ngIf="task.weight!=null" class="alert alert-success">Weightage: {{task.weight}}</p>
+                <p *ngIf="task.weight==null" class="alert alert-warning">Weightage not set</p>
+            </div>
             <p>Release: {{task.releaseDate}}, {{task.releaseTime}} | Due at: {{task.dueDate}}, {{task.dueTime}}</p>
             <div class="btn-group">
-                <button class="btn btn-outline-dark" id="{{task.number}}" (click)="downloadSubmissions(task.number)"><i class="bi bi-download"></i>Submissions</button>
+                <button class="btn btn-outline-dark" id="{{task.number}}" (click)="downloadSubmissions(task.number)"><i class="bi bi-download"></i> Submissions</button>
                 <button class="btn btn-outline-dark" id="{{task.number}}" (click)="triggerFileChooser(task.number)"><i class="bi bi-upload"></i> Feedback</button>
-                <button *ngIf="!task.graded" class="btn btn-outline-success" id="{{task.number}}" (click)="markAsGraded(task.number)"><i class="bi bi-check"></i>Release Grades</button>
-                <button *ngIf="task.graded" class="btn btn-outline-danger" id="{{task.number}}" (click)="markAsGraded(task.number,false)"><i class="bi bi-x-circle"></i>Retract Grades</button>
+                <button *ngIf="!task.graded" class="btn btn-outline-success" id="{{task.number}}" (click)="markAsGraded(task.number)"><i class="bi bi-check"></i> Release Grades</button>
+                <button *ngIf="task.graded" class="btn btn-outline-danger" id="{{task.number}}" (click)="markAsGraded(task.number,false)"><i class="bi bi-x-circle"></i> Retract Grades</button>
             </div>
 
         </div>

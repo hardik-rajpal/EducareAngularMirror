@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AssignmentService } from 'src/app/services/assignment.service';
 import { CourseService } from 'src/app/services/course.service';
