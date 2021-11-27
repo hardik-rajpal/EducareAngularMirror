@@ -78,7 +78,7 @@ export class ProfcourseComponent implements OnInit {
   releasePostNow:boolean = false;
   releaseAssessmentNow:boolean = false;
   datesinvalid:boolean = false;
-  makingAssignment:boolean = true;
+  makingAssignment:boolean = false;
   editingAssignment:boolean = false;
   makingPost:boolean = false;
   editingPost:boolean = false;

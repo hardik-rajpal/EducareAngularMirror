@@ -1,3 +1,7 @@
-<div *ngFor="let course of studentCourses">
-    <a href="grades/{{course.courseID}}"  class="btn btn-primary">{{course.courseCode}}</a>
+<h3 style="margin: 30px;">Grades</h3>
+
+<div class="btn-group-vertical btn-group-lg" style="margin-left: 30px;">
+    <ng-container *ngFor="let course of studentCourses">
+        <a href="grades/{{course.courseID}}" class="btn btn-outline-primary" style="text-align: left !important;">{{course.courseCode}} : {{course.courseName}}</a>
+    </ng-container>
 </div>
