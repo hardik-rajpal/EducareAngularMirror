@@ -72,6 +72,7 @@ export class ProfcourseComponent implements OnInit {
   userid:string = ''
   taskdata:any = {}
   postdata:any = {}
+  gradertype:string = ''
   filehost:string = environment.server_url
   tasknumtemp!:number
   releaseTaskNow:boolean = false;
@@ -106,7 +107,7 @@ export class ProfcourseComponent implements OnInit {
       if(this.editingAssignment){
         console.log(dupdata.releaseDate)
 
-        this.assignmentService.updateAssignment(dupdata, this.courseid,this.taskdata.number, this.tempfileholder).subscribe(data=>{
+        this.assignmentService.updateAssignment(dupdata, this.courseid,this.userid,this.taskdata.number, this.tempfileholder).subscribe(data=>{
           this.assignform.reset()
           this.releaseTaskNow = false;
           this.hideAllForms();
@@ -155,7 +156,7 @@ export class ProfcourseComponent implements OnInit {
       if(!(dueDate=="")){
         let ddate = new Date(dueDate+'T'+duetime+':00');
         if(ddate<today){
-          console.log("H");
+          // console.log("H");
           this.datesinvalid = true;
           return;
         }
@@ -174,7 +175,7 @@ export class ProfcourseComponent implements OnInit {
   }
   deleteElement(type:string, num:number){
     if(type=='post'){
-      this.postService.updatePost({delete:true},this.courseid, num, null).subscribe(data=>{
+      this.postService.updatePost({delete:true},this.courseid, this.userid,num, null).subscribe(data=>{
         this.posts = data
       })
 
@@ -192,7 +193,7 @@ export class ProfcourseComponent implements OnInit {
     this.assignmentService.updateAssignment(updateData, this.courseid, this.userid,tasknumber).subscribe(data=>{
       this.assignments = data
       if(this.assignments.find(v=>v.number==tasknumber)!.graded!=notretract){
-        window.alert('Failed to Release Grades. Please grade all submissions.')
+        window.alert('Failed to Release Grades. Please ensure that the due date has passed and that all submissions have been graded.')
       }
       // console.log()
       // console.log(data)
@@ -208,6 +209,7 @@ export class ProfcourseComponent implements OnInit {
         delete data.published
         delete data.seenby
         delete data.submittedby
+        delete data.author
         console.log({...data})
         if(data.files!=""){
           delete data.files
@@ -226,7 +228,7 @@ export class ProfcourseComponent implements OnInit {
         data.releasePostNow = false;
         delete data.id
         delete data.number
-
+        delete data.author
         delete data.comments
         delete data.files
         delete data.published
@@ -242,17 +244,17 @@ export class ProfcourseComponent implements OnInit {
     let dupdata = {...data}
     dupdata['releaseDate']+=('T'+data['releaseTime']+':00')
     if(this.editingPost){
-      this.postService.updatePost(dupdata, this.courseid, this.postdata.number, this.tempfileholder).subscribe(data=>{
+      this.postService.updatePost(dupdata, this.courseid, this.userid,this.postdata.number, this.tempfileholder).subscribe(data=>{
         console.log(data)
         this.posts = data
         window.alert("Successfully saved your changes!")
         this.releasePostNow = false;
       })
     }else{
-      this.postService.createPost(data, this.courseid,this.tempfileholder).subscribe(data=>{
+      this.postService.createPost(data, this.courseid,this.userid,this.tempfileholder).subscribe(data=>{
         this.releasePostNow = false;
         this.uploader.files = []
-        window.alert("Successfully Made Assignment!")
+        window.alert("Successfully Made Post!")
         this.postform.reset()
       }, error=>{
         window.alert("Error. Please check the form.");
@@ -303,13 +305,14 @@ export class ProfcourseComponent implements OnInit {
     console.log(files);
     this.tempfileholder = files[0]
   }
-  triggerFileChooser(task_num:number=-1){
+  triggerFileChooser(task_num:number=-1, type:string){
     console.log(task_num);
     this.tasknumtemp = task_num;
+    this.gradertype = type;
     console.log("Called");
     this.sender.nativeElement.click()
   }
-  submitFeedback(event:any){
+  submitGrader(event:any){
     if(this.sender.nativeElement.files.length<1){
       // this.filename.nativeElement.innerHTML = ""
       return
@@ -319,9 +322,26 @@ export class ProfcourseComponent implements OnInit {
       this.filename.nativeElement.innerHTML += event.target.files[0].name
       return
     }
-    this.assignmentService.sendFeedback(this.courseid,this.tasknumtemp, event.target.files[0]).subscribe(data=>{
+    this.assignmentService.sendGrader(this.courseid,this.userid,this.tasknumtemp, this.gradertype,event.target.files[0]).subscribe(data=>{
+      if(this.gradertype=='auto'){
+        if(data!='success'){
+          console.log(data)
+          window.alert(data.msg)
+        }
+        else{
+          window.alert(data.msg)
+        }
+      }
+      else if(this.gradertype=='manual'){
+        if(data.NE_users.length!=0){
+          window.alert("Following userids do not exist:"+ data.NE_users.toString())
+        }
+        if(data.NE_students.length!=0){
+          window.alert("Following userids are not in the course: "+data.NE_students.toString())
+        }
+      }
       this.sender.nativeElement.value = null
-      window.alert("Succesfully posted feedback!")
+      
     })
   }
   downloadSubmissions(tasknum:number){

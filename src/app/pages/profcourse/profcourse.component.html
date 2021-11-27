@@ -158,7 +158,8 @@
             <p>Release: {{task.releaseDate}}, {{task.releaseTime}} | Due at: {{task.dueDate}}, {{task.dueTime}}</p>
             <div class="btn-group">
                 <button class="btn btn-outline-dark" id="{{task.number}}" (click)="downloadSubmissions(task.number)"><i class="bi bi-download"></i> Submissions</button>
-                <button class="btn btn-outline-dark" id="{{task.number}}" (click)="triggerFileChooser(task.number)"><i class="bi bi-upload"></i> Feedback</button>
+                <button class="btn btn-outline-dark" id="{{task.number}}" (click)="triggerFileChooser(task.number, 'manual')"><i class="bi bi-upload"></i> Feedback</button>
+                <button class="btn btn-outline-dark" id="{{task.number}}" (click)="triggerFileChooser(task.number, 'auto')"><i class="bi bi-gear"></i> Autograde</button>
                 <button *ngIf="!task.graded" class="btn btn-outline-success" id="{{task.number}}" (click)="markAsGraded(task.number)"><i class="bi bi-check"></i> Release Grades</button>
                 <button *ngIf="task.graded" class="btn btn-outline-danger" id="{{task.number}}" (click)="markAsGraded(task.number,false)"><i class="bi bi-x-circle"></i> Retract Grades</button>
             </div>
@@ -167,6 +168,6 @@
     </div>
 
     <hr/>
-<input type="file" style="visibility: hidden;" #hiddenSender (change)="submitFeedback($event)">
+<input type="file" style="visibility: hidden;" #hiddenSender (change)="submitGrader($event)">
 <a style="visibility: hidden;" target="_blank" #hiddenGetter></a>
 </div>

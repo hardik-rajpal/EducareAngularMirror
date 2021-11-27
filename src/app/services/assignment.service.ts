@@ -55,10 +55,12 @@ export class AssignmentService {
 
     return this.http.post<any>(this.apiroot + suffix, uploadData);
   }
-  sendFeedback(courseid: string, enumL:number, file:any){
-    let suffix = courseid + '/' + enumL +'/submissions/feedback/upload/';
+  sendGrader(courseid: string, userid:string,enumL:number, type:string,file:any){
+    let suffix = courseid + '/' + enumL +'/submissions/grader/upload/';
     let uploadData = new FormData();
+    uploadData.append('type',type)
     uploadData.append('file', file, file.name);
+    uploadData.append('graderID', userid);
     return this.http.post<any>(this.apiroot + suffix, uploadData);
   }
   getSubmissions(courseid:string, enumL:number){

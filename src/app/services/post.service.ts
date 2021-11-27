@@ -20,22 +20,22 @@ export class PostService {
     }
     return this.http.get<any>(this.apiroot+courseid +enumstr+role+'/',httpop)
   }
-  createPost(data:any, courseid:string,file:any){
+  createPost(data:any, courseid:string,userid:string,file:any){
     // let enumstr = '/'+enumL.toString()+'/'
     let uploadData = new FormData();
     uploadData.append('data', JSON.stringify(data))
     if(file!=null){
       uploadData.append('file', file, file.name);
     }
-    return this.http.post<any>(this.apiroot + courseid +'/create/', uploadData);
+    return this.http.post<any>(this.apiroot + courseid +'/'+userid +'/create/', uploadData);
   }
-  updatePost(data:any, courseid:string,num:number,file:any){
+  updatePost(data:any, courseid:string,userid:string,num:number,file:any){
     // let enumstr = '/'+enumL.toString()+'/'
     let uploadData = new FormData();
     uploadData.append('data', JSON.stringify(data))
     if(file!=null){
       uploadData.append('file', file, file.name);
     }
-    return this.http.post<any>(this.apiroot + courseid +'/'+num.toString()+'/update/', uploadData);
+    return this.http.post<any>(this.apiroot + courseid+'/'+userid +'/'+num.toString()+'/update/', uploadData);
   }
 }
