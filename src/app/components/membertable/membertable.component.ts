@@ -1,3 +1,4 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import * as FileSaver from 'file-saver';
 import { AssignmentService } from 'src/app/services/assignment.service';
@@ -22,6 +23,7 @@ export class MembertableComponent implements OnInit {
         "taskGrades": [
           {
             "name":"a",
+            "number":1,
             "score": 5.1
           }
           ]
@@ -45,7 +47,7 @@ export class MembertableComponent implements OnInit {
     'instructors':['User ID'],
     'wizards':['User ID', 'Access Level']
   }
-  constructor(private assignmentService:AssignmentService) { }
+  constructor(private assignmentService:AssignmentService, private http:HttpClient) { }
   remove(id:string){
     for(let i =0;i<this.data['members'].length;i++){
       if(this.data['memberdata'][i]['userID']==id){
@@ -81,23 +83,36 @@ export class MembertableComponent implements OnInit {
     }
     return keys
   }
-  saveUserSubmission(userid:string){
-    this.assignmentService.getSubmissionData(this.courseid, 1, userid).subscribe(data=>{
-      FileSaver.saveAs(new Blob([JSON.stringify(data)]), this.courseid+'_'+userid+'.txt')
-      FileSaver.saveAs( data.files, this.courseid+'_'+userid+'_file'+'.txt')
+  saveUserSubmission(userid:string, name:string){
+    let enumL = Number.parseInt(name.replace('T', ''))-1
+    this.assignmentService.getSubmissionData(this.courseid, enumL, userid).subscribe(data=>{
+      FileSaver.saveAs(new Blob([JSON.stringify(data)], {type:'text'}), this.courseid+'_'+userid+'.txt')
+      const param = new HttpParams();
+      const options = {
+        params:param
+      }
+      if(data.files!='' && data.files!=null){
+        this.http.get(data.files.url, {...options, responseType:'blob'}).subscribe(
+          data2=>{
+            console.log(data2)
+            FileSaver.saveAs(data2, data.files.name)
+          }
+        );
+  
+      }
+      // FileSaver.saveAs(data.files, this.courseid+'_'+userid+'_file'+'.txt', )
       
     })
 
   }
   addMembers(){
     let inputstr:string = this.inputelem.nativeElement.value;
-    inputstr =  inputstr.replace(' ', '');
     let idlist:string[] = this.inputelem.nativeElement.value.split(',');
     let objlist = [...this.data.members];
     console.log(idlist);
     for(let item of idlist){
       let element:any = {};
-      element[item] = this.deflevels[this.title.toLowerCase()];
+      element[item.trim()] = this.deflevels[this.title.toLowerCase()];
       objlist.push(element)
     }
     objlist.push({'userID':this.title.toLowerCase()})

@@ -339,6 +339,9 @@ export class ProfcourseComponent implements OnInit {
         if(data.NE_students.length!=0){
           window.alert("Following userids are not in the course: "+data.NE_students.toString())
         }
+        if(data.msg!=''){
+          window.alert(data.msg)
+        }
       }
       this.sender.nativeElement.value = null
       

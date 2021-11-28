@@ -64,7 +64,9 @@
             <td>{{datum.email}}</td>
             <!-- <td *ngIf="title=='Students"></td> -->
             <ng-container *ngIf="true">
-                <td *ngFor="let taskgrade of datum.taskGrades" (click)="saveUserSubmission(datum.userID)"><u>{{taskgrade.score}}</u></td>
+                <td *ngFor="let taskgrade of datum.taskGrades">
+                    <button style="font-size: xx-small;padding: 0px;" (click)="saveUserSubmission(datum.userID, taskgrade.name)"><i class="bi bi-arrow-down"></i></button>{{taskgrade.score}}
+                </td>
             </ng-container>
             <td *ngIf="title=='Students'">{{datum.score}}</td>
 

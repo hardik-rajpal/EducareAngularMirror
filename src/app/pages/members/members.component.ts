@@ -45,11 +45,14 @@ export class MembersComponent implements OnInit {
     let roleobj = data.pop()
     // console.log(roleobj['role'])
     this.courseService.sendMemberData(this.courseid, roleobj['userID'], data).subscribe(data=>{
+      console.log(data)
+      if(data.length>0){
+        window.alert('Error. The following IDS are unreal: ' + data.toString())
+      }
+      // this.members[] data[roleobj['userID']]
       this.courseService.getMemberData(this.courseid).subscribe(d=>{
         this.members = d;
       })
-      // this.members = data;
-      // console.log(this.members[roleobj['role']])
     })
   }
   ngOnInit(): void {

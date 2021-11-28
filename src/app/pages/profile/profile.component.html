@@ -22,7 +22,8 @@
     </table>
 
     <button (click)="editprofile=!editprofile" class="btn btn-outline-danger" style="margin: 10px;">Edit Details</button>
-    <button (click)="changepw=!changepw" class="btn btn-outline-danger" style="margin: 10px;">Change Password</button>
+    <!-- <button (click)="changepw=true" class="btn btn-outline-danger" style="margin: 10px;">Change Password</button> -->
+    <button (click)="initChangePassword()" class="btn btn-outline-danger" style="margin: 10px;">Change Password</button>
 
     <div class="container" style="margin: 10px;">
 
@@ -50,9 +51,15 @@
 
         <form *ngIf="changepw" #changepwForm = "ngForm" (ngSubmit) = "submitchangepw(changepwForm.value)">
             <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="currpw" placeholder="CurrPW" name="currpw" ngModel>
+                <input type="password" class="form-control" id="otp" placeholder="12-Character OTP" name="otp" ngModel>
+                <label for="otp" class="form-label">12-Character OTP (expires in {{changepwtimer}})</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="currpw" placeholder="Current Password" name="currpw" ngModel>
                 <label for="currpw" class="form-label">Current Password</label>
             </div>
+            <p class="alert alert-danger" *ngIf="notnewpw">The new password is the same as the current password!</p>
+            <p class="alert alert-danger" *ngIf="newpwmismatch">The two passwords below do not match!</p>
             <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="newpw1" placeholder="NewPW1" name="newpw1" ngModel>
                 <label for="newpw1" class="form-label">New Password</label>
@@ -62,6 +69,7 @@
                 <label for="newpw2" class="form-label">New Password, going twice</label>
             </div>
             <button type="submit" class="btn btn-outline-success" style="margin: 10px;">Change Password</button>
+            <button (click)="changepw=false" class="btn btn-outline-danger" style="margin: 10px;">Cancel</button>
             <br>
         </form>
 

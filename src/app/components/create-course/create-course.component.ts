@@ -53,9 +53,9 @@ export class CreateCourseComponent implements OnInit {
     if(this.validatekeys(this.configdata)){
       data.roles = this.configdata;
     }
-    console.log(data);
+    // console.log(data);
     this.courseService.createCourse(data, this.userid).subscribe(data=>{
-      console.log(data)
+      // console.log(data)
       if(data.errorids.length>0){
         window.alert(`Some user ids were not found!:${data.errorids}`)
       }else{
