@@ -23,12 +23,12 @@ import { DownloaderComponent } from './components/downloader/downloader.componen
 import { UploaderComponent } from './components/uploader/uploader.component';
 import { CommentstackComponent } from './components/commentstack/commentstack.component';
 import { PostComponent } from './pages/post/post.component';
-import { MembersComponent } from './pages/members/members.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MembertableComponent } from './components/membertable/membertable.component';
 import { TodolistComponent } from './components/todolist/todolist.component';
 import { CoursegradesComponent } from './pages/coursegrades/coursegrades.component';
 import { GradesComponent } from './pages/grades/grades.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +47,6 @@ import { GradesComponent } from './pages/grades/grades.component';
     DownloaderComponent,
     UploaderComponent,
     CommentstackComponent,
-    MembersComponent,
     MembertableComponent,
     TodolistComponent,
     CoursegradesComponent,
@@ -62,7 +61,8 @@ import { GradesComponent } from './pages/grades/grades.component';
     TagInputModule,
     BrowserAnimationsModule,
     MatChipsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -73,6 +73,12 @@ export class ProfcourseComponent implements OnInit {
   taskdata:any = {}
   postdata:any = {}
   gradertype:string = ''
+  accesslevel:number = 0
+  members:any={
+    students:[],
+    instructors:[],
+    wizards:[]
+  }
   filehost:string = environment.server_url
   tasknumtemp!:number
   releaseTaskNow:boolean = false;
@@ -83,7 +89,6 @@ export class ProfcourseComponent implements OnInit {
   makingPost:boolean = false;
   editingPost:boolean = false;
   tempfileholder:any
-  accesslevel = 1;
   constructor(private assignmentService:AssignmentService,
     private courseService:CourseService,
     private postService:PostService,
@@ -94,6 +99,37 @@ export class ProfcourseComponent implements OnInit {
       this.makingPost = false;
       this.editingAssignment = false;
       this.editingPost = false;
+    }
+    getAccessLevel(userid:string, members:any){
+      let concatroles:any[] = []
+      for(let role of Object.keys(members)){
+        // console.log(role)
+        concatroles = concatroles.concat(members[role]['members'])
+      }
+      // console.log(members)
+      console.log(concatroles)
+      for(let card of concatroles){
+        if(card[userid]!=undefined){
+          return card[userid]
+        }
+      } 
+      return -1
+    }
+    sendEditedList(data:any[]){
+      // console.log(data)
+      // console.log(data[0][Object.keys(data[0])[0]])
+      let roleobj = data.pop()
+      // console.log(roleobj['role'])
+      this.courseService.sendMemberData(this.courseid, roleobj['userID'], data).subscribe(data=>{
+        console.log(data)
+        if(data.length>0){
+          window.alert('Error. The following IDS are unreal: ' + data.toString())
+        }
+        // this.members[] data[roleobj['userID']]
+        this.courseService.getMemberData(this.courseid).subscribe(d=>{
+          this.members = d;
+        })
+      })
     }
     makeAssignmentData(data:any){
 
@@ -294,11 +330,19 @@ export class ProfcourseComponent implements OnInit {
           else{
             this.accesslevel = 4;  
           }
+          this.courseService.getMemberData(this.courseid).subscribe(data=>{
+            console.log(data);
+            this.members = data;      
+          })
         }
         else{
           this.router.navigate(["/dashboard"])
           //user not in instructors list. Redirect to dashboard.
         }
+      }
+      else{
+        //user not logged in: redirect to login
+        this.router.navigate(["/login"])
       }
 
     })
