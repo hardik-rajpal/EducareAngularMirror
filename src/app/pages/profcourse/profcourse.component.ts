@@ -112,6 +112,7 @@ export class ProfcourseComponent implements OnInit {
           this.uploader.files = []
           this.assignments = data;
           window.alert("Successfully saved your changes!")
+          this.hideAllForms()
         },error=>{
           window.alert("Error. Please check the changes you've made.")
         });
@@ -249,6 +250,7 @@ export class ProfcourseComponent implements OnInit {
         window.alert("Successfully saved your changes!")
         this.releasePostNow = false;
         this.postform.reset()
+        this.hideAllForms()
         this.uploader.files = []
       })
     }else{

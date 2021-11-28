@@ -32,3 +32,42 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
         - creating posts.
     (Wizards:1 can only download submissions and upload feedback)
 
+
+- Create Posts and Assignments for existing courses in which you are an instructor or wizard of sufficient prowess.
+- Disable/participate in discussions on posts.
+- Edit/delete existing posts and assignments.
+- Make submissions to assignments as a student, add comments to your submissions.
+- Submit Feedback for submissions as an instructor or wizard using an autograding script (whose guidelines are mailed
+    on failure of a script) or manually using a file with the format below:
+######################Feedback.txt##########################
+{"200050002":{
+"feedback": "Stay treat-ppl-with-kindness, pony dude.",
+"grade":"3.6"
+},
+"200050003":{
+"feedback": "Stay falling, pony man.",
+"grade":"3.5"
+},
+"200050004":{
+"feedback": "Stay two ghosts, pony bro.",
+"grade":"10.0"
+},
+"200050005":{
+"feedback": "Stay canyon moon, pony guy.",
+"grade":"4.2"
+},
+"200050001":{
+"feedback": "Stay golden, pony boy.",
+"grade":"6.3"
+},
+"200050048":{
+"feedback": "You really need to work on this.#soMeta",
+"grade":"7.1"
+}
+}
+##########################################################
+- Release grades (or retract them) for graded assignments.
+- Download member data tables, with information like grades and email ids.
+- Study the grading statistics under Grades for your courses with:
+    - Assignmentwise histograms, mean and variance results.
+    - (Weighted) Cumulative score reports.

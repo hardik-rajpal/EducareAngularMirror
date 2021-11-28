@@ -39,8 +39,10 @@
             <input type="time" class="form-control" id="releaseTime" placeholder="ReleaseTime" name="releaseTime"(change)="validateDates(postForm)" ngModel>
             <label for="releaseTime" class="form-label">Release Time</label>
         </div>
-        <button class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
-        <button class="btn btn-outline-danger" (click)="makingPost=false" style="margin: 10px;">Discard</button>
+        <button *ngIf="releasePostNow&&makingPost"class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
+        <button *ngIf="(!releasePostNow)&&(makingPost)" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Draft</button>
+        <button *ngIf="editingPost" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Changes</button>
+        <button class="btn btn-outline-danger" (click)="makingPost=false;editingPost=false" style="margin: 10px;">Discard</button>
     </form>
 
     <form *ngIf="makingAssignment||editingAssignment" #assignForm = "ngForm" (ngSubmit) = "makeAssignmentData(assignForm.value)">
@@ -81,9 +83,10 @@
             <input type="time" class="form-control" id="dueTime" placeholder="DueTime" name="dueTime" (change)="validateDates(assignForm)"ngModel>
             <label for="dueTime" class="form-label">Due Time</label>
         </div>
-        <button *ngIf="releaseTaskNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
-        <button *ngIf="!releaseTaskNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Draft</button>
-        <button class="btn btn-outline-danger" (click)="makingAssignment=false" style="margin: 10px;">Discard</button>
+        <button *ngIf="releaseTaskNow&&(makingAssignment)" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
+        <button *ngIf="!releaseTaskNow&&(makingAssignment)" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Draft</button>
+        <button *ngIf="editingAssignment" type="submit" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Changes</button>
+        <button class="btn btn-outline-danger" (click)="makingAssignment=false;editingAssignment=false" style="margin: 10px;">Discard</button>
     </form>
     <hr/>
 
