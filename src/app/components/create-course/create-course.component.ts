@@ -19,7 +19,7 @@ export class CreateCourseComponent implements OnInit {
   years=[1999]
   configdata:any={};
   courseExists:boolean = false;
-  sems = ["Semester 1", "Semester 2"]
+  sems = ["1", "2"]
   ngOnInit(): void {
     let id = localStorage.getItem("userid");
     if(id!=null){
@@ -42,26 +42,31 @@ export class CreateCourseComponent implements OnInit {
     return data.code + 'y'+data.year.toString()+'s'+data.sem.split(' ')[1];
   }
   createcourse(data:any){
+    if(!(data.code && data.year && data.sem &&data.name)){
+      window.alert("Please fill all fields and add the configuration file.")
+      return
+    }
     let courseid = this.getCourseID(data)
     for(let course of this.courselist){
       if(course.courseID==courseid){
         this.courseExists = true;
+        window.alert("Course with specifications of year and semester already exists!")
         return;
       }
     }
     data.courseID = courseid;
-    if(this.validatekeys(this.configdata)){
+    // if(this.validatekeys(this.configdata)){
       data.roles = this.configdata;
-    }
+    // }
     // console.log(data);
     this.courseService.createCourse(data, this.userid).subscribe(data=>{
       // console.log(data)
-      if(data.errorids.length>0){
-        window.alert(`Some user ids were not found!:${data.errorids}`)
-      }else{
+      // if(data.errorids.length>0){
+        // window.alert(`Some user ids were not found!:${data.errorids}`)
+      // }else{
         window.alert('Successfully created course!');
-        this.router.navigate(['/courses/profview/'+data.courseID])
-      }
+        this.router.navigate(['/dashboard'])
+      // }
     });
     //clean data. Remove non-players.
     //send data.
@@ -90,37 +95,45 @@ export class CreateCourseComponent implements OnInit {
     for(let key of keys){
       arrconcat = arrconcat.concat(data[key]);
     }
+    let realids = true;let invalids = [];
+    console.log(this.userlist)
+
     for(let userid of arrconcat){
-      if(this.userlist.find(obj=>obj.userID==userid)==undefined){
-        return false;
+      if(this.userlist.find((obj)=>{return obj.userID==userid})==undefined){
+        invalids.push(userid)
+        realids = false;
       }
     }
-    return true;
+    return {validity:realids, invalids:invalids};
   }
   validate(data:any){
     console.log(this.form.value);
     if(this.validatekeys(data)){
+      // console.log("Hi")
       if(data.instructors.includes(this.userid)){
         if(this.validateIntersect(data)){
-          if(this.validateUserExistence(data)){
+          // console.log("Hi")
+          let validobj = this.validateUserExistence(data)
+          if(validobj.validity){
             return true;
           }
           else{
-            //report;
+            window.alert("Some user ids in the file are imaginary: "+ validobj.invalids.toString())
           }
         }
         else{
-          // report
+          window.alert("No student/instructor/wizard can be anything other than what they are.")
         }
       }
       else{
-        //report
+        window.alert("You, the creator of the course, must be one of the instructors.")
       }
 
     }
     else{
+      window.alert("You have not followed the format. Consult the IT Crowd.👩‍🦰👨‍💻👨‍💻")
       //report alert
-      console.log("Invalid keys");
+      // console.log("Invalid keys");
     }
   return false;
   }

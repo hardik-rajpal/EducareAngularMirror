@@ -156,9 +156,9 @@ export class ProfcourseComponent implements OnInit {
       }
       else{
         this.assignmentService.createAssignment(dupdata, this.courseid, this.userid,this.tempfileholder).subscribe(data=>{
-          // this.assignform.reset()
-          // this.releaseTaskNow = false;
-          // this.uploader.files = []
+          this.assignform.reset()
+          this.releaseTaskNow = false;
+          this.uploader.files = []
           window.alert("Successfully Made Assignment!")
           this.assignments = data
         }, error=>{
@@ -237,6 +237,7 @@ export class ProfcourseComponent implements OnInit {
   loadFormToEdit(tasknumber:number,form:string){
     if(form=='assignform'){
       this.taskdata['number'] = tasknumber
+      // this.assignform.setValue({'releaseTaskNow':false})
       this.hideAllForms();this.editingAssignment = true;
       this.assignmentService.getAssignmentData(this.courseid, tasknumber, true).subscribe(data=>{
         data.releaseTaskNow = false;
@@ -247,9 +248,9 @@ export class ProfcourseComponent implements OnInit {
         delete data.author
         delete data.hasfiles
         console.log({...data})
-        if(data.files!="" && data.files!=null){
-          delete data.files
-        }
+        // if(data.files!="" && data.files!=null){
+        delete data.files
+        // }
         delete data.graded
         delete data.acceptSubmission
         this.assignform.setValue(data);
@@ -295,9 +296,10 @@ export class ProfcourseComponent implements OnInit {
         this.uploader.files = []
         window.alert("Successfully Made Post!")
         this.postform.reset()
+        this.posts = data;
       }, error=>{
         window.alert("Error. Please check the form.");
-        this.posts = data;
+        
       });  
     }
     

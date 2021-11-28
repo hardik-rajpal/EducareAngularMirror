@@ -50,9 +50,17 @@ export class ProfileComponent implements OnInit {
 
   }
   submiteditprofile(profileData:any){
-    console.log(profileData);
+    if(!(profileData.username&&profileData.email&&profileData.DOB&&profileData.password)){
+      window.alert("Please fill all the fields.")
+      return
+    }
+    // console.log(profileData);
     this.userService.setProfileData(this.userdata.userID, profileData).subscribe(data=>{
-      console.log(data);
+      // console.log(data);
+      this.editprofile = false;
+      window.location.reload()
+    },err=>{
+      window.alert("Edit failed. Fill the fields right.")
     })
   }
   decrementTimer(delta:number){

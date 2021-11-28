@@ -84,9 +84,9 @@ export class MembertableComponent implements OnInit {
     return keys
   }
   saveUserSubmission(userid:string, name:string){
-    let enumL = Number.parseInt(name.replace('T', ''))-1
+    let enumL = Number.parseInt(name.replace('A', ''))-1
     this.assignmentService.getSubmissionData(this.courseid, enumL, userid).subscribe(data=>{
-      FileSaver.saveAs(new Blob([JSON.stringify(data)], {type:'text'}), this.courseid+'_'+userid+'.txt')
+      FileSaver.saveAs(new Blob([JSON.stringify(data)], {type:'text'}), this.courseid+'_'+userid+'_A'+enumL.toString()+'.txt')
       const param = new HttpParams();
       const options = {
         params:param
