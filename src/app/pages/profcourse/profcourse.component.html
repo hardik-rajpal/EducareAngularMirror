@@ -2,10 +2,9 @@
 <!-- 4->prof only -->
 <!-- 3, 2, 1 -->
     <div *ngIf="accesslevel>1" class="btn-group-vertical" style="margin: 20px; margin-left: 0px;">
-        <a *ngIf="accesslevel>1" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;" (click)="makingPost=true;makingAssignment=false;makingAssessment=false;">+ Create Post</a>
-        <a *ngIf="accesslevel>2" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;" (click)="makingPost=false;makingAssignment=true;makingAssessment=false;">+ Create Assignment</a>
-        <a *ngIf="accesslevel>2" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;" (click)="makingPost=false;makingAssignment=false;makingAssessment=true;">+ Create Assessment</a>
-        <a *ngIf="accesslevel>2" href="/members/{{course.courseID}}" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;">Members</a>
+        <a *ngIf="accesslevel>1" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;" (click)="makingPost=true;makingAssignment=false;">+ Create Post</a>
+        <a *ngIf="accesslevel>2" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;" (click)="makingPost=false;makingAssignment=true;">+ Create Assignment</a>
+        <a *ngIf="accesslevel>0" href="/members/{{course.courseID}}" class="btn btn-outline-primary text-left" style="text-align: left; padding: 15px;">Members</a>
     </div>
 
 
@@ -86,30 +85,6 @@
         <button *ngIf="!releaseTaskNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Draft</button>
         <button class="btn btn-outline-danger" (click)="makingAssignment=false" style="margin: 10px;">Discard</button>
     </form>
-
-    <form *ngIf="makingAssessment" #assessForm = "ngForm" (ngSubmit) = "makeAssignmentData(assessForm.value)">
-        <div class="form-floating">
-            <input type="text" class="form-control" id="title" placeholder="Title" name="title" ngModel>
-            <label for="title" class="form-label">Title of Assessment</label>
-        </div>
-        <div class="form-floating">
-            <textarea class="form-control" id="instruction" placeholder="Instruction" name="instruction" ngModel></textarea>
-            <label for="instruction" class="form-label">Instruction</label>
-        </div>
-        <div class="form-floating">
-            <input type="date" class="form-control" id="releaseDate" placeholder="ReleaseDate" name="releaseDate" ngModel>
-            <label for="releaseDate" class="form-label">Release Date</label>
-        </div>
-        
-        <div class="form-floating">
-            <input type="date" class="form-control" id="dueDate" placeholder="DueDate" name="dueDate" ngModel>
-            <label for="dueDate" class="form-label">Due Date</label>
-        </div>
-        <button *ngIf="releaseTaskNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save and Publish</button>
-        <button *ngIf="!releaseTaskNow" class="btn btn-outline-success" type="submit" style="margin: 10px;">Save Draft</button>
-        <button class="btn btn-outline-danger" (click)="makingAssessment=false" style="margin: 10px;">Discard</button>
-    </form>
-
     <hr/>
 
     <!-- <div style="width: 50%;border:1px solid green; padding:10px;"> -->

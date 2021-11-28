@@ -77,13 +77,11 @@ export class ProfcourseComponent implements OnInit {
   tasknumtemp!:number
   releaseTaskNow:boolean = false;
   releasePostNow:boolean = false;
-  releaseAssessmentNow:boolean = false;
   datesinvalid:boolean = false;
   makingAssignment:boolean = false;
   editingAssignment:boolean = false;
   makingPost:boolean = false;
   editingPost:boolean = false;
-  makingAssessment:boolean = false;
   tempfileholder:any
   accesslevel = 1;
   constructor(private assignmentService:AssignmentService,

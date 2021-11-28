@@ -2,7 +2,7 @@
 
     <h5 style="display: inline;">{{title}}&emsp;</h5>
     <div class="btn-group">
-        <button class="btn btn-outline-primary" *ngIf="!editing" (click)="editing=true">Edit</button>
+        <button class="btn btn-outline-primary" *ngIf="(!editing)&&(!(title=='Instructors'&&level<4))&&(level>2)" (click)="editing=true">Edit</button>
         <button class="btn btn-outline-success" *ngIf="editing" (click)="editing=false;sendList()">Save</button>
         <button class="btn btn-outline-secondary" (click)="downloadList()">Download</button>
     </div>

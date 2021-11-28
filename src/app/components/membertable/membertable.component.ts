@@ -31,7 +31,7 @@ export class MembertableComponent implements OnInit {
     ]
   };
   datain:boolean = false
-  @Input('level') level!:number;
+  @Input('level') level:number = 0;
   @Input('memberids') memberids:string[]=[];
   @Output('sendlist') sendlist:EventEmitter<any> = new EventEmitter();
   @ViewChild('newmembers') inputelem!:ElementRef;
