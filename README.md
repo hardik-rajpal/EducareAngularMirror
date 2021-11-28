@@ -13,13 +13,13 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 - Create Courses with a code, name and a config file which follows the format below:
 (Excluding the ###...###)
 
-######################Config.txt##########################
-
+#######################Config.txt###########################
+<pre>
 {"instructors":["200050006"],
 "wizards":["200050012","200050048"],
 "students":["200050001","200050008"]
 }
-
+</pre>
 ##########################################################
 
 - Role based permissions: student < wizards < instructors
@@ -33,9 +33,9 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
     - Wizards:2 can do everything the wizards:3 do except:
         - creating assignments
         - editing any memberlist
-    - Wizards:1 can do everythign the wizards:2 do except:
-        - creating posts.
-    (Wizards:1 can only download submissions and upload feedback)
+    - Wizards:1 can do everything the wizards:2 do except:
+        - creating posts.<br>
+        (Wizards:1 can only download submissions and upload feedback)
 
 
 - Create Posts and Assignments for existing courses in which you are an instructor or wizard of sufficient prowess.
@@ -47,6 +47,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 (Excluding the ###...###)
 
 ######################Feedback.txt##########################
+<pre>
 {"200050004":{
 "feedback": "Stay two ghosts, pony bro.",
 "grade":"10.0"
@@ -60,6 +61,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 "grade":"6.3"
 }
 }
+</pre>
 ##########################################################
 
 - Release grades (or retract them) for graded assignments.
