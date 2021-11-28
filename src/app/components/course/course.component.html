@@ -6,7 +6,8 @@
         <h4 *ngIf="course.new=='true'" style="color: green;"><i class="bi bi-exclamation-circle-fill"></i> New</h4>
         <div  *ngIf="!isprof">
             {{course.progress}}%
-            <mat-progress-bar [value]="course.progress" [color]="'Green'"></mat-progress-bar>
+            <mat-progress-bar [value]="course.progress"></mat-progress-bar>
         </div>
+        <hr />
     </button>
 </p>
