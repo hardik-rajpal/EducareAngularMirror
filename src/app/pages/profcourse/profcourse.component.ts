@@ -210,11 +210,11 @@ export class ProfcourseComponent implements OnInit {
         delete data.seenby
         delete data.submittedby
         delete data.author
+        delete data.hasfiles
         console.log({...data})
-        if(data.files!=""){
+        if(data.files!="" && data.files!=null){
           delete data.files
         }
-        delete data.hasfiles
         delete data.graded
         delete data.acceptSubmission
         this.assignform.setValue(data);
@@ -227,6 +227,7 @@ export class ProfcourseComponent implements OnInit {
         console.log(data)
         data.releasePostNow = false;
         delete data.id
+        delete data.hasfiles
         delete data.number
         delete data.author
         delete data.comments
@@ -249,6 +250,8 @@ export class ProfcourseComponent implements OnInit {
         this.posts = data
         window.alert("Successfully saved your changes!")
         this.releasePostNow = false;
+        this.postform.reset()
+        this.uploader.files = []
       })
     }else{
       this.postService.createPost(data, this.courseid,this.userid,this.tempfileholder).subscribe(data=>{

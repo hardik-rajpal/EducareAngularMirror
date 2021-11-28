@@ -18,6 +18,7 @@ export class CommentstackComponent implements OnInit {
   @Input('parentID') parentID:number = -1;
   @Input('parent') parent:string = "Post";//could be Submission or Comment
   courseid:string = ""
+  authorid:string = "Anonymouse"
   replyable:boolean = false;
   @ViewChildren('replybox') replybox!:ElementRef[];
   @ViewChild('postreplybox') postreplybox!:ElementRef;
@@ -61,10 +62,16 @@ export class CommentstackComponent implements OnInit {
     // console.log(this.comments);
     let courseid = JSON.parse(JSON.stringify(this.route.snapshot.paramMap.get('coursecode') || '{}'));
     let postnum = JSON.parse(JSON.stringify(this.route.snapshot.paramMap.get('enum') || '{}'));
+    let id = localStorage.getItem('userid')
+    if(id==null){
+      window.location.assign('/dashboard')
+    }
+    this.authorid = id!
     this.courseid = courseid;
     this.postNum = postnum;
     // console.log(this.comments);
   }
+
   addReply(commentid:number){
     let id = localStorage.getItem('userid')
     let rightbox;
@@ -90,11 +97,13 @@ export class CommentstackComponent implements OnInit {
     }
     this.commentService.addComment(data,this.courseid,this.postNum).subscribe(data=>{
       let comment;
-      if(this.parent!='Comment'){
+      if(parentOfNewComment!='Comment'){
         this.comments = data;
+        console.log("commented on post")
         this.commenting = false;        
       }
       else{
+        console.log("Commented on a comment")
         for(let comm of this.comments){
           if(comm.id==commentid){
             comment = comm;
@@ -108,9 +117,9 @@ export class CommentstackComponent implements OnInit {
 
     // console.log(text)
   }
-  deleteComment(){
-    this.commentService.deleteComment(this.parentID, this.courseid, this.postNum).subscribe(data=>{
-      console.log(data)
+  deleteComment(id:number){
+    this.commentService.deleteComment(id, this.courseid, this.postNum).subscribe(data=>{
+      window.location.reload()
     })
   }
 

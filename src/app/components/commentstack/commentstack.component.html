@@ -24,6 +24,7 @@
                 <footer class="blockquote-footer" style="margin-top: 0px; font-size: small;">{{comment.author}}, <cite>{{comment.datemade}}</cite></footer>
 
                 <button class="btn btn-outline-primary" *ngIf="(!comment.commenting)&&(!disabled)&&comment.replyable" (click)="comment.commenting=true" style="font-size: small;">+ Reply</button>
+                <button class="btn btn-outline-danger" *ngIf="(!comment.commenting)&&(!disabled)&&comment.replyable&&comment.authorid==authorid" (click)="deleteComment(comment.id)" style="font-size: small;"><i class="bi bi-trash"></i>Delete</button>
                 <form *ngIf="comment.commenting">
                     <div class="form-floating mb-3" style="font-size: small;">
                         <input type="text" id="{{comment.id}}" class="form-control" placeholder="Reply" #replybox>

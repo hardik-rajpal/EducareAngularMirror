@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from 'src/app/services/course.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class MembersComponent implements OnInit {
     courseID:'',
     courseCode:'',
   }
-  constructor(private courseService:CourseService, private route:ActivatedRoute) { }
+  constructor(private courseService:CourseService, private route:ActivatedRoute, private router:Router) { }
   getAccessLevel(userid:string, members:any){
     let concatroles:any[] = []
     for(let role of Object.keys(members)){
@@ -31,7 +31,7 @@ export class MembersComponent implements OnInit {
       concatroles = concatroles.concat(members[role]['members'])
     }
     // console.log(members)
-    // console.log(concatroles)
+    console.log(concatroles)
     for(let card of concatroles){
       if(card[userid]!=undefined){
         return card[userid]
@@ -61,13 +61,10 @@ export class MembersComponent implements OnInit {
     this.courseService.getMemberData(this.courseid).subscribe(data=>{
       console.log(data);
       this.members = data;
-      // for(let key of Object.keys(this.keys)){
-      //   this.keys[key] = this.getKeys(this.members[key]['members'])
-      // }
-
       if(id!=null){
         this.accesslevel = this.getAccessLevel(id, this.members);      
-        if(this.accesslevel<0){
+        if(this.accesslevel<=0){
+          this.router.navigate(['/dashboard'])
           //redirect to dashboard
         }
       }
