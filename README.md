@@ -11,12 +11,17 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 - Registration and login dependent on uniques alphanumeric user ID's, like roll numbers.
 - Edit details in your profile after registration and change the password (this requires an otp sent to your registered email id on request)
 - Create Courses with a code, name and a config file which follows the format below:
+(Excluding the ###...###)
+
 ######################Config.txt##########################
+
 {"instructors":["200050006"],
 "wizards":["200050012","200050048"],
 "students":["200050001","200050008"]
 }
+
 ##########################################################
+
 - Role based permissions: student < wizards < instructors
     - Further distinction between wizards of levels 1, 2 and 3, editable by the instructor and wizards of level 3.
     - Students can access posts and assignments in a course and make submissions.
@@ -39,16 +44,10 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 - Make submissions to assignments as a student, add comments to your submissions.
 - Submit Feedback for submissions as an instructor or wizard using an autograding script (whose guidelines are mailed
     on failure of a script) or manually using a file with the format below:
+(Excluding the ###...###)
+
 ######################Feedback.txt##########################
-{"200050002":{
-"feedback": "Stay treat-ppl-with-kindness, pony dude.",
-"grade":"3.6"
-},
-"200050003":{
-"feedback": "Stay falling, pony man.",
-"grade":"3.5"
-},
-"200050004":{
+{"200050004":{
 "feedback": "Stay two ghosts, pony bro.",
 "grade":"10.0"
 },
@@ -59,13 +58,10 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 "200050001":{
 "feedback": "Stay golden, pony boy.",
 "grade":"6.3"
-},
-"200050048":{
-"feedback": "You really need to work on this.#soMeta",
-"grade":"7.1"
 }
 }
 ##########################################################
+
 - Release grades (or retract them) for graded assignments.
 - Download member data tables, with information like grades and email ids.
 - Study the grading statistics under Grades for your courses with:
