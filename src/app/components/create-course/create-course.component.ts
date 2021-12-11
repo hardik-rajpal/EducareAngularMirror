@@ -39,7 +39,7 @@ export class CreateCourseComponent implements OnInit {
     this.years.push(this.years[this.years.length-1]+1);
   }
   getCourseID(data:any){
-    return data.code + 'y'+data.year.toString()+'s'+data.sem.split(' ')[1];
+    return data.code + 'y'+data.year.toString()+'s'+data.sem;
   }
   createcourse(data:any){
     if(!(data.code && data.year && data.sem &&data.name)){
@@ -58,7 +58,7 @@ export class CreateCourseComponent implements OnInit {
     // if(this.validatekeys(this.configdata)){
       data.roles = this.configdata;
     // }
-    // console.log(data);
+    console.log(data);
     this.courseService.createCourse(data, this.userid).subscribe(data=>{
       // console.log(data)
       // if(data.errorids.length>0){
