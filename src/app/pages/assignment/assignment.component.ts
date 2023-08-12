@@ -16,13 +16,16 @@ export class AssignmentComponent implements OnInit {
   submDate!:Date;
   num!:any
   befduedate:boolean = true;
-  taskhasfiles:boolean = false;
   taskdata={
     number:0,
     title:"",
+    hasfiles:true,
     instruction:"",
     releaseDate:"",
     dueDate:"",
+    releaseTime:"",
+    dueTime:"",
+    published:false,
     acceptSubmission:false,
     files:{
       url:'',
@@ -39,7 +42,8 @@ export class AssignmentComponent implements OnInit {
     grade:0,
     time:"",
     feedback:"",
-    comments:""
+    id:0,
+    comments:[]
   }
   submitted:boolean = false;
   submitting:boolean=false;
@@ -66,22 +70,7 @@ export class AssignmentComponent implements OnInit {
     console.log(num)
     this.assignmentService.getAssignmentData(courseid, num).subscribe(data=>{
       console.log(data)
-      this.taskdata = data
-      let loc:string = data.files
-      if(loc==null){
-        this.taskhasfiles = false;
-      }
-      else{
-        this.taskhasfiles = true;
-        let tempname = loc.split('/')[loc.split('/').length-1].split('?X-Amz')[0];
-        // tempname = tempname.substring(0, tempname.length -1);
-        this.taskdata.files = {
-          name:tempname,
-          url:this.filehost+loc
-        }
-      }
-      console.log(this.taskdata)
-          
+      this.taskdata = data          
     })
     id = localStorage.getItem('userid');
     
@@ -92,10 +81,7 @@ export class AssignmentComponent implements OnInit {
         this.submissiondata = data;
         if(this.submissiondata.files!=null){
           this.submitted = true;
-          let loc:string = this.submissiondata.files
-
-          this.file.name=loc.split('/')[loc.split('/').length-1].split('?X-Amz')[0]
-          this.file.url = loc
+          this.file = this.submissiondata.files
           console.log(this.file.url)
           this.submDate = new Date(data.time.split('+')[0])
           this.submissiondata.time = [this.submDate.getHours().toString() + ':' +this.submDate.getMinutes().toString()+','+this.submDate.getDate().toString(),this.submDate.getMonth().toString(), this.submDate.getFullYear().toString()].join('/');

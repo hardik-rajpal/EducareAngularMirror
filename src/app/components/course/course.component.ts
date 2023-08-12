@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./course.component.css']
 })
 export class CourseComponent implements OnInit {
-  @Input() courses!:any;
+  @Input() courses!:any[];
   @Input() isprof!:boolean;
   // courses : CourseItem[];
 
@@ -34,8 +34,8 @@ export class CourseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
 
+  }
   showForm = false;
   value = "Create a new Course";
   navigate(id:string){

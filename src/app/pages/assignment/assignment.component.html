@@ -3,14 +3,15 @@
     <hr/>
     <p><b>Instruction</b>: {{taskdata.instruction}}</p>
     <hr/>
-    <div *ngIf="taskhasfiles">
+    <div *ngIf="taskdata.hasfiles">
     <b>Files:</b> <br>
     <downloader [url]="taskdata.files.url" [filename]="taskdata.files.name"></downloader>
     <hr/>
     </div>
-    <p>Release Date: {{taskdata.releaseDate}}</p>
+    <p *ngIf="taskdata.published">Released on: {{taskdata.releaseDate}}, {{taskdata.releaseTime}}</p>
+    <p *ngIf="!taskdata.published">Will be released on: {{taskdata.releaseDate}}, {{taskdata.releaseTime}}</p>
     <hr/>
-    <p>Due Date: {{taskdata.dueDate}}</p>
+    <p>Due by: {{taskdata.dueDate}}, {{taskdata.dueTime}}</p>
     <hr/>
 </div>
 
@@ -25,13 +26,13 @@
     <hr/>
     <p><b>Grade</b>: {{submissiondata.grade}}</p>
     <hr/>
-    <p><b>Your Comments</b>: {{submissiondata.comments}}</p>
+    <p><b>Comments</b>:<app-commentstack [parent]="'Submission'" [parentID]="submissiondata.id" [comments]="submissiondata.comments"></app-commentstack></p>
     <hr/>
     <p><b>Grader's Feedback</b>: {{submissiondata.feedback}}</p>
 </div>
 
 <div class="container">
-<p *ngIf="!(taskdata.acceptSubmission||submitted)" class="alert alert-danger">The deadline's gone by.</p>
+<p *ngIf="(!(taskdata.acceptSubmission||submitted))&&(taskdata.published)" class="alert alert-danger">The deadline's gone by.</p>
 </div>
 
 <div *ngIf="(taskdata.acceptSubmission)" class="container">

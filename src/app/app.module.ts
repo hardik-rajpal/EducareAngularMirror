@@ -21,6 +21,14 @@ import { ProfcourseComponent } from './pages/profcourse/profcourse.component';
 import { CreateCourseComponent } from './components/create-course/create-course.component';
 import { DownloaderComponent } from './components/downloader/downloader.component';
 import { UploaderComponent } from './components/uploader/uploader.component';
+import { CommentstackComponent } from './components/commentstack/commentstack.component';
+import { PostComponent } from './pages/post/post.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { MembertableComponent } from './components/membertable/membertable.component';
+import { TodolistComponent } from './components/todolist/todolist.component';
+import { CoursegradesComponent } from './pages/coursegrades/coursegrades.component';
+import { GradesComponent } from './pages/grades/grades.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,12 +40,17 @@ import { UploaderComponent } from './components/uploader/uploader.component';
     CourseComponent,
     CreateCourseComponent,
     CourseItemComponent,
-    AssignmentComponent,
-    ProfileComponent,
     ProfcourseComponent,
+    AssignmentComponent,
+    PostComponent,
+    ProfileComponent,
     DownloaderComponent,
     UploaderComponent,
-    
+    CommentstackComponent,
+    MembertableComponent,
+    TodolistComponent,
+    CoursegradesComponent,
+    GradesComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +60,9 @@ import { UploaderComponent } from './components/uploader/uploader.component';
     FormsModule,
     TagInputModule,
     BrowserAnimationsModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTabsModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

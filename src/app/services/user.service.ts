@@ -35,6 +35,9 @@ export class UserService {
     }
     return this.http.post<any>(this.apiroot + userid + '/changepw/', createHttpOp)
   }
+  sendOTPMail(userid:string){
+    return this.http.get<any>(this.apiroot + userid+ '/otpmail/', httpop)
+  }
   setProfileData(userid:string,profileData:any){
     const createHttpOp = {
       params:new HttpParams().append('profiledata',profileData)

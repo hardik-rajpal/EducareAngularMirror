@@ -9,9 +9,19 @@ import { PostService } from 'src/app/services/post.service';
 export class PostComponent implements OnInit {
   data={
     number:0,
+    id:0,
     title:'',
     instruction:"",
+    comments:[],
     releaseDate:"",
+    releaseTime:"",
+    discussable:true,
+    published:false,
+    hasfiles:true,
+    files:{
+      name:'',
+      url:''
+    }
   }
   constructor(private route:ActivatedRoute,
     private postService:PostService) { }
@@ -26,7 +36,9 @@ export class PostComponent implements OnInit {
       console.log(num)
       this.postService.getPostData(courseid, num).subscribe(data=>{
         console.log(data)
-        this.data = data
+        let tempdata = data;
+        tempdata.comments = data.comments
+        this.data = tempdata;
       })
     }
     else{
